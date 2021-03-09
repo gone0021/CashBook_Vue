@@ -1,0 +1,94 @@
+a.cld {
+    text-decoration: none;
+}
+
+body {
+    background-color: #fff;
+    color: #636b6f;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 200;
+    font-size: small;
+    height: 100vh;
+    margin: 0;
+}
+
+th.cld {
+    height: 50px;
+    width: 120px;
+    text-align: center;
+}
+
+td.cld {
+    height: 100px;
+    width: 120px;
+    text-align: right;
+}
+
+th.cld:nth-of-type(1),
+td.cld:nth-of-type(1) {
+    color: red;
+}
+
+th.cld:nth-of-type(7),
+td.cld:nth-of-type(7) {
+    color: blue;
+}
+
+.cld.arrow {
+    font-size: 24px;
+}
+
+.cldContent {
+    text-align: center;
+}
+
+.cld.title {
+    font-size: 24px;
+}
+
+.cld.thisMonth {
+    font-size: 24px;
+}
+
+.flexCenter {
+    align-items: center;
+    /* display: flex; */
+    display: inline-block;
+    justify-content: center;
+    position: relative;
+}
+
+.positionRef {
+    position: relative;
+}
+
+.title {
+    font-size: 84px;
+}
+
+.holiday {
+    background: rgb(255, 240, 255);
+    /* color: red; */
+}
+
+.today {
+    background: rgba(28, 169, 97, 0.1);
+    text-align: right;
+}
+
+.hasItem {
+    margin: 0;
+    margin-top: 2em;
+    /* text-align: center; */
+    /* vertical-align: text-bottom; */
+}
+
+.plus>a {
+    color: royalblue;
+    font-weight: bold;
+}
+
+.minus>a {
+    color: crimson;
+    font-weight: bold;
+}

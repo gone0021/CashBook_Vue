@@ -1,0 +1,127 @@
+/* ------------------------ */
+/* input Nomal/income */
+/* ------------------------ */
+/* 1v-if(show)を使う場合 */
+#modalNomal {
+    z-index: 2;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+
+    width: 600px;
+    max-width: 600px;
+    height: 480px;
+    background-color: #e6ecf0;
+
+    top: 50%;
+    left: 50%;
+    margin-left: -300px;
+    margin-top: -240px;
+
+    padding: 30px 10px;
+    border-radius: 10px;
+    text-align: center;
+
+    /* vue-js-modalを使う場合 */
+    /* .nomalModal {
+    background-color: #e6ecf0;
+    padding-top: 40px;
+    border-radius: 10px; */
+}
+
+.nomalModalInner {
+    display: flex;
+    justify-content: center;
+}
+
+#modalNomal select {
+    width: 180px;
+}
+
+/* 資産・損益共通 */
+div.inpNa,
+div.inpNp {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+div.inpNaCategory,
+div.inpNpCategory {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+div.inpNaKubun,
+div.inpNpKubun {
+    display: inline-block;
+}
+
+div.inpNaCategory select,
+div.inpNpCategory select,
+div.inpNaKubun select,
+div.inpNpKubun select {
+    display: inline-block;
+}
+
+/* 資産の文字設定 */
+div.inpNaCategory {
+    font-weight: bold;
+    font-size: medium;
+}
+
+/* 日付 */
+div.inpNmlDate {
+    text-align: center;
+}
+
+div.inpNmlinputDate {
+    display: inline-block;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* 金額入力欄 */
+div.inpNmlPrice {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+div.inpNmlinputPrice {
+    display: inline-block;
+    text-align: center;
+}
+
+/* コメント＋submitボタン 外枠 */
+div.inpNmlLast {
+    display: inline-block;
+    justify-content: center;
+    text-align: center;
+}
+
+/* コメント＋submitボタン 内枠 */
+div.inpNmlCommentSubmit {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+/* コメントラベル */
+label.inpNmlCommentLabel {
+    display: flex;
+    align-items: flex-start;
+    margin: 24px 5px 0 0;
+}
+
+/* コメント */
+div.inpNmlComment {
+    display: inline-block;
+}
+
+/* submitボタン */
+div.inpNmlSubmit {
+    display: flex;
+    align-items: flex-end;
+    margin: 0 0 10px 10px;
+}

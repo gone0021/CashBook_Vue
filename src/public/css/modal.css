@@ -1,0 +1,13 @@
+/* ------------------------ */
+/* modal back */
+/* ------------------------ */
+.glayLayer {
+    z-index: 1;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background: #636B6F;
+    opacity: 0.35;
+}

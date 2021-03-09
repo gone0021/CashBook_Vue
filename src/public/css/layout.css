@@ -1,0 +1,26 @@
+/* layout */
+.top {
+    display: inline-block;
+}
+
+form.yearMonth {
+    display: inline-block;
+}
+
+.yearMonth select {
+    display: inline-block;
+}
+
+.yearMonth select#year {
+    width: 100px;
+    margin-right: 10px;
+}
+
+.yearMonth select#month {
+    width: 65px;
+    margin: 0 10px;
+}
+
+.totalPrice{
+    font-size: large;
+}

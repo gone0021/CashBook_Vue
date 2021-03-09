@@ -1,0 +1,183 @@
+/* ------------------------ */
+/* input account */
+/* ------------------------ */
+#modalAccount {
+    z-index: 2;
+    overflow-y: scroll;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+
+    width: 720px;
+    max-width: 720px;
+    height: 480px;
+    background-color: #e6ecf0;
+
+    top: 50%;
+    left: 50%;
+    margin-left: -360px;
+    margin-top: -240px;
+
+    padding: 30px 10px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+/* 日付 */
+div.inpAccountDate {
+    display: inline-block;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* selcetのサイズ */
+#modalAccount select {
+    width: 180px;
+}
+
+/* 日付 */
+.inpAccountinputDate {
+    display: inline-block;
+}
+
+/* 追加・削除ボタン */
+.addBtn {
+    display: inline-block;
+}
+
+/* 追加Button */
+p.addDebit {
+    display: inline-block;
+}
+p.addCredit {
+    display: inline-block;
+}
+
+/* テーブルサイズ */
+#inpAccountTabale {
+    width: 680px;
+    margin-bottom: 20px;
+}
+
+th td {
+    width: 170px;
+}
+
+/* 枠線 */
+#inpAccountTabale td {
+    border: 1px solid black;
+}
+
+/* タイトルレイアウト */
+.accountTitle {
+    text-align: center;
+}
+/* totalPrice */
+.totalPrice {
+    text-align: center;
+}
+
+/* 合計金額 */
+.debitTotalPrice
+.creditTotalPrice
+ {
+    margin: 5px 0 5px 20px;
+}
+.debitTotalPriceInput
+.creditTotalPriceInput
+{
+    display: inline-block;
+    width: 200px;
+}
+
+/* 借方レイアウト */
+.addDebit {
+    display: inline;
+}
+
+.inpAd {
+    /* text-align: left; */
+    text-align: center;
+}
+
+.inpAdCategory {
+    margin: 5px 0 0 20px;
+}
+.inpAdCategory select {
+    display: inline-block;
+}
+.inpAdKubun {
+    margin: 5px 0 0 20px;
+}
+.inpAdKubun select {
+    display: inline-block;
+}
+
+.inpAdPrice {
+    margin: 5px 0 5px 20px;
+}
+.inpAdPriceInput {
+    display: inline-block;
+    width: 200px;
+}
+
+/* 貸方レイアウト */
+.inpAc {
+    /* text-align: left; */
+    text-align: center;
+}
+
+.inpAcCategory {
+    margin: 5px 0 0 20px;
+}
+.inpAcCategory select {
+    display: inline-block;
+}
+.inpAcKubun {
+    margin: 5px 0 0 20px;
+}
+.inpAcKubun select {
+    display: inline-block;
+}
+
+.inpAcPrice {
+    margin: 5px 0 5px 20px;
+}
+.inpAcPriceinput {
+    display: inline-block;
+    width: 200px;
+}
+
+/* ------------------------ */
+/* account comment */
+/* ------------------------ */
+
+/* コメント 外枠 */
+div.inpAccountComment {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* コメントラベル */
+div.inpAccountCommentLebel {
+    display: flex;
+    align-items : flex-start;
+    margin: 24px 5px 0 0;
+}
+
+/* テキストエリア */
+div.inpAccountCommentErea {
+    display: inline-block;
+    text-align: center;
+}
+
+/* 送信ボタン */
+div.inpAccountSubmit {
+    margin-bottom: 20px;
+}
+
+div.inpAccountSubmit {
+    margin-bottom: 20px;
+}

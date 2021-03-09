@@ -9,6 +9,10 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
+// use App\Models\User;
+use Illuminate\Http\Request;
+use App\Http\Requests\UserRequest;
+
 class RegisterController extends Controller
 {
     /*
@@ -49,11 +53,7 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
+        // フォームリクエストでバリデーションを記述
     }
 
     /**
@@ -65,9 +65,62 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
+            'user_name' => $data['user_name'],
             'email' => $data['email'],
+            'birthday' => $data['birthday'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+    // 以下より独自メソッド
+
+    /**
+     * 新規登録の確認
+     *
+     * @param UserRequest $req
+     * @return void
+     */
+    public function registerCheck(UserRequest $req)
+    {
+        $val = $req->all();
+        unset($val['_token']);
+        unset($val['password_confirmation']);
+
+        $param = $val;
+        return view('/auth.register_check', $param,);
+    }
+
+    /**
+     * 新規登録の実行
+     *
+     * @param Request $req
+     * @return void
+     */
+    public function registerAdd(Request $req)
+    {
+        $users = new User;
+        $val = $req->all();
+        $val['password'] = Hash::make($val['password']);
+        unset($val['_token']);
+        // dump($val); die;
+
+        $users->fill($val)->save();
+        return redirect('/register_done');
+    }
+
+    /**
+     * 登録完了
+     *
+     * @return void
+     */
+    public function registerDone()
+    {
+        $title = __('Register Completed');
+        $msg = '登録が完了しました';
+        $link =  route('login');
+        $disp = 'Login';
+
+        $param = ['title' => $title, 'msg' => $msg, 'link' => $link, 'disp' => $disp];
+        return view('/done', $param);
     }
 }

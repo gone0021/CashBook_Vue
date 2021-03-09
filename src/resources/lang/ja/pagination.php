@@ -1,11 +1,9 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Pagination Language Lines
-    | ページネーション言語
     |--------------------------------------------------------------------------
     |
     | The following language lines are used by the paginator library to build
@@ -14,7 +12,6 @@ return [
     |
     */
 
-    'previous' => '&laquo; 前へ',
-    'next' => '次へ &raquo;',
-
+    'previous' => '&laquo; 前',
+    'next'     => '次 &raquo;',
 ];

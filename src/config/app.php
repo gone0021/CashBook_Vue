@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'CashBook'),
 
     /*
     |--------------------------------------------------------------------------
@@ -68,7 +68,7 @@ return [
     */
 
     // 'timezone' => 'UTC',
-    'timezone' => 'Asia/Tokyo',
+    'timezone' => 'Asia/Tokyo', //
 
     /*
     |--------------------------------------------------------------------------
@@ -81,7 +81,8 @@ return [
     |
     */
 
-    'locale' => 'ja',
+    // 'locale' => 'en',
+    'locale' => 'ja', //
 
     /*
     |--------------------------------------------------------------------------
@@ -176,6 +177,11 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /**
+         * Utility
+         */
+        App\Providers\CalendarServiceProvider::class,
+
     ],
 
     /*
@@ -226,6 +232,9 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+
+        // add org
+        'Calendar' => App\Facades\Calendar::class,
 
     ],
 

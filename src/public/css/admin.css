@@ -1,0 +1,59 @@
+/* ------------------------ */
+/* 共通 */
+/* ------------------------ */
+form input[type="text"] {
+    width: 200px;
+}
+
+/* ------------------------ */
+/* admin edit */
+/* ------------------------ */
+.crateCategory div {
+    display: inline-block;
+}
+
+.crateCategory select {
+    width: 100px;
+}
+
+div.createSelectCategory {
+    display: none;
+}
+
+.createSelectCategory select {
+    width: 200px;
+}
+
+div.createKubunName {
+    display: none;
+}
+
+/* ------------------------ */
+/* admiin edit */
+/* ------------------------ */
+.editDiv div {
+    display: inline-block;
+}
+
+div .editSelectKubun {
+    display: none;
+}
+
+.editDiv select {
+    width: 100px;
+}
+
+.editSelectCategory select,
+.editSelectKubun select
+{
+    width: 200px;
+}
+
+.editKubunName {
+    display: none;
+}
+
+#editAccountDel {
+    display: none;
+    width: 300px;
+}
