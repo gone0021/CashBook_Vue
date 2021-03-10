@@ -105,6 +105,7 @@ div.inpNmlCommentSubmit {
     display: flex;
     justify-content: center;
     text-align: center;
+    margin-bottom: 20px;
 }
 
 /* コメントラベル */
@@ -122,6 +123,6 @@ div.inpNmlComment {
 /* submitボタン */
 div.inpNmlSubmit {
     display: flex;
-    align-items: flex-end;
+    justify-content: center;
     margin: 0 0 10px 10px;
 }

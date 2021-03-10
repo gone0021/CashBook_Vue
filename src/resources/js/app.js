@@ -21,12 +21,16 @@ window.Vue = require('vue');
 
 // Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('modal-account', require('./components/modalAccount.vue').default);
-Vue.component('modal-nomal', require('./components/modalNomal.vue').default);
-Vue.component('modal-detail-acct', require('./components/modalDetailAcct.vue').default);
-Vue.component('add-account-tr', require('./components/addAccountTr.vue').default);
-Vue.component('m-account-debit', require('./components/mAccountDebit.vue').default);
-Vue.component('m-account-credit', require('./components/mAccountCredit.vue').default);
+Vue.component('modal-acct', require('./components/modalAcct.vue').default);
+Vue.component('modal-nml', require('./components/modalNml.vue').default);
+// Vue.component('modal-detail-acct', require('./components/modalDetailAcct.vue').default);
+// Vue.component('modal-detail-nml', require('./components/modalDetailNml.vue').default);
+Vue.component('add-acct-tr', require('./components/addAcctTr.vue').default);
+Vue.component('m-acct-debit', require('./components/mAcctDebit.vue').default);
+Vue.component('m-acct-credit', require('./components/mAcctCredit.vue').default);
+Vue.component('m-acct-top-new', require('./components/mAcctTopNew.vue').default);
+Vue.component('m-acct-top-dtl', require('./components/mAcctTopDtl.vue').default);
+Vue.component('detail-btn', require('./components/detailBtn.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -79,6 +83,7 @@ const app = new Vue({
             this.modalAccount = false;
             this.modalNomal = false;
             this.modalDetailAcct = false;
+            this.modalDetailNml = false;
         },
         newAccount: function () {
             // console.log('newAccount');
@@ -89,12 +94,10 @@ const app = new Vue({
         },
         newExpense: function () {
             // console.log('newExpense');
-            console.log(this.modalNomal);
             this.glay = true;
             this.modalNomal = true;
             // this.$modal.show('nomal');
             this.nmObj = {
-                post: "./items/store",
                 name: "expence",
                 title: "支出：",
                 dc0: 2,
@@ -103,12 +106,10 @@ const app = new Vue({
         },
         newIncome: function () {
             // console.log('newIncome');
-            console.log(this.modalNomal);
             this.glay = true;
             this.modalNomal = true;
             // this.$modal.show('nomal');
             this.nmObj = {
-                post: "./items/store",
                 name: "income",
                 title: '収入：',
                 dc0: 1,
@@ -117,7 +118,7 @@ const app = new Vue({
         },
         detailAccount: function () {
             this.glay = true;
-            this.modalDetailAcct = true;
+            this.modalAccount = true;
             // this.$modal.show('nomal');
         },
         detailNomal: function () {
@@ -126,8 +127,7 @@ const app = new Vue({
             // this.$modal.show('nomal');
             this.nmObj = {
                 name: "",
-                title: '収入：',
-                post: "./items/update",
+                title: '収支：',
                 dc0: 1,
                 dc1: 2,
             };

@@ -1,6 +1,7 @@
 /* ------------------------ */
 /* modal back */
 /* ------------------------ */
+/* 背景 */
 .glayLayer {
     z-index: 1;
     position: fixed;
@@ -8,6 +9,26 @@
     top: 0;
     height: 100%;
     width: 100%;
-    background: #636B6F;
+    background: #636b6f;
     opacity: 0.35;
+}
+
+/* acct-top */
+div.mAcctTopNew {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+/* submitボタン */
+div.newBtn {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+div.detailBtn {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
 }

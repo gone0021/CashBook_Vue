@@ -189,12 +189,15 @@
 </div>
 
 <div class='glayLayer' v-if="glay" v-on:click="glayLayer"></div>
-<modal-detail-acct v-if="modalAccount" :csrf="{{json_encode(csrf_token())}}" :m-date="date" :m-cate="category">
-</modal-detail-acct>
+<modal-acct v-show="modalAccount" :csrf="{{json_encode(csrf_token())}}" :m-date="date" :m-cate="category"
+    :m-action="'detail'"></modal-acct>
+
+<modal-nml v-show="modalNomal" :csrf="{{json_encode(csrf_token())}}" :m-date="date" :nm-obj="nmObj" :m-cate="category"
+    :m-action="'detail'"></modal-nml>
+{{-- vue-js-modal --}}
 {{-- <modal-nomal :csrf="{{json_encode(csrf_token())}}" :nm-obj="nmObj" :m-cate="category"></modal-nomal> --}}
 
-<modal-nomal v-if="modalNomal" :csrf="{{json_encode(csrf_token())}}" :m-date="date" :nm-obj="nmObj":m-cate="category":m-kubun="kubun"></modal-nomal>
-
+{{-- ここから旧 --}}
 {{-- @component ('components.detail_account')
 @slot('items',$items)
 @endcomponent

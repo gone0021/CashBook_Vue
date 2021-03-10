@@ -11,7 +11,7 @@
     :minHeight="480"
   > -->
   <div id="modalNomal" class="nomalModalInner">
-    <form :action="nmObj.post" method="post">
+    <form action="./items/store" method="post">
       <input type="hidden" name="_token" :value="csrf" />
       <div class="inpNmlDate">
         <label for="inpNmlDate" class="">日付：</label>
@@ -143,39 +143,32 @@
         </div>
       </div>
 
-      <div class="inpNmlLast">
-        <div class="inpNmlCommentSubmit">
-          <label for="inpNmlComment" class="inpNmlCommentLabel"
-            >コメント：</label
-          >
-          <div class="inpNmlComment">
-            <textarea
-              name="comment"
-              id="inpNmlComment"
-              class="form-control"
-              cols="36"
-              rows="5"
-            ></textarea>
-          </div>
-          <div class="inpNmlSubmit">
-            <input
-              type="submit"
-              name="inpNml"
-              id="inpNmlNew"
-              value="new"
-              class="btn btn-info"
-            />
-          </div>
+      <div class="inpNmlCommentSubmit">
+        <label for="inpNmlComment" class="inpNmlCommentLabel">コメント：</label>
+        <div class="inpNmlComment">
+          <textarea
+            name="comment"
+            id="inpNmlComment"
+            class="form-control"
+            cols="36"
+            rows="5"
+          ></textarea>
         </div>
       </div>
+
+      <new-btn v-if="mAction == 'new'" :new-btn-name="'inputNomal'"></new-btn>
+      <detail-btn v-if="mAction == 'detail'"></detail-btn>
     </form>
   </div>
   <!-- </modal> -->
 </template>
 
 <script>
+import DetailBtn from "./detailBtn.vue";
+import NewBtn from "./newBtn.vue";
 export default {
-  props: ["mDate", "nmObj", "mCate", "csrf"],
+  components: { NewBtn, DetailBtn },
+  props: ["mDate", "nmObj", "mCate", "csrf", "mAction"],
   data: function () {
     return {
       cataId: "",
@@ -185,8 +178,12 @@ export default {
     };
   },
   mounted: function () {
-    console.log("modal nomal");
+    // console.log("modal nomal");
     // console.log("date = " + this.mDate);
+    console.log("action : " + this.mAction);
+  },
+  updated: function () {
+    console.log("action : " + this.mAction);
   },
   methods: {
     delNaCateTop: function () {

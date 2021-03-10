@@ -59,42 +59,42 @@
             <!-- default -->
             <tr class="accounTop">
               <td class="inpAd">
-                <m-account-debit
+                <m-acct-debit
                   :add-btn="'debit'"
                   :cnt-deb="0"
                   :m-cate="mCate"
                   @m-chg-deb-cate-top="chgDebCateTop(0)"
-                ></m-account-debit>
+                ></m-acct-debit>
               </td>
 
               <td class="inpAc">
-                <m-account-credit
+                <m-acct-credit
                   :add-btn="'credit'"
                   :cnt-cre="0"
                   :m-cate="mCate"
                   @m-chg-cre-cate-top="chgCreCateTop(0)"
-                ></m-account-credit>
+                ></m-acct-credit>
               </td>
             </tr>
 
             <!-- add -->
             <tr v-for="(val, i) in addTr" :key="`cntTr${i + 1}`">
               <td class="inpAd">
-                <m-account-debit
+                <m-acct-debit
                   :add-btn="val"
                   :cnt-deb="i + 1"
                   :m-cate="mCate"
                   @m-chg-deb-cate-top="chgDebCateTop(i + 1)"
-                ></m-account-debit>
+                ></m-acct-debit>
               </td>
 
               <td class="inpAc">
-                <m-account-credit
+                <m-acct-credit
                   :add-btn="val"
                   :cnt-cre="i + 1"
                   :m-cate="mCate"
                   @m-chg-cre-cate-top="chgCreCateTop(i + 1)"
-                ></m-account-credit>
+                ></m-acct-credit>
               </td>
             </tr>
 
@@ -124,16 +124,11 @@
           </tbody>
         </table>
 
-        <div class="inpAccountSubmit" id="">
-          <input type="hidden" name="submit" value="inputAccount" />
-          <input
-            type="submit"
-            name="inputAccount"
-            id="inpAccountNew"
-            value="new"
-            class="btn btn-info"
-          />
-        </div>
+        <new-btn
+          v-if="mAction == 'new'"
+          :new-btn-name="'inputAccount'"
+        ></new-btn>
+        <detail-btn v-if="mAction == 'detail'"></detail-btn>
       </form>
     </div>
   </div>
@@ -141,11 +136,13 @@
 </template>
 
 <script>
-import mAccountDebit from "./mAccountDebit.vue";
-import mAccountCredit from "./mAccountCredit.vue";
+import mAcctDebit from "./mAcctDebit.vue";
+import mAcctCredit from "./mAcctCredit.vue";
+import NewBtn from "./newBtn.vue";
+import DetailBtn from "./detailBtn.vue";
 export default {
-  components: { mAccountDebit, mAccountCredit },
-  props: ["mDate", "mCate", "csrf"],
+  components: { mAcctDebit, mAcctCredit, NewBtn, DetailBtn },
+  props: ["mDate", "mCate", "csrf", "mAction"],
   data: function () {
     return {
       addTr: [],
@@ -154,9 +151,12 @@ export default {
     };
   },
   mounted: function () {
-    console.log("modal account");
+    // console.log("modal account");
     // console.log("date = " + this.mDate);
-    console.log(this.addtr);
+    console.log("action : " + this.mAction);
+  },
+  beforDestroy: function () {
+    console.log("action : " + this.mAction);
   },
   methods: {
     addDebit: function () {
