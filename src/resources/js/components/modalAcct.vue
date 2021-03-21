@@ -17,7 +17,7 @@
         <input type="hidden" name="_token" :value="csrf" />
 
         <div class="inpAccountDate">
-          <label for="inpAccountDate" class="">日付：</label>
+          <label for="inpAccountDate" class="inpAccountDate">日付：</label>
           <div class="inpAccountinputDate">
             <input
               type="date"
@@ -29,10 +29,10 @@
             />
           </div>
           <div class="addBtn">
-            <div class="addDebit btn" @click="addDebit">借方＋</div>
-            <div class="delDebit btn" @click="delDebit">借方－</div>
-            <div class="addCredit btn" @click="addCredit">貸方＋</div>
-            <div class="delCredit btn" @click="delCredit">貸方－</div>
+            <div class="addDebit btn" @click="addDebit()">借方＋</div>
+            <div class="delDebit btn" @click="delDebit()">借方－</div>
+            <div class="addCredit btn" @click="addCredit()">貸方＋</div>
+            <div class="delCredit btn" @click="delCredit()">貸方－</div>
           </div>
         </div>
 
@@ -124,11 +124,15 @@
           </tbody>
         </table>
 
-        <new-btn
-          v-if="mAction == 'new'"
-          :new-btn-name="'inputAccount'"
-        ></new-btn>
-        <detail-btn v-if="mAction == 'detail'"></detail-btn>
+        <div class="newBtn">
+          <input
+            type="submit"
+            name="inputAccount"
+            id="newBtn"
+            value="new"
+            class="btn btn-info"
+          />
+        </div>
       </form>
     </div>
   </div>
@@ -138,10 +142,8 @@
 <script>
 import mAcctDebit from "./mAcctDebit.vue";
 import mAcctCredit from "./mAcctCredit.vue";
-import NewBtn from "./newBtn.vue";
-import DetailBtn from "./detailBtn.vue";
 export default {
-  components: { mAcctDebit, mAcctCredit, NewBtn, DetailBtn },
+  components: { mAcctDebit, mAcctCredit },
   props: ["mDate", "mCate", "csrf", "mAction"],
   data: function () {
     return {

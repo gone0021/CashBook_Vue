@@ -23,20 +23,26 @@
     text-align: center;
 }
 
-/* 日付 */
-div.inpAccountDate {
-    display: inline-block;
-    text-align: center;
-    margin-bottom: 10px;
-}
-
 /* selcetのサイズ */
 #modalAccount select {
     width: 180px;
 }
 
 /* 日付 */
-.inpAccountinputDate {
+div.inpAccountDate {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+label.inpaccountDate {
+    display: inline-block;
+    text-align: center;
+    margin: 0;
+}
+
+div.inpAccountinputDate {
     display: inline-block;
 }
 

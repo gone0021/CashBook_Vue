@@ -33,7 +33,7 @@ class CalendarController extends Controller
         }
         // 合計金額
         $income_sum = ItemUtil::calcSumIncme($val);
-        $expense_sum = ItemUtil::calcSumExpence($val);
+        $expense_sum = ItemUtil::calcSumExpense($val);
 
         // ------------------------
         // 借方の取得

@@ -57,7 +57,7 @@ class CalendarUtil
             $val['day'] = $day;
 
             $income_sum = ItemUtil::calcSumIncme($val);
-            $expense_sum = ItemUtil::calcSumExpence($val);
+            $expense_sum = ItemUtil::calcSumExpense($val);
             $totalPrice = $income_sum - $expense_sum;
 
             // リンクの作成

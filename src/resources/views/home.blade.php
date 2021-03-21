@@ -56,13 +56,14 @@
     </div>
 
     <div class='glayLayer' v-if="glay" v-on:click="glayLayer"></div>
-    <modal-acct v-show="modalAccount" :csrf="{{json_encode(csrf_token())}}" :m-date="date" :m-cate="category"
-        :m-action="'new'"></modal-acct>
+    <modal-acct v-show="modalAccount" :csrf="{{json_encode(csrf_token())}}" :m-date="date" :ma-val="mnVal"
+        :m-cate="category" :m-action="'new'"></modal-acct>
+
     </modal-nomal>
-    <modal-nml v-show="modalNomal" :csrf="{{json_encode(csrf_token())}}" :m-date="date" :nm-obj="nmObj"
-        :m-cate="category" :m-action="'new'"></modal-nml>
+    <modal-nml v-show="modalNomal" :csrf="{{json_encode(csrf_token())}}" :m-date="date" :mn-val="mnVal"
+        :m-cate-asset="cateAsset" :m-cate-expense="cateExpense" :m-cate-income="cateIncome"></modal-nml>
     {{-- vue-js-modal --}}
-    {{-- <modal-nomal :csrf="{{json_encode(csrf_token())}}" :nm-obj="nmObj" :m-cate="category" :key="nmObj.name">
+    {{-- <modal-nomal :csrf="{{json_encode(csrf_token())}}" :nm-obj="mnVal" :m-cate="category" :key="mnVal.name">
 
     {{-- ここから旧 --}}
     {{-- @include('components.expense_modal') --}}

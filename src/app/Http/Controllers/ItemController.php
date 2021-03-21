@@ -48,7 +48,7 @@ class ItemController extends Controller
 
         // 合計金額の計算
         $income_sum = ItemUtil::calcSumIncme($val);
-        $expense_sum = ItemUtil::calcSumExpence($val);
+        $expense_sum = ItemUtil::calcSumExpense($val);
 
         // ------------------------
         // 借方
@@ -120,7 +120,7 @@ class ItemController extends Controller
             } else {
                 $dbItem->kubun_id = $req->kubun_id[$k];
             }
-
+// dd($req->all());
             if ($req->inputAccount == 'new') {
                 $dbItem->price = $req->price[$k];
                 $dbItem->comment = $req->comment;
@@ -178,7 +178,7 @@ class ItemController extends Controller
                 } else {
                     $dbItem->kubun_id = $val['kubun_id'][$k];
                 }
-                $dbItem->price = $val['price'][$k];
+                $dbItem->price = $val['price'];
                 $dbItem->comment = $val['comment'];
 
                 $dbItem->update();

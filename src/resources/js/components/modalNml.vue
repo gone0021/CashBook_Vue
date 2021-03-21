@@ -13,6 +13,7 @@
   <div id="modalNomal" class="nomalModalInner">
     <form action="./items/store" method="post">
       <input type="hidden" name="_token" :value="csrf" />
+
       <div class="inpNmlDate">
         <label for="inpNmlDate" class="">日付：</label>
         <div class="inpNmlinputDate">
@@ -35,25 +36,24 @@
           type="hidden"
           name="debit_credit[]"
           id="inpNmlDc0"
-          :value="nmObj.dc0"
+          :value="mnVal.dc0"
         />
         <div class="inpNaCategory">
-          <label for="inpNaCategory">{{ nmObj.title }}</label>
+          <label for="inpNaCategory">{{ mnVal.title }}</label>
           <select
             name="category_id[]"
             id="inpNaCategory"
             class="form-control"
             required
-            @change.once="delNaCateTop()"
             @change="getKubunNomal($event, 'asset')"
           >
             <option value="" class="selectFormatNomalAccet" id="opna0">
               選択してください
             </option>
             <option
-              v-for="cateDeb in mCate"
+              v-for="cateDeb in mCateAsset"
               :value="cateDeb.id"
-              :key="'categoryDebit' + nmObj.name + cateDeb.id"
+              :key="'categoryDebit' + mnVal.name + cateDeb.id"
             >
               {{ cateDeb.category_name }}
             </option>
@@ -70,8 +70,8 @@
           >
             <option
               v-for="(ask, i) in asKubun"
-              :value="ask.category_id"
-              :key="'asset-kubun' + nmObj.name + i"
+              :value="ask.id"
+              :key="'asset-kubun' + mnVal.name + i"
             >
               {{ ask.kubun_name }}
             </option>
@@ -85,7 +85,7 @@
           type="hidden"
           name="debit_credit[]"
           id="inpNmlDc"
-          :value="nmObj.dc1"
+          :value="mnVal.dc1"
         />
         <div class="inpNpCategory">
           <label for="inpNpCategory">内容：</label>
@@ -94,19 +94,30 @@
             id="inpNpCategory"
             class="form-control"
             required
-            @change.once="delNpCateTop()"
             @change="getKubunNomal($event, 'pl')"
           >
             <option value="" class="selectFormatNomalPl" id="opnp0">
               選択してください
             </option>
-            <option
-              v-for="catePl in mCate"
-              :value="catePl.id"
-              :key="'categoryCredit' + nmObj.name + catePl.id"
-            >
-              {{ catePl.category_name }}
-            </option>
+
+            <template v-if="mnVal.name == 'income'">
+              <option
+                v-for="catePl in mCateIncome"
+                :value="catePl.id"
+                :key="'categoryCredit' + mnVal.name + catePl.id"
+              >
+                {{ catePl.category_name }}
+              </option>
+            </template>
+            <template v-if="mnVal.name == 'expense'">
+              <option
+                v-for="catePl in mCateExpense"
+                :value="catePl.id"
+                :key="'categoryCredit' + mnVal.name + catePl.id"
+              >
+                {{ catePl.category_name }}
+              </option>
+            </template>
           </select>
         </div>
 
@@ -120,8 +131,8 @@
           >
             <option
               v-for="(plk, i) in plKubun"
-              :value="plk.category_id"
-              :key="'pl-kubun' + nmObj.name + i"
+              :value="plk.id"
+              :key="'pl-kubun' + mnVal.name + i"
             >
               {{ plk.kubun_name }}
             </option>
@@ -156,34 +167,47 @@
         </div>
       </div>
 
-      <new-btn v-if="mAction == 'new'" :new-btn-name="'inputNomal'"></new-btn>
-      <detail-btn v-if="mAction == 'detail'"></detail-btn>
+      <div class="newBtn">
+        <input
+          type="submit"
+          name="inputNomal"
+          id="newBtn"
+          value="new"
+          class="btn btn-info"
+        />
+      </div>
     </form>
   </div>
   <!-- </modal> -->
 </template>
 
 <script>
-import DetailBtn from "./detailBtn.vue";
-import NewBtn from "./newBtn.vue";
 export default {
-  components: { NewBtn, DetailBtn },
-  props: ["mDate", "nmObj", "mCate", "csrf", "mAction"],
+  props: [
+    "mDate",
+    "mnVal",
+    "csrf",
+    "mCateAsset",
+    "mCateExpense",
+    "mCateIncome",
+  ],
   data: function () {
     return {
       cataId: "",
       mKubun: "",
       asKubun: "",
       plKubun: "",
+
+      // 置き換え用
+      rep: {},
     };
   },
   mounted: function () {
-    // console.log("modal nomal");
+    console.log("mount modal nomal");
     // console.log("date = " + this.mDate);
-    console.log("action : " + this.mAction);
   },
   updated: function () {
-    console.log("action : " + this.mAction);
+    console.log("update modal nomal");
   },
   methods: {
     delNaCateTop: function () {

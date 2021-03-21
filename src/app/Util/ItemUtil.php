@@ -54,7 +54,7 @@ class ItemUtil
      *
      * @return int
      */
-    public static function calcSumExpence($val)
+    public static function calcSumExpense($val)
     {
         // 借方
         $val['debit_credit'] = 1;
