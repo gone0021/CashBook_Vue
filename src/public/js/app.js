@@ -2157,12 +2157,13 @@ __webpack_require__.r(__webpack_exports__);
 
     };
   },
-  updated: function updated() {
+  created: function created() {
     if (this.addBtn == "debit") {
       console.log("add : " + this.addBtn);
       console.log("props : " + this.cntDeb);
     }
   },
+  updated: function updated() {},
   methods: {
     mChgDebCateTop: function mChgDebCateTop(i) {
       //   console.log("mdeb:i = " + i);
@@ -2192,6 +2193,306 @@ __webpack_require__.r(__webpack_exports__);
         this.mDebkubun = res.data;
         console.log("args i : " + i);
         console.log(this.mDebkubun); // console.log(title);
+      }.bind(this))["catch"](function (e) {
+        console.error(e);
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/mdaCredit.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/mdaCredit.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  inheritAttrs: false,
+  props: ["addName", "cntCre", "mCate", "mRoot", "mItems", "mDis"],
+  data: function data() {
+    return {
+      // --- this ---
+      keepKubun: [],
+      creKubun: [],
+      // --- form ---
+      // value：v-modelで入力の度に値が変わるため変数に代入
+      cateId: this.mItems.category_id,
+      kubunId: this.mItems.kubun_id //
+
+    };
+  },
+  created: function created() {
+    var _this = this;
+
+    console.log("--- created modal detail account credit ---");
+
+    if (this.addName == "credit") {
+      console.log("add : " + this.addName);
+      console.log("props : " + this.mKubunId);
+    }
+
+    var cid = this.mItems.category_id;
+    this.getKubunDtlCre(cid).then(function () {
+      _this.creKubun = _this.keepKubun;
+    });
+  },
+  mounted: function mounted() {// console.log("--- mounted modal detail account ---");
+  },
+  updated: function updated() {// console.log("--- updated modal detail account ---");
+  },
+  methods: {
+    chgDtlCreCate: function chgDtlCreCate(ev) {
+      var _this2 = this;
+
+      var args = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+      this.getKubunDtlCre(ev).then(function () {
+        _this2.kubunId = _this2.keepKubun[0].id;
+        _this2.creKubun = _this2.keepKubun;
+      });
+    },
+    // method
+    getKubunDtlCre: function getKubunDtlCre(ev) {
+      var args = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+      var cid = NaN;
+
+      if (typeof ev === "string") {
+        cid = ev;
+      } else {
+        cid = ev.target.value;
+      } // --- ajax get ---
+
+
+      console.log("parent cid : " + cid);
+      return axios.get("".concat(this.mRoot, "/ajax/kubun_by_category"), {
+        params: {
+          category_id: cid
+        }
+      }).then(function (res) {
+        console.log("--- ajax ---");
+        console.log(res.data);
+        this.keepKubun = res.data;
+      }.bind(this))["catch"](function (e) {
+        console.error(e);
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/mdaDebit.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/mdaDebit.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  inheritAttrs: false,
+  props: ["addName", "cntDeb", "mCate", "mRoot", "mItems", "mDis"],
+  data: function data() {
+    return {
+      // --- this ---
+      keepKubun: [],
+      debKubun: [],
+      // --- form ---
+      // value：v-modelで入力の度に値が変わるため変数に代入
+      cateId: this.mItems.category_id,
+      kubunId: this.mItems.kubun_id //
+
+    };
+  },
+  // watcherの書き方：メモ残し
+  //   watch: {
+  //     mKubunId: {
+  //       // 外からプロパティの中身が変更になったら実行される
+  //       immediate: true,
+  //       handler(val) {
+  //         this.kubunId = val;
+  //       },
+  //     },
+  //   },
+  created: function created() {
+    var _this = this;
+
+    console.log("--- created modal detail account debit ---");
+
+    if (this.addName == "debit") {
+      console.log("add : " + this.addName);
+      console.log("props : " + this.mKubunId);
+    }
+
+    var cid = this.mItems.category_id;
+    this.getKubunDtlDeb(cid).then(function () {
+      _this.debKubun = _this.keepKubun;
+    });
+  },
+  mounted: function mounted() {// console.log("--- mounted modal detail account ---");
+  },
+  updated: function updated() {// console.log("--- updated modal detail account ---");
+  },
+  methods: {
+    chgDtlDebCate: function chgDtlDebCate(ev) {
+      var _this2 = this;
+
+      var args = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+      this.getKubunDtlDeb(ev).then(function () {
+        _this2.kubunId = _this2.keepKubun[0].id;
+        _this2.debKubun = _this2.keepKubun;
+      });
+    },
+    // method
+    getKubunDtlDeb: function getKubunDtlDeb(ev) {
+      var args = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+      var cid = NaN;
+
+      if (typeof ev === "string") {
+        cid = ev;
+      } else {
+        cid = ev.target.value;
+      } // --- ajax get ---
+
+
+      console.log("parent cid : " + cid);
+      return axios.get("".concat(this.mRoot, "/ajax/kubun_by_category"), {
+        params: {
+          category_id: cid
+        }
+      }).then(function (res) {
+        // console.log("--- ajax ---");
+        // console.log(res.data);
+        this.keepKubun = res.data;
       }.bind(this))["catch"](function (e) {
         console.error(e);
       });
@@ -2363,17 +2664,14 @@ __webpack_require__.r(__webpack_exports__);
   props: ["mDate", "mCate", "csrf", "mAction"],
   data: function data() {
     return {
-      addTr: [],
-      debKubun: [],
-      creKubun: []
+      addTr: [] //   debKubun: [],
+      //   creKubun: [],
+
     };
   },
   mounted: function mounted() {
-    // console.log("modal account");
+    // console.log("--- mouted modal account ---");
     // console.log("date = " + this.mDate);
-    console.log("action : " + this.mAction);
-  },
-  beforDestroy: function beforDestroy() {
     console.log("action : " + this.mAction);
   },
   methods: {
@@ -2416,41 +2714,7 @@ __webpack_require__.r(__webpack_exports__);
       var bCategory = document.querySelector("#inpAcCategory".concat(i));
       var child = document.querySelector("#opCateCredit".concat(i));
       bCategory.removeChild(child);
-    } // parentで処理してchildへ値を渡す場合：値が渡せなかっため保留
-    // getKubunAcct: function (cid, i, args) {
-    //   //   let cid = ev.target.value;
-    //   //   console.log("id = " + cid);
-    //   console.log("args = " + args);
-    //   //   this.$emit("m-get-kubun", cid);
-    //   Number(i);
-    //   axios
-    //     .get("./ajax/kubun_by_category", {
-    //       params: {
-    //         category_id: cid,
-    //       },
-    //     })
-    //     .then(
-    //       function (res) {
-    //         console.log("getkubun-acct-parent");
-    //         // console.log(res.data);
-    //         // this.mKubun = res.data;
-    //         if (args == "debit") {
-    //           this.debKubun[i] = res.data;
-    //           console.log("debit : " + i);
-    //           console.log(this.debKubun[i]);
-    //         } else {
-    //           this.creKubun[i] = res.data;
-    //           console.log("credit : " + i);
-    //           console.log(this.creKubun[i]);
-    //         }
-    //         // console.log(title);
-    //       }.bind(this)
-    //     )
-    //     .catch(function (e) {
-    //       console.error(e);
-    //     });
-    // },
-
+    }
   }
 });
 
@@ -2465,6 +2729,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _mdaDebit_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./mdaDebit.vue */ "./resources/js/components/mdaDebit.vue");
 //
 //
 //
@@ -2622,68 +2887,83 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    mdaDebit: _mdaDebit_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  props: ["csrf", "mdaCate", "mdaItems"],
+  data: function data() {
+    return {
+      // this
+      cntTr: [],
+      // --- form ---
+      // 属性の操作
+      dis: true,
+      // textareaはv-model
+      mComment: this.mdaItems[0].comment,
+      // --- ajax ---
+      // urlの取得・保存
+      root: "",
+      // 取得した値の一時保存
+      keepKubun: [],
+      // --- child ---
+      debKubun: [],
+      creKubun: [],
+      //   debCateId: {},
+      debKubunId: [],
+      creKubunId: [],
+      debItems: [],
+      creItems: [],
+      //   --- その他 ---
+      // addの配列：forで回す用
+      addType: [] // 代入
+
+    };
+  },
   created: function created() {
-    console.log("--- created modal detail account ---");
+    console.log("--- created modal detail account ---"); // urlの取得
+
+    var url = location.href;
+    var indexItem = url.indexOf("/item");
+    this.root = url.substr(0, indexItem); // itmesの数をカウント
+    // console.log("items legth");
+
+    var items = this.mdaItems; // console.log(items.length);
+    // --- childの初期値 ---
+    // items
+
+    var dItems = [];
+    var citems = [];
+
+    for (var i = 0; i < items.length; i++) {
+      if (items[i].debit_credit === "1") {
+        this.cntTr.push("debit");
+        dItems[i] = items[i];
+      } else {
+        this.cntTr.push("credit");
+        citems[i] = items[i];
+      }
+    } // 最初の2つ（deb,cre）は不要のため削除
+
+
+    this.cntTr.shift();
+    this.cntTr.shift();
+    this.debItems = dItems.filter(Boolean);
+    this.creItems = citems.filter(function (v) {
+      return v;
+    }); // form属性：値を取得してからdisabledを設定
+
+    this.dis = true;
   },
   mounted: function mounted() {
     console.log("--- mounted modal detail account ---");
+  },
+  methods: {
+    dtlEdit: function dtlEdit() {
+      // disabled
+      this.dis = false;
+    }
   }
 });
 
@@ -2926,23 +3206,38 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   // keep：categoryのaccount_rypeに使用：CashBookのitem.jsを参照
   // 処理が終わったらコメントを削除すること
   props: [// csrf
   "csrf", // category
-  "mCateAsset", "mCateExpense", "mCateIncome", // items
+  "mdnCateAsset", "mdnCateExpense", "mdnCateIncome", // items
   "mdnAsItems", "mdnPlItems"],
   data: function data() {
     return {
       // --- form ---
       // 属性の操作
       dis: true,
-      // value：kubunはcreatedとchangeで値が変わる
+      // value：v-modelで入力の度に値が変わるため変数に代入
       asCateId: this.mdnAsItems.category_id,
-      asKubunId: [],
+      asKubunId: this.mdnAsItems.kubun_id,
       plCateId: this.mdnPlItems.category_id,
-      plKubunId: [],
+      plKubunId: this.mdnPlItems.kubun_id,
+      mPrice: this.mdnAsItems.price,
+      mComment: this.mdnAsItems.comment,
       // --- ajax ---
       // urlの取得・保存
       root: "",
@@ -2962,18 +3257,15 @@ __webpack_require__.r(__webpack_exports__);
     console.log("mdn-plItems ::: ");
     console.log(this.mdnPlItems);
     console.log("mdn-cate-set ::: ");
-    console.log(this.mCateAsset);
-    console.log(this.mCateExpense);
-    console.log(this.mCateIncome); // urlの取得
+    console.log(this.mdnCateAsset);
+    console.log(this.mdnCateExpense);
+    console.log(this.mdnCateIncome); // urlの取得
 
     var url = location.href;
     var indexItem = url.indexOf("/item");
-    this.root = url.substr(0, indexItem); // form属性
+    this.root = url.substr(0, indexItem); // form属性：値を取得してからdisabledを設定
 
-    this.dis = true; // 値の振替
-
-    this.asKubunId = this.mdnAsItems.kubun_id;
-    this.plKubunId = this.mdnPlItems.kubun_id;
+    this.dis = true;
   },
   mounted: function mounted() {
     console.log("--- mounted modal detail nomal ---");
@@ -2993,13 +3285,9 @@ __webpack_require__.r(__webpack_exports__);
       this.getKubunDtlNml(asstCid).then(function () {
         _this.asKubun = _this.keepKubun;
       });
-      console.log("--- as kubun ---");
-      console.log(this.asKubun);
       this.getKubunDtlNml(plCid).then(function () {
         _this.plKubun = _this.keepKubun;
       });
-      console.log("--- pl kubun ---");
-      console.log(this.plKubun);
     },
     chgAsCate: function chgAsCate(ev) {
       var _this2 = this;
@@ -3032,18 +3320,13 @@ __webpack_require__.r(__webpack_exports__);
       var kchild = document.querySelector("#opdnpk0");
       chgKubun.removeChild(kchild);
     },
-    getCateDtlNml: function getCateDtlNml(ev) {
-      var args = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-    },
     getKubunDtlNml: function getKubunDtlNml(ev) {
       var args = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-      //   console.log("ev ↓ ");
-      //   console.log(ev);
-      // --- 取得する値をチェック（eventまたはstring）---
+      // 取得する値をチェック（初期値はstringのため）
       var cid = NaN;
 
-      if (typeof ev == "string") {
-        cid = Number(ev);
+      if (typeof ev === "string") {
+        cid = ev;
       } else {
         cid = ev.target.value;
       } // --- ajax get ---
@@ -3269,10 +3552,10 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    console.log("mount modal nomal"); // console.log("date = " + this.mDate);
+    console.log("--- mount modal nomal ---"); // console.log("date = " + this.mDate);
   },
   updated: function updated() {
-    console.log("update modal nomal");
+    console.log("--- update modal nomal ---");
   },
   methods: {
     delNaCateTop: function delNaCateTop() {
@@ -3285,21 +3568,8 @@ __webpack_require__.r(__webpack_exports__);
       var child = document.querySelector("#opnp0");
       bCategory.removeChild(child);
     },
-    // ワンテンポ遅れるためmGetKubunの第2引数で対応
-    // chgCateAsset: function (ev) {
-    //   this.mGetKubun(ev);
-    //   this.asKubun = this.mKubun;
-    //   console.log("kubun = " + this.asKubun);
-    // },
-    // chgCatePl: function (ev) {
-    //   this.mGetKubun(ev);
-    //   this.plKubun = this.mKubun;
-    //   console.log("kubun = " + this.plKubun);
-    // },
     getKubunNomal: function getKubunNomal(ev, args) {
       var cid = ev.target.value;
-      console.log("id = " + cid);
-      this.$emit("m-get-kubun", cid);
       axios.get("./ajax/kubun_by_category", {
         params: {
           category_id: cid
@@ -3307,14 +3577,13 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (res) {
         var data = res.data;
         console.log("getkubun-nomal");
-        console.log(data); // this.mKubun = res.data;
+        console.log(data);
 
         if (args == "asset") {
           this.asKubun = res.data;
         } else {
           this.plKubun = res.data;
-        } // console.log(title);
-
+        }
       }.bind(this))["catch"](function (e) {
         console.error(e);
       });
@@ -40038,6 +40307,334 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/mdaCredit.vue?vue&type=template&id=4d20f608&":
+/*!************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/mdaCredit.vue?vue&type=template&id=4d20f608& ***!
+  \************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("input", {
+      attrs: { type: "hidden", name: "id[]" },
+      domProps: { value: _vm.mItems.id }
+    }),
+    _vm._v(" "),
+    _c("input", {
+      attrs: { type: "hidden", name: "debit_credit[]", id: "", value: "2" }
+    }),
+    _vm._v(" "),
+    _c("div", { staticClass: "inpAcCategory" }, [
+      _c("label", { attrs: { for: "dtlAcCategory" + _vm.cntCre } }, [
+        _vm._v("科目：")
+      ]),
+      _vm._v(" "),
+      _c(
+        "select",
+        {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.cateId,
+              expression: "cateId"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: {
+            name: "category_id[]",
+            id: "dtlAcCategory" + _vm.cntCre,
+            disabled: _vm.mDis,
+            required: ""
+          },
+          on: {
+            change: [
+              function($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function(o) {
+                    return o.selected
+                  })
+                  .map(function(o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.cateId = $event.target.multiple
+                  ? $$selectedVal
+                  : $$selectedVal[0]
+              },
+              function($event) {
+                return _vm.chgDtlCreCate($event, _vm.cntCre)
+              }
+            ]
+          }
+        },
+        _vm._l(_vm.mCate, function(cate) {
+          return _c(
+            "option",
+            { key: "cateCredit" + cate.id, domProps: { value: cate.id } },
+            [_vm._v("\n        " + _vm._s(cate.category_name) + "\n      ")]
+          )
+        }),
+        0
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "inpAcKubun" }, [
+      _c("label", { attrs: { for: "dtlAcKubun" + _vm.cntCre } }, [
+        _vm._v("小科目：")
+      ]),
+      _vm._v(" "),
+      _c(
+        "select",
+        {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.kubunId,
+              expression: "kubunId"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: {
+            name: "kubun_id[]",
+            id: "dtlAcKubun" + _vm.cntCre,
+            disabled: _vm.mDis
+          },
+          on: {
+            change: function($event) {
+              var $$selectedVal = Array.prototype.filter
+                .call($event.target.options, function(o) {
+                  return o.selected
+                })
+                .map(function(o) {
+                  var val = "_value" in o ? o._value : o.value
+                  return val
+                })
+              _vm.kubunId = $event.target.multiple
+                ? $$selectedVal
+                : $$selectedVal[0]
+            }
+          }
+        },
+        _vm._l(_vm.creKubun, function(kubun) {
+          return _c(
+            "option",
+            { key: "ddcKbn" + kubun.id, domProps: { value: kubun.id } },
+            [_vm._v("\n        " + _vm._s(kubun.kubun_name) + "\n      ")]
+          )
+        }),
+        0
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "inpAcPrice" }, [
+      _c("label", { attrs: { for: "inpAcPrice" + _vm.cntCre } }, [
+        _vm._v("金額：")
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "inpAcPriceinput",
+          attrs: { id: "inpAcPriceinput" + _vm.cntCre }
+        },
+        [
+          _c("input", {
+            staticClass: "form-control",
+            attrs: {
+              type: "text",
+              name: "price[]",
+              id: "inpAcPrice" + _vm.cntCre,
+              disabled: _vm.mDis,
+              required: ""
+            },
+            domProps: { value: _vm.mItems.price }
+          })
+        ]
+      )
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/mdaDebit.vue?vue&type=template&id=680f39ad&":
+/*!***********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/mdaDebit.vue?vue&type=template&id=680f39ad& ***!
+  \***********************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("input", {
+      attrs: { type: "hidden", name: "id[]" },
+      domProps: { value: _vm.mItems.id }
+    }),
+    _vm._v(" "),
+    _c("input", {
+      attrs: { type: "hidden", name: "debit_credit[]", id: "", value: "1" }
+    }),
+    _vm._v(" "),
+    _c("div", { staticClass: "inpAdCategory" }, [
+      _c("label", { attrs: { for: "dtlAdCategory" + _vm.cntDeb } }, [
+        _vm._v("科目：")
+      ]),
+      _vm._v(" "),
+      _c(
+        "select",
+        {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.cateId,
+              expression: "cateId"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: {
+            name: "category_id[]",
+            id: "dtlAdCategory" + _vm.cntDeb,
+            disabled: _vm.mDis,
+            required: ""
+          },
+          on: {
+            change: [
+              function($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function(o) {
+                    return o.selected
+                  })
+                  .map(function(o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.cateId = $event.target.multiple
+                  ? $$selectedVal
+                  : $$selectedVal[0]
+              },
+              function($event) {
+                return _vm.chgDtlDebCate($event, _vm.cntDeb)
+              }
+            ]
+          }
+        },
+        _vm._l(_vm.mCate, function(cate) {
+          return _c(
+            "option",
+            { key: "cateDebit" + cate.id, domProps: { value: cate.id } },
+            [_vm._v("\n        " + _vm._s(cate.category_name) + "\n      ")]
+          )
+        }),
+        0
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "inpAdKubun" }, [
+      _c("label", { attrs: { for: "dtlAdKubun" + _vm.cntDeb } }, [
+        _vm._v("小科目：")
+      ]),
+      _vm._v(" "),
+      _c(
+        "select",
+        {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.kubunId,
+              expression: "kubunId"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: {
+            name: "kubun_id[]",
+            id: "dtlAdKubun" + _vm.cntDeb,
+            disabled: _vm.mDis
+          },
+          on: {
+            change: function($event) {
+              var $$selectedVal = Array.prototype.filter
+                .call($event.target.options, function(o) {
+                  return o.selected
+                })
+                .map(function(o) {
+                  var val = "_value" in o ? o._value : o.value
+                  return val
+                })
+              _vm.kubunId = $event.target.multiple
+                ? $$selectedVal
+                : $$selectedVal[0]
+            }
+          }
+        },
+        _vm._l(_vm.debKubun, function(kubun) {
+          return _c(
+            "option",
+            { key: "ddaKbn" + kubun.id, domProps: { value: kubun.id } },
+            [_vm._v("\n        " + _vm._s(kubun.kubun_name) + "\n      ")]
+          )
+        }),
+        0
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "inpAdPrice" }, [
+      _c("label", { attrs: { for: "inpAdPrice" + _vm.cntDeb } }, [
+        _vm._v("金額：")
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "inpAdPriceInput",
+          attrs: { id: "inpAdPriceInput" + _vm.cntDeb }
+        },
+        [
+          _c("input", {
+            staticClass: "form-control",
+            attrs: {
+              type: "text",
+              name: "price[]",
+              id: "inpAdPrice" + _vm.cntDeb,
+              disabled: _vm.mDis,
+              required: ""
+            },
+            domProps: { value: _vm.mItems.price }
+          })
+        ]
+      )
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/modalAcct.vue?vue&type=template&id=a6b79ab6&":
 /*!************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/modalAcct.vue?vue&type=template&id=a6b79ab6& ***!
@@ -40145,7 +40742,7 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _c("table", { attrs: { id: "inpAccountTabale" } }, [
+          _c("table", { staticClass: "accountTabale" }, [
             _vm._m(0),
             _vm._v(" "),
             _c(
@@ -40353,255 +40950,229 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c(
-      "div",
-      { staticClass: "ui-widget-content", attrs: { id: "modalAccount" } },
-      [
-        _c("form", { attrs: { action: "./update", method: "POST" } }, [
-          _c("input", {
-            attrs: { type: "hidden", name: "_token" },
-            domProps: { value: _vm.csrf }
-          }),
+  return _c(
+    "div",
+    { staticClass: "ui-widget-content", attrs: { id: "modalAccount" } },
+    [
+      _c("form", { attrs: { action: "./update", method: "POST" } }, [
+        _c("input", {
+          attrs: { type: "hidden", name: "_token" },
+          domProps: { value: _vm.csrf }
+        }),
+        _vm._v(" "),
+        _c("div", { staticClass: "mb-3" }, [
+          _c("span", [_vm._v("book No.")]),
           _vm._v(" "),
+          _c("span", { staticClass: "detailAccountBookNo mr-3" }),
+          _vm._v(" "),
+          _c("label", { attrs: { for: "detailAccountDate" } }, [
+            _vm._v("日付：")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "detailAccountinputDate" }, [
+            _c("input", {
+              staticClass: "form-control",
+              attrs: {
+                type: "date",
+                name: "date",
+                id: "detailAccountDate",
+                disabled: _vm.dis,
+                required: ""
+              },
+              domProps: { value: _vm.mdaItems[0].date }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("table", { staticClass: "accountTabale" }, [
           _vm._m(0),
           _vm._v(" "),
-          _c("table", { attrs: { id: "detailAccountTable" } }, [
-            _c("thead", [
-              _c("tr", [
-                _c("th", { staticClass: "text-center" }, [
-                  _c("span", { staticClass: "debit" }, [
-                    _vm._v(_vm._s(_vm.__("Debit")))
-                  ])
-                ]),
+          _c(
+            "tbody",
+            { staticClass: "detailAccount" },
+            [
+              _vm._m(1),
+              _vm._v(" "),
+              _c("tr", { staticClass: "detailTop" }, [
+                _c(
+                  "td",
+                  { staticClass: "inpAd" },
+                  [
+                    _c("mda-debit", {
+                      attrs: {
+                        "add-name": "debit",
+                        "cnt-deb": 0,
+                        "m-cate": _vm.mdaCate,
+                        "m-items": _vm.debItems[0],
+                        "m-root": _vm.root,
+                        "m-dis": _vm.dis
+                      }
+                    })
+                  ],
+                  1
+                ),
                 _vm._v(" "),
-                _c("th", { staticClass: "text-center" }, [
-                  _c("span", { staticClass: "credit" }, [
-                    _vm._v(_vm._s(_vm.__("Credit")))
+                _c(
+                  "td",
+                  { staticClass: "inpAc" },
+                  [
+                    _c("mda-credit", {
+                      attrs: {
+                        "add-name": "credit",
+                        "cnt-cre": 0,
+                        "m-cate": _vm.mdaCate,
+                        "m-items": _vm.creItems[0],
+                        "m-root": _vm.root,
+                        "m-dis": _vm.dis
+                      }
+                    })
+                  ],
+                  1
+                )
+              ]),
+              _vm._v(" "),
+              _vm._l(_vm.cntTr, function(val, i) {
+                return _c("tr", { key: "cntTr" + (i + 1) }, [
+                  _c(
+                    "td",
+                    { staticClass: "inpAd" },
+                    [
+                      val === "debit"
+                        ? _c("mda-debit", {
+                            attrs: {
+                              "cnt-deb": i + 1,
+                              "m-cate": _vm.mdaCate,
+                              "m-items": _vm.debItems[i + 1],
+                              "m-root": _vm.root,
+                              "m-dis": _vm.dis
+                            }
+                          })
+                        : _vm._e()
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    { staticClass: "inpAc" },
+                    [
+                      val === "credit"
+                        ? _c("mda-credit", {
+                            attrs: {
+                              "cnt-cre": i + 1,
+                              "m-cate": _vm.mdaCate,
+                              "m-items": _vm.creItems[i + 1],
+                              "m-root": _vm.root,
+                              "m-dis": _vm.dis
+                            }
+                          })
+                        : _vm._e()
+                    ],
+                    1
+                  )
+                ])
+              }),
+              _vm._v(" "),
+              _c("tr", { staticClass: "detailEnd" }, [
+                _c("td", { attrs: { colspan: "2", id: "" } }, [
+                  _c("div", { staticClass: "inpAccountComment" }, [
+                    _vm._m(2),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "inpAccountCommentErea my-aout" },
+                      [
+                        _c("textarea", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.mComment,
+                              expression: "mComment"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            name: "comment",
+                            id: "inpAccountComment",
+                            cols: "36",
+                            rows: "3",
+                            disabled: _vm.dis
+                          },
+                          domProps: { value: _vm.mComment },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.mComment = $event.target.value
+                            }
+                          }
+                        })
+                      ]
+                    )
                   ])
                 ])
               ])
-            ]),
-            _vm._v(" "),
-            _vm._m(1)
-          ]),
+            ],
+            2
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "detailAccountBtn col-md-10 mb-3" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-info btnEdit mr-3",
+              attrs: { type: "button", id: "dtlBtnEdit" },
+              on: {
+                click: function($event) {
+                  return _vm.dtlEdit()
+                }
+              }
+            },
+            [_vm._v("\n        edit\n      ")]
+          ),
           _vm._v(" "),
-          _vm._m(2),
+          _c("input", {
+            staticClass: "btn btn-info btnUpdate mr-3",
+            attrs: {
+              type: "submit",
+              name: "submit",
+              value: "update",
+              id: "detailAccountUpdate",
+              disabled: _vm.dis
+            }
+          }),
           _vm._v(" "),
-          _vm._m(3)
+          _c("input", {
+            staticClass: "btn btn-outline-danger btnDel mr-3",
+            attrs: {
+              type: "submit",
+              name: "submit",
+              value: "delete",
+              id: "detailAcountDel"
+            }
+          })
         ])
-      ]
-    )
-  ])
+      ])
+    ]
+  )
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "mb-3" }, [
-      _c("span", [_vm._v("book No.")]),
-      _vm._v(" "),
-      _c("span", { staticClass: "detailAccountBookNo mr-3" }),
-      _vm._v(" "),
-      _c("label", { attrs: { for: "detailAccountDate" } }, [_vm._v("日付：")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "detailAccountinputDate" }, [
-        _c("input", {
-          staticClass: "form-control",
-          attrs: {
-            type: "date",
-            name: "date",
-            id: "detailAccountDate",
-            value: "",
-            disabled: "",
-            required: ""
-          }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tbody", { staticClass: "detailAccount" }, [
-      _c("tr", { staticClass: "totalPrice" }, [
-        _c("td", { staticClass: "detailDebitTotalPrice", attrs: { id: "" } }, [
-          _c("span", [_vm._v("借方合計：")]),
-          _vm._v(" "),
-          _c("span", { attrs: { id: "detailDebitTotalPrice" } })
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { staticClass: "text-center" }, [
+          _c("span", { staticClass: "debit" }, [_vm._v("借方")])
         ]),
         _vm._v(" "),
-        _c("td", { staticClass: "detailCreditTotalPrice", attrs: { id: "" } }, [
-          _c("span", [_vm._v("借方合計：")]),
-          _vm._v(" "),
-          _c("span", { attrs: { id: "detailCreditTotalPrice" } })
+        _c("th", { staticClass: "text-center" }, [
+          _c("span", { staticClass: "credit" }, [_vm._v("貸方")])
         ])
-      ]),
-      _vm._v(" "),
-      _c("tr", { staticClass: "detailTop" }, [
-        _c(
-          "td",
-          {
-            staticClass: "detailAccountDebit",
-            attrs: { id: "detailAccountDebit0" }
-          },
-          [
-            _c("input", {
-              attrs: {
-                type: "hidden",
-                name: "id[]",
-                value: "",
-                id: "detailAccountDebitId0"
-              }
-            }),
-            _vm._v(" "),
-            _c("input", {
-              attrs: {
-                type: "hidden",
-                name: "debit_credit[]",
-                id: "detailAccountDebitDc0",
-                value: "1"
-              }
-            }),
-            _vm._v(" "),
-            _c("div", { staticClass: "detailAccountDebitCategory" }, [
-              _c("label", { attrs: { for: "detailAccountDebitCategory0" } }, [
-                _vm._v("科目：")
-              ]),
-              _vm._v(" "),
-              _c("select", {
-                staticClass: "form-control",
-                attrs: {
-                  name: "category_id[]",
-                  id: "detailAccountDebitCategory0",
-                  disabled: ""
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "detailAccountDebitKubun" }, [
-              _c("label", { attrs: { for: "detailAccountDebitKubun0" } }, [
-                _vm._v("小科目：")
-              ]),
-              _vm._v(" "),
-              _c("select", {
-                staticClass: "form-control",
-                attrs: {
-                  name: "kubun_id[]",
-                  id: "detailAccountDebitKubun0",
-                  disabled: ""
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "detailAccountDebitPrice" }, [
-              _c("label", { attrs: { for: "detailAccountDebitPrice0" } }, [
-                _vm._v("金額：")
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "detailAccountDebitPriceInput" }, [
-                _c("input", {
-                  staticClass: "form-control",
-                  attrs: {
-                    type: "text",
-                    name: "price[]",
-                    id: "detailAccountDebitPrice0",
-                    value: "",
-                    required: "",
-                    disabled: ""
-                  }
-                })
-              ])
-            ])
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "td",
-          {
-            staticClass: "detailAccountCredit",
-            attrs: { id: "detailAccountCredit0" }
-          },
-          [
-            _c("input", {
-              attrs: {
-                type: "hidden",
-                name: "id[]",
-                value: "",
-                id: "detailAccountCreditId0"
-              }
-            }),
-            _vm._v(" "),
-            _c("input", {
-              attrs: {
-                type: "hidden",
-                name: "debit_credit[]",
-                id: "detailAccountCreditDc0",
-                value: "2"
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "detailAccountCreditCategory",
-                attrs: { id: "detailAccountCreditCategory" }
-              },
-              [
-                _c(
-                  "label",
-                  { attrs: { for: "detailAccountCreditCategory0" } },
-                  [_vm._v("科目：")]
-                ),
-                _vm._v(" "),
-                _c("select", {
-                  staticClass: "form-control",
-                  attrs: {
-                    name: "category_id[]",
-                    id: "detailAccountCreditCategory0",
-                    disabled: ""
-                  }
-                })
-              ]
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "detailAccountCreditKubun" }, [
-              _c("label", { attrs: { for: "detailAccountCreditKubun0" } }, [
-                _vm._v("小科目：")
-              ]),
-              _vm._v(" "),
-              _c("select", {
-                staticClass: "form-control",
-                attrs: {
-                  name: "kubun_id[]",
-                  id: "detailAccountCreditKubun0",
-                  disabled: ""
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "detailAccountCreditPrice" }, [
-              _c("label", { attrs: { for: "detailAccountCreditPrice0" } }, [
-                _vm._v("金額：")
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "detailAccountCreditPriceinput" }, [
-                _c("input", {
-                  staticClass: "form-control",
-                  attrs: {
-                    type: "text",
-                    name: "price[]",
-                    id: "detailAccountCreditPrice0",
-                    required: "",
-                    disabled: ""
-                  }
-                })
-              ])
-            ])
-          ]
-        )
       ])
     ])
   },
@@ -40609,80 +41180,33 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "table",
-      { staticClass: "table", attrs: { id: "detailAccountCommentTable" } },
-      [
-        _c("thead"),
+    return _c("tr", { staticClass: "totalPrice" }, [
+      _c("td", { staticClass: "detailDebitTotalPrice", attrs: { id: "" } }, [
+        _c("span", [_vm._v("借方合計：")]),
         _vm._v(" "),
-        _c("tbody", { staticClass: "detailAccountComment" }, [
-          _c("tr", { staticClass: "detailEnd" }, [
-            _c("td", { attrs: { colspan: "2" } }, [
-              _c("div", { staticClass: "detailAccountComment" }, [
-                _c("div", { staticClass: "detailAccountCommentSubmit" }, [
-                  _c(
-                    "label",
-                    {
-                      staticClass: "detailAccountCommentLabel",
-                      attrs: { for: "detailAccountComment" }
-                    },
-                    [_vm._v("コメント：")]
-                  ),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "detailNomalinputComment" }, [
-                    _c("textarea", {
-                      staticClass: "form-control",
-                      attrs: {
-                        name: "comment",
-                        id: "detailAccountComment",
-                        cols: "36",
-                        rows: "3",
-                        disabled: ""
-                      }
-                    })
-                  ])
-                ])
-              ])
-            ])
-          ])
-        ])
-      ]
-    )
+        _c("span", { attrs: { id: "detailDebitTotalPrice" } })
+      ]),
+      _vm._v(" "),
+      _c("td", { staticClass: "detailCreditTotalPrice", attrs: { id: "" } }, [
+        _c("span", [_vm._v("借方合計：")]),
+        _vm._v(" "),
+        _c("span", { attrs: { id: "detailCreditTotalPrice" } })
+      ])
+    ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "detailAccountBtn col-md-10 mb-3" }, [
+    return _c("div", { staticClass: "inpAccountCommentLebel my-aout" }, [
       _c(
-        "button",
+        "label",
         {
-          staticClass: "btn btn-info btnEdit mr-3",
-          attrs: { id: "detailAccountEdit" }
+          staticClass: "inpAccountCommentLabel",
+          attrs: { for: "inpAccountComment" }
         },
-        [_vm._v("\n          Edit\n        ")]
-      ),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "btn btn-info btnUpdate mr-3",
-        attrs: {
-          type: "submit",
-          name: "submit",
-          id: "detailAccountUpdate",
-          value: "update",
-          disabled: ""
-        }
-      }),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "btn btn-outline-danger btnDel mr-3",
-        attrs: {
-          type: "submit",
-          name: "submit",
-          id: "detailAcountDel",
-          value: "delete"
-        }
-      })
+        [_vm._v("コメント：")]
+      )
     ])
   }
 ]
@@ -40796,7 +41320,7 @@ var render = function() {
                   ]
                 }
               },
-              _vm._l(_vm.mCateAsset, function(cate, i) {
+              _vm._l(_vm.mdnCateAsset, function(cate, i) {
                 return _c(
                   "option",
                   { key: "cateAs" + i, domProps: { value: cate.id } },
@@ -40942,7 +41466,7 @@ var render = function() {
               },
               [
                 _vm.mdnPlItems.account_type === "1"
-                  ? _vm._l(_vm.mCateExpense, function(cate, i) {
+                  ? _vm._l(_vm.mdnCateExpense, function(cate, i) {
                       return _c(
                         "option",
                         { key: "cateEx" + i, domProps: { value: cate.id } },
@@ -40958,7 +41482,7 @@ var render = function() {
                   : _vm._e(),
                 _vm._v(" "),
                 _vm.mdnPlItems.account_type === "2"
-                  ? _vm._l(_vm.mCateIncome, function(cate, i) {
+                  ? _vm._l(_vm.mdnCateIncome, function(cate, i) {
                       return _c(
                         "option",
                         { key: "cateIn" + i, domProps: { value: cate.id } },
@@ -40974,7 +41498,7 @@ var render = function() {
                   : _vm._e(),
                 _vm._v(" "),
                 _vm.mdnPlItems.account_type === "0"
-                  ? _vm._l(_vm.mCateAsset, function(cate, i) {
+                  ? _vm._l(_vm.mdnCateAsset, function(cate, i) {
                       return _c(
                         "option",
                         { key: "cateAs2" + i, domProps: { value: cate.id } },
@@ -41070,15 +41594,61 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "inpNmlinputPrice" }, [
             _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.mPrice,
+                  expression: "mPrice"
+                }
+              ],
               staticClass: "form-control",
               attrs: {
                 type: "text",
-                name: "price",
+                name: "price[]",
                 id: "inpNmlPrice",
                 disabled: _vm.dis,
                 required: ""
               },
-              domProps: { value: _vm.mdnAsItems.price }
+              domProps: { value: _vm.mPrice },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.mPrice = $event.target.value
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "priceHidden" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.mPrice,
+                  expression: "mPrice"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: {
+                type: "hidden",
+                name: "price[]",
+                id: "inpNmlPrice",
+                disabled: _vm.dis,
+                required: ""
+              },
+              domProps: { value: _vm.mPrice },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.mPrice = $event.target.value
+                }
+              }
             })
           ])
         ]),
@@ -41095,6 +41665,14 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "inpNmlComment" }, [
             _c("textarea", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.mComment,
+                  expression: "mComment"
+                }
+              ],
               staticClass: "form-control",
               attrs: {
                 name: "comment",
@@ -41102,6 +41680,15 @@ var render = function() {
                 cols: "36",
                 rows: "5",
                 disabled: _vm.dis
+              },
+              domProps: { value: _vm.mComment },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.mComment = $event.target.value
+                }
               }
             })
           ])
@@ -41114,9 +41701,11 @@ var render = function() {
               staticClass: "btn btn-info btnEdit mr-3",
               attrs: { type: "button", id: "dtlBtnEdit" },
               on: {
-                click: _vm.dtlEdit,
+                click: function($event) {
+                  return _vm.dtlEdit()
+                },
                 "~click": function($event) {
-                  return _vm.delKateTop($event)
+                  return _vm.delKateTop()
                 }
               }
             },
@@ -53669,6 +54258,8 @@ Vue.component('m-acct-debit', __webpack_require__(/*! ./components/mAcctDebit.vu
 Vue.component('m-acct-credit', __webpack_require__(/*! ./components/mAcctCredit.vue */ "./resources/js/components/mAcctCredit.vue")["default"]);
 Vue.component('modal-dtl-nml', __webpack_require__(/*! ./components/modalDtlNml.vue */ "./resources/js/components/modalDtlNml.vue")["default"]);
 Vue.component('modal-dtl-acct', __webpack_require__(/*! ./components/modalDtlAcct.vue */ "./resources/js/components/modalDtlAcct.vue")["default"]);
+Vue.component('mda-debit', __webpack_require__(/*! ./components/mdaDebit.vue */ "./resources/js/components/mdaDebit.vue")["default"]);
+Vue.component('mda-credit', __webpack_require__(/*! ./components/mdaCredit.vue */ "./resources/js/components/mdaCredit.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -53690,26 +54281,26 @@ var app = new Vue({
     // urlの取得・保存
     rootUrl: "",
     // 取得した値の一時保存
-    keepKubun: [],
-    cataAll: [],
+    keepCate: [],
+    keepItems: [],
+    keepKubun: {},
     // --- child ---
+    // all共通
+    propCate: {},
     // home : 共通
     date: "",
     // home : nomal
     cateAsset: {},
     cateIncome: {},
     cateExpense: {},
-    maVal: {},
     mnVal: {},
     // home : account
-    category: {},
-    kubun: {},
     // items/index : nomal
-    itemsAll: [],
     asItems: {},
     plItems: {},
-    dnType: "" // items/index : account
-
+    dnType: "",
+    // items/index : account
+    daItems: {}
   },
   created: function created() {
     var _this = this;
@@ -53746,18 +54337,18 @@ var app = new Vue({
     console.log("-- get category --"); // modal - home : account
 
     this.getCategory().then(function () {
-      _this.category = _this.cataAll;
+      _this.propCate = _this.keepCate;
     }); // items/index : nomal
     // modal - home $ items : nomal
 
     this.getCateDetail(0).then(function () {
-      _this.cateAsset = _this.cataAll; // console.log(this.cataAll);
+      _this.cateAsset = _this.keepCate; // console.log(this.keepCate);
     });
     this.getCateDetail(1).then(function () {
-      _this.cateExpense = _this.cataAll; // console.log(this.cataAll);
+      _this.cateExpense = _this.keepCate; // console.log(this.keepCate);
     });
     this.getCateDetail(2).then(function () {
-      _this.cateIncome = _this.cataAll; // console.log(this.cataAll);
+      _this.cateIncome = _this.keepCate; // console.log(this.keepCate);
     });
   },
   mounted: function mounted() {
@@ -53780,10 +54371,6 @@ var app = new Vue({
       console.log();
       this.glay = true;
       this.modalAccount = true; // this.$modal.show('accout');
-
-      this.maVal = {
-        dis: false
-      };
     },
     newExpense: function newExpense() {
       // console.log('newExpense');
@@ -53811,43 +54398,41 @@ var app = new Vue({
     },
     // --- ここからitems/index ---
     detailAccount: function detailAccount(bookNo) {
-      this.glay = true;
-      this.modalDtlAcct = true;
+      var _this2 = this;
+
+      this.getItems(bookNo).then(function () {
+        // getKubunの値を資産・損益に区別して保存
+        _this2.daItems = _this2.keepItems; // 値を代入してからモーダルを表示
+
+        _this2.glay = true;
+        _this2.modalDtlAcct = true;
+      });
     },
     detailNomal: function () {
       var _detailNomal = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(bookNo) {
-        var _this2 = this;
+        var _this3 = this;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 console.log("--- click detsil nomal ---");
-                this.bookNo = bookNo; // console.log("book no : " + bookNo);
-
+                this.bookNo = bookNo;
                 this.getItems(bookNo).then(function () {
                   // getKubunの値を資産・損益に区別して保存
-                  var keepAll = _this2.itemsAll; // console.log("items-all ::: ");
-                  // console.log(this.itemsAll);
-                  // childへ渡す値の振り分け
+                  var keepAll = _this3.keepItems; // childへ渡す値の振り分け
 
                   if (keepAll[0].account_type === "0") {
-                    _this2.asItems = keepAll[0];
-                    _this2.plItems = keepAll[1];
+                    _this3.asItems = keepAll[0];
+                    _this3.plItems = keepAll[1];
                   } else {
-                    _this2.plItems = keepAll[0];
-                    _this2.asItems = keepAll[1];
-                  } // console.log("itemsAll ::: ");
-                  // console.log(keepAll);
-                  // console.log("asItems ::: ");
-                  // console.log(this.asItems);
-                  // console.log("plItems ::: ");
-                  // console.log(this.plItems);
-                  // 値を代入してからモーダルを表示
+                    _this3.plItems = keepAll[0];
+                    _this3.asItems = keepAll[1];
+                  } // 値を代入してからモーダルを表示
 
 
-                  _this2.glay = true;
-                  _this2.modalDtlNml = true;
+                  _this3.glay = true;
+                  _this3.modalDtlNml = true;
                 });
 
               case 3:
@@ -53864,27 +54449,23 @@ var app = new Vue({
 
       return detailNomal;
     }(),
+    // --- method ---
     getItems: function getItems(bookNo) {
       return axios.get("../items/show/a", {
         params: {
           book_no: bookNo
         }
       }).then(function (res) {
-        console.log("get items all ::: "); // ここまでok
-
-        console.log(res.data);
-        this.itemsAll = res.data;
+        this.keepItems = res.data;
       }.bind(this))["catch"](function (e) {
         console.error(e);
       });
     },
-    // --- method ---
     getCategory: function getCategory() {
       var root = this.rootUrl;
       return axios.get("".concat(root, "/ajax/category")).then(function (res) {
         // 取得完了したらlistリストに代入
-        this.cataAll = res.data; // console.log("get category detail ::: ");
-        // console.log(res.data);
+        this.keepCate = res.data;
       }.bind(this))["catch"](function (e) {
         console.error(e);
       });
@@ -53896,9 +54477,7 @@ var app = new Vue({
           account_type: type
         }
       }).then(function (res) {
-        // console.log("get items detail ::: ");
-        // console.log(res.data);
-        this.cataAll = res.data;
+        this.keepCate = res.data;
       }.bind(this))["catch"](function (e) {
         console.error(e);
       });
@@ -54155,6 +54734,144 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_mAcctDebit_vue_vue_type_template_id_19581537___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_mAcctDebit_vue_vue_type_template_id_19581537___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/mdaCredit.vue":
+/*!***********************************************!*\
+  !*** ./resources/js/components/mdaCredit.vue ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _mdaCredit_vue_vue_type_template_id_4d20f608___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./mdaCredit.vue?vue&type=template&id=4d20f608& */ "./resources/js/components/mdaCredit.vue?vue&type=template&id=4d20f608&");
+/* harmony import */ var _mdaCredit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./mdaCredit.vue?vue&type=script&lang=js& */ "./resources/js/components/mdaCredit.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _mdaCredit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _mdaCredit_vue_vue_type_template_id_4d20f608___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _mdaCredit_vue_vue_type_template_id_4d20f608___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/mdaCredit.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/mdaCredit.vue?vue&type=script&lang=js&":
+/*!************************************************************************!*\
+  !*** ./resources/js/components/mdaCredit.vue?vue&type=script&lang=js& ***!
+  \************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_mdaCredit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./mdaCredit.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/mdaCredit.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_mdaCredit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/mdaCredit.vue?vue&type=template&id=4d20f608&":
+/*!******************************************************************************!*\
+  !*** ./resources/js/components/mdaCredit.vue?vue&type=template&id=4d20f608& ***!
+  \******************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_mdaCredit_vue_vue_type_template_id_4d20f608___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./mdaCredit.vue?vue&type=template&id=4d20f608& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/mdaCredit.vue?vue&type=template&id=4d20f608&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_mdaCredit_vue_vue_type_template_id_4d20f608___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_mdaCredit_vue_vue_type_template_id_4d20f608___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/mdaDebit.vue":
+/*!**********************************************!*\
+  !*** ./resources/js/components/mdaDebit.vue ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _mdaDebit_vue_vue_type_template_id_680f39ad___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./mdaDebit.vue?vue&type=template&id=680f39ad& */ "./resources/js/components/mdaDebit.vue?vue&type=template&id=680f39ad&");
+/* harmony import */ var _mdaDebit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./mdaDebit.vue?vue&type=script&lang=js& */ "./resources/js/components/mdaDebit.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _mdaDebit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _mdaDebit_vue_vue_type_template_id_680f39ad___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _mdaDebit_vue_vue_type_template_id_680f39ad___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/mdaDebit.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/mdaDebit.vue?vue&type=script&lang=js&":
+/*!***********************************************************************!*\
+  !*** ./resources/js/components/mdaDebit.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_mdaDebit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./mdaDebit.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/mdaDebit.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_mdaDebit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/mdaDebit.vue?vue&type=template&id=680f39ad&":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/mdaDebit.vue?vue&type=template&id=680f39ad& ***!
+  \*****************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_mdaDebit_vue_vue_type_template_id_680f39ad___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./mdaDebit.vue?vue&type=template&id=680f39ad& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/mdaDebit.vue?vue&type=template&id=680f39ad&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_mdaDebit_vue_vue_type_template_id_680f39ad___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_mdaDebit_vue_vue_type_template_id_680f39ad___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

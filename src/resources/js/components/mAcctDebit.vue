@@ -75,12 +75,13 @@ export default {
       //
     };
   },
-  updated: function () {
+  created: function () {
     if (this.addBtn == "debit") {
       console.log("add : " + this.addBtn);
       console.log("props : " + this.cntDeb);
     }
   },
+  updated: function () {},
   methods: {
     mChgDebCateTop: function (i) {
       //   console.log("mdeb:i = " + i);

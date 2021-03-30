@@ -54,7 +54,7 @@
             @change="chgAsCate($event)"
           >
             <option
-              v-for="(cate, i) in mCateAsset"
+              v-for="(cate, i) in mdnCateAsset"
               :value="cate.id"
               :key="'cateAs' + i"
             >
@@ -110,7 +110,7 @@
             <!-- expense -->
             <template v-if="mdnPlItems.account_type === '1'">
               <option
-                v-for="(cate, i) in mCateExpense"
+                v-for="(cate, i) in mdnCateExpense"
                 :value="cate.id"
                 :key="'cateEx' + i"
               >
@@ -121,7 +121,7 @@
             <!-- income -->
             <template v-if="mdnPlItems.account_type === '2'">
               <option
-                v-for="(cate, i) in mCateIncome"
+                v-for="(cate, i) in mdnCateIncome"
                 :value="cate.id"
                 :key="'cateIn' + i"
               >
@@ -132,7 +132,7 @@
             <!-- asset -->
             <template v-if="mdnPlItems.account_type === '0'">
               <option
-                v-for="(cate, i) in mCateAsset"
+                v-for="(cate, i) in mdnCateAsset"
                 :value="cate.id"
                 :key="'cateAs2' + i"
               >
@@ -171,10 +171,22 @@
         <div class="inpNmlinputPrice">
           <input
             type="text"
-            name="price"
+            name="price[]"
             id="inpNmlPrice"
             class="form-control"
-            :value="mdnAsItems.price"
+            v-model="mPrice"
+            :disabled="dis"
+            required
+          />
+        </div>
+
+        <div class="priceHidden">
+          <input
+            type="hidden"
+            name="price[]"
+            id="inpNmlPrice"
+            class="form-control"
+            v-model="mPrice"
             :disabled="dis"
             required
           />
@@ -190,6 +202,7 @@
             class="form-control"
             cols="36"
             rows="5"
+            v-model="mComment"
             :disabled="dis"
           ></textarea>
         </div>
@@ -200,8 +213,8 @@
           type="button"
           id="dtlBtnEdit"
           class="btn btn-info btnEdit mr-3"
-          @click="dtlEdit"
-          @click.once="delKateTop"
+          @click="dtlEdit()"
+          @click.once="delKateTop()"
         >
           edit
         </button>
@@ -234,9 +247,9 @@ export default {
     // csrf
     "csrf",
     // category
-    "mCateAsset",
-    "mCateExpense",
-    "mCateIncome",
+    "mdnCateAsset",
+    "mdnCateExpense",
+    "mdnCateIncome",
     // items
     "mdnAsItems",
     "mdnPlItems",
@@ -246,11 +259,13 @@ export default {
       // --- form ---
       // 属性の操作
       dis: true,
-      // value：kubunはcreatedとchangeで値が変わる
+      // value：v-modelで入力の度に値が変わるため変数に代入
       asCateId: this.mdnAsItems.category_id,
-      asKubunId: [],
-      plCateId:  this.mdnPlItems.category_id,
-      plKubunId: [],
+      asKubunId: this.mdnAsItems.kubun_id,
+      plCateId: this.mdnPlItems.category_id,
+      plKubunId: this.mdnPlItems.kubun_id,
+      mPrice: this.mdnAsItems.price,
+      mComment:this.mdnAsItems.comment,
 
       // --- ajax ---
       // urlの取得・保存
@@ -272,23 +287,18 @@ export default {
     console.log("mdn-plItems ::: ");
     console.log(this.mdnPlItems);
 
-
     console.log("mdn-cate-set ::: ");
-    console.log(this.mCateAsset);
-    console.log(this.mCateExpense);
-    console.log(this.mCateIncome);
+    console.log(this.mdnCateAsset);
+    console.log(this.mdnCateExpense);
+    console.log(this.mdnCateIncome);
 
-// urlの取得
+    // urlの取得
     let url = location.href;
     let indexItem = url.indexOf("/item");
     this.root = url.substr(0, indexItem);
 
-    // form属性
+    // form属性：値を取得してからdisabledを設定
     this.dis = true;
-
-    // 値の振替
-    this.asKubunId = this.mdnAsItems.kubun_id;
-    this.plKubunId = this.mdnPlItems.kubun_id;
   },
 
   mounted: function () {
@@ -310,13 +320,9 @@ export default {
       this.getKubunDtlNml(asstCid).then(() => {
         this.asKubun = this.keepKubun;
       });
-      console.log("--- as kubun ---");
-      console.log(this.asKubun);
       this.getKubunDtlNml(plCid).then(() => {
         this.plKubun = this.keepKubun;
       });
-      console.log("--- pl kubun ---");
-      console.log(this.plKubun);
     },
     chgAsCate: function (ev) {
       this.getKubunDtlNml(ev).then(() => {
@@ -347,14 +353,11 @@ export default {
       chgKubun.removeChild(kchild);
     },
 
-    getCateDtlNml: function (ev, args = null) {},
     getKubunDtlNml: function (ev, args = null) {
-      //   console.log("ev ↓ ");
-      //   console.log(ev);
-      // --- 取得する値をチェック（eventまたはstring）---
+      // 取得する値をチェック（初期値はstringのため）
       let cid = NaN;
-      if (typeof ev == "string") {
-        cid = Number(ev);
+      if (typeof ev === "string") {
+        cid = ev;
       } else {
         cid = ev.target.value;
       }

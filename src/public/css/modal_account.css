@@ -60,7 +60,7 @@ p.addCredit {
 }
 
 /* テーブルサイズ */
-#inpAccountTabale {
+.accountTabale {
     width: 680px;
     margin-bottom: 20px;
 }
@@ -70,7 +70,7 @@ th td {
 }
 
 /* 枠線 */
-#inpAccountTabale td {
+.accountTabale td {
     border: 1px solid black;
 }
 

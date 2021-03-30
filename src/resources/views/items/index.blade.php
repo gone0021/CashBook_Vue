@@ -189,10 +189,10 @@
 </div>
 
 <div class='glayLayer' v-if="glay" v-on:click="glayLayer"></div>
-<modal-dtl-acct v-if="modalAccount" :csrf="{{json_encode(csrf_token())}}" :m-date="date" :m-cate="category"></modal-dtl-acct>
+<modal-dtl-acct v-if="modalDtlAcct" :csrf="{{json_encode(csrf_token())}}" :mda-cate="propCate" :mda-items="daItems"></modal-dtl-acct>
 
-<modal-dtl-nml v-if="modalDtlNml" :csrf="{{json_encode(csrf_token())}}" :m-cate-asset="cateAsset"
-    :m-cate-expense="cateExpense" :m-cate-income="cateIncome" :mdn-as-items="asItems" :mdn-pl-items="plItems">
+<modal-dtl-nml v-if="modalDtlNml" :csrf="{{json_encode(csrf_token())}}" :mdn-cate-asset="cateAsset"
+    :mdn-cate-expense="cateExpense" :mdn-cate-income="cateIncome" :mdn-as-items="asItems" :mdn-pl-items="plItems">
 </modal-dtl-nml>
 
 {{-- <modal-nml-dtl v-if="modalNomal" :csrf="{{json_encode(csrf_token())}}" :mn-val="mnVal" :m-cate="category" >

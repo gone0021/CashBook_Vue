@@ -29,6 +29,8 @@ Vue.component('m-acct-credit', require('./components/mAcctCredit.vue').default);
 
 Vue.component('modal-dtl-nml', require('./components/modalDtlNml.vue').default);
 Vue.component('modal-dtl-acct', require('./components/modalDtlAcct.vue').default);
+Vue.component('mda-debit', require('./components/mdaDebit.vue').default);
+Vue.component('mda-credit', require('./components/mdaCredit.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -52,28 +54,29 @@ const app = new Vue({
         // urlの取得・保存
         rootUrl: "",
         // 取得した値の一時保存
-        keepKubun: [],
-        cataAll: [],
+        keepCate: [],
+        keepItems: [],
+        keepKubun: {},
 
         // --- child ---
+        // all共通
+        propCate: {},
+
         // home : 共通
         date: "",
         // home : nomal
         cateAsset: {},
         cateIncome: {},
         cateExpense: {},
-        maVal: {},
         mnVal: {},
         // home : account
-        category: {},
-        kubun: {},
 
         // items/index : nomal
-        itemsAll: [],
         asItems: {},
         plItems: {},
         dnType: "",
         // items/index : account
+        daItems: {},
 
     },
     created: function () {
@@ -110,23 +113,23 @@ const app = new Vue({
         console.log("-- get category --");
         // modal - home : account
         this.getCategory().then(() => {
-            this.category = this.cataAll;
+            this.propCate = this.keepCate;
         });
 
 
         // items/index : nomal
         // modal - home $ items : nomal
         this.getCateDetail(0).then(() => {
-            this.cateAsset = this.cataAll;
-            // console.log(this.cataAll);
+            this.cateAsset = this.keepCate;
+            // console.log(this.keepCate);
         });
         this.getCateDetail(1).then(() => {
-            this.cateExpense = this.cataAll;
-            // console.log(this.cataAll);
+            this.cateExpense = this.keepCate;
+            // console.log(this.keepCate);
         });
         this.getCateDetail(2).then(() => {
-            this.cateIncome = this.cataAll;
-            // console.log(this.cataAll);
+            this.cateIncome = this.keepCate;
+            // console.log(this.keepCate);
         });
 
     },
@@ -153,9 +156,6 @@ const app = new Vue({
             this.glay = true;
             this.modalAccount = true;
             // this.$modal.show('accout');
-            this.maVal = {
-                dis: false,
-            }
         },
         newExpense: function () {
             // console.log('newExpense');
@@ -184,22 +184,24 @@ const app = new Vue({
 
         // --- ここからitems/index ---
         detailAccount: function (bookNo) {
-            this.glay = true;
-            this.modalDtlAcct = true;
+            this.getItems(bookNo).then(() => {
+                // getKubunの値を資産・損益に区別して保存
+                this.daItems = this.keepItems;
+
+                // 値を代入してからモーダルを表示
+                this.glay = true;
+                this.modalDtlAcct = true;
+            });
         },
 
         detailNomal: async function (bookNo) {
             console.log("--- click detsil nomal ---");
 
             this.bookNo = bookNo
-            // console.log("book no : " + bookNo);
 
             this.getItems(bookNo).then(() => {
                 // getKubunの値を資産・損益に区別して保存
-                let keepAll = this.itemsAll;
-
-                // console.log("items-all ::: ");
-                // console.log(this.itemsAll);
+                let keepAll = this.keepItems;
 
                 // childへ渡す値の振り分け
                 if (keepAll[0].account_type === "0") {
@@ -209,42 +211,32 @@ const app = new Vue({
                     this.plItems = keepAll[0];
                     this.asItems = keepAll[1];
                 }
-                // console.log("itemsAll ::: ");
-                // console.log(keepAll);
-                // console.log("asItems ::: ");
-                // console.log(this.asItems);
-                // console.log("plItems ::: ");
-                // console.log(this.plItems);
 
                 // 値を代入してからモーダルを表示
                 this.glay = true;
                 this.modalDtlNml = true;
             });
         },
+
+        // --- method ---
         getItems: function (bookNo) {
             return axios.get("../items/show/a", {
                 params: {
                     book_no: bookNo,
                 },
             }).then(function (res) {
-                console.log("get items all ::: "); // ここまでok
-                console.log(res.data);
-                this.itemsAll = res.data;
+                this.keepItems = res.data;
             }.bind(this)
             ).catch(function (e) {
                 console.error(e);
             });
         },
-
-        // --- method ---
         getCategory: function () {
             let root = this.rootUrl;
             return axios.get(`${root}/ajax/category`
             ).then(function (res) {
                 // 取得完了したらlistリストに代入
-                this.cataAll = res.data;
-                // console.log("get category detail ::: ");
-                // console.log(res.data);
+                this.keepCate = res.data;
             }.bind(this)
             ).catch(function (e) {
                 console.error(e);
@@ -257,9 +249,7 @@ const app = new Vue({
                     account_type: type,
                 },
             }).then(function (res) {
-                // console.log("get items detail ::: ");
-                // console.log(res.data);
-                this.cataAll = res.data;
+                this.keepCate = res.data;
             }.bind(this)
             ).catch(function (e) {
                 console.error(e);
