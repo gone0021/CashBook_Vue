@@ -203,11 +203,11 @@ export default {
     };
   },
   mounted: function () {
-    console.log("mount modal nomal");
+    console.log("--- mount modal nomal ---");
     // console.log("date = " + this.mDate);
   },
   updated: function () {
-    console.log("update modal nomal");
+    console.log("--- update modal nomal ---");
   },
   methods: {
     delNaCateTop: function () {
@@ -220,22 +220,9 @@ export default {
       let child = document.querySelector("#opnp0");
       bCategory.removeChild(child);
     },
-    // ワンテンポ遅れるためmGetKubunの第2引数で対応
-    // chgCateAsset: function (ev) {
-    //   this.mGetKubun(ev);
-    //   this.asKubun = this.mKubun;
-    //   console.log("kubun = " + this.asKubun);
-    // },
-    // chgCatePl: function (ev) {
-    //   this.mGetKubun(ev);
-    //   this.plKubun = this.mKubun;
-    //   console.log("kubun = " + this.plKubun);
-    // },
 
     getKubunNomal: function (ev, args) {
       let cid = ev.target.value;
-      console.log("id = " + cid);
-      this.$emit("m-get-kubun", cid);
       axios
         .get("./ajax/kubun_by_category", {
           params: {
@@ -247,13 +234,11 @@ export default {
             let data = res.data;
             console.log("getkubun-nomal");
             console.log(data);
-            // this.mKubun = res.data;
             if (args == "asset") {
               this.asKubun = res.data;
             } else {
               this.plKubun = res.data;
             }
-            // console.log(title);
           }.bind(this)
         )
         .catch(function (e) {

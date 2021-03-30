@@ -57,7 +57,7 @@
 
     <div class='glayLayer' v-if="glay" v-on:click="glayLayer"></div>
     <modal-acct v-show="modalAccount" :csrf="{{json_encode(csrf_token())}}" :m-date="date" :ma-val="mnVal"
-        :m-cate="category" :m-action="'new'"></modal-acct>
+        :m-cate="propCate" :m-action="'new'"></modal-acct>
 
     </modal-nomal>
     <modal-nml v-show="modalNomal" :csrf="{{json_encode(csrf_token())}}" :m-date="date" :mn-val="mnVal"

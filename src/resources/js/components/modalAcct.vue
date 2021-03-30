@@ -36,7 +36,7 @@
           </div>
         </div>
 
-        <table id="inpAccountTabale">
+        <table class="accountTabale">
           <thead>
             <tr class="accountTitle">
               <th id="tittleDebit">借方</th>
@@ -148,16 +148,13 @@ export default {
   data: function () {
     return {
       addTr: [],
-      debKubun: [],
-      creKubun: [],
+    //   debKubun: [],
+    //   creKubun: [],
     };
   },
   mounted: function () {
-    // console.log("modal account");
+    // console.log("--- mouted modal account ---");
     // console.log("date = " + this.mDate);
-    console.log("action : " + this.mAction);
-  },
-  beforDestroy: function () {
     console.log("action : " + this.mAction);
   },
   methods: {
@@ -198,41 +195,6 @@ export default {
       let child = document.querySelector(`#opCateCredit${i}`);
       bCategory.removeChild(child);
     },
-
-    // parentで処理してchildへ値を渡す場合：値が渡せなかっため保留
-    // getKubunAcct: function (cid, i, args) {
-    //   //   let cid = ev.target.value;
-    //   //   console.log("id = " + cid);
-    //   console.log("args = " + args);
-    //   //   this.$emit("m-get-kubun", cid);
-    //   Number(i);
-    //   axios
-    //     .get("./ajax/kubun_by_category", {
-    //       params: {
-    //         category_id: cid,
-    //       },
-    //     })
-    //     .then(
-    //       function (res) {
-    //         console.log("getkubun-acct-parent");
-    //         // console.log(res.data);
-    //         // this.mKubun = res.data;
-    //         if (args == "debit") {
-    //           this.debKubun[i] = res.data;
-    //           console.log("debit : " + i);
-    //           console.log(this.debKubun[i]);
-    //         } else {
-    //           this.creKubun[i] = res.data;
-    //           console.log("credit : " + i);
-    //           console.log(this.creKubun[i]);
-    //         }
-    //         // console.log(title);
-    //       }.bind(this)
-    //     )
-    //     .catch(function (e) {
-    //       console.error(e);
-    //     });
-    // },
   },
 };
 </script>
