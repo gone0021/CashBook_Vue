@@ -16,16 +16,8 @@ form input[type="text"] {
     width: 100px;
 }
 
-div.createSelectCategory {
-    display: none;
-}
-
 .createSelectCategory select {
     width: 200px;
-}
-
-div.createKubunName {
-    display: none;
 }
 
 /* ------------------------ */

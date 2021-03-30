@@ -31,7 +31,7 @@ class AdminController extends Controller
 
     public function store(Request $req)
     {
-        if ($req->mode == 1) {  // category
+        if ($req->mode === "category") {  // category
             $validator = Validator::make($req->all(), Category::$ruleCreate, Category::$msgCreate);
             if ($validator->fails()) {
                 $param = ['validateMsg' => 'createCategory'];

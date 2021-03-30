@@ -12,20 +12,33 @@
         <form action="{{ route('admin/store') }}" method="post" class="">
             @csrf
             <div class="checkbox mb-3">
-                <input type="radio" value="1" name="mode" class="mr-1" id="createSelect1" checked>
+                <input type="radio" name="mode" value="category" class="mr-1" id="createSelect1" v-model="adminCreate" :click="createCate">
                 <label for="createSelect1" class="form-check-label mr-3">科目のみ作成</label>
 
-                <input type="radio" value="2" name="mode" class="mr-1" id="createSelect2" @if (session('validateMsg') == 'createKubun') checked @endif>
+                {{-- <input type="radio" value="2" name="mode" class="mr-1" id="createSelect2" @if (session('validateMsg') == 'createKubun') checked @endif> --}}
+
+                <input type="radio" name="mode" value="kubun" class="mr-1" id="createSelect2" v-model="adminCreate" :click="createKubun">
+
                 <label for="createSelect2" class="form-check-label mr-3">小科目のみ作成</label>
             </div>
 
-            <div class="crateCategory  mb-3">
-                <div class="createAccountType align-top mr-3">
+            {{-- 科目のみ --}}
+            <admin-create-cate  v-if="adminCreate === 'category'" :m-dis="disCate"></admin-create-cate>
+
+            {{-- <div class="crateCategory mb-3" v-if="adminCreate ==='category'">
+                <div class="createAccountType mr-3">
                     <label for="createAccountType">科目区分</label>
-                    <select name="account_type" id="createAccountType" class="form-control @error('account_type')is-invalid @enderror" required>
+                    <select name="account_type" id="createAccountType"
+                        class="form-control @error('account_type')is-invalid @enderror" required>
                         <option id="option0" value="">---</option>
+
+
+                        <option v-for="(typen i) in accountType" :value="type.id" :key="'type' + i">
+                            {{ type }}
+                        </option>
+
                         @foreach ($accountType as $k => $v)
-                            <option value="{{$k}}">{{$v}}</option>
+                        <option value="{{$k}}">{{$v}}</option>
                         @endforeach
                     </select>
 
@@ -38,10 +51,11 @@
                     </div>
                 </div>
 
-                {{-- 科目のみ --}}
                 <div class="createCategory">
                     <label for="createCategory">科目名</label>
-                    <input type="text" name="category_name" id="createCategory" class="form-control @error('category_name')is-invalid @enderror" value="{{ old('category_name') }}" required>
+                    <input type="text" name="category_name" id="createCategory"
+                        class="form-control @error('category_name')is-invalid @enderror"
+                        value="{{ old('category_name') }}" required>
 
                     <div class="invalid-feedback">
                         @error('category_name')
@@ -51,11 +65,34 @@
                         @enderror
                     </div>
                 </div>
+            </div> --}}
 
-                {{-- 小科目のみ --}}
-                <div class="createSelectCategory">
+            {{-- 小科目のみ --}}
+            <admin-create-kubun v-if="adminCreate === 'kubun'" @m-chg-type="adminChgType($event)" :m-cate="admCate" :m-dis="disKubun"></admin-create-kubun>
+
+            {{-- <div class="crateCategory" v-if="adminCreate ==='kubun'">
+                <div class="createAccountType align-top mr-3">
+                    <label for="createAccountType">科目区分</label>
+                    <select name="account_type" id="createAccountType"
+                        class="form-control @error('account_type')is-invalid @enderror" required>
+                        <option id="option0" value="">---</option>
+                        @foreach ($accountType as $k => $v)
+                        <option value="{{$k}}">{{$v}}</option>
+                        @endforeach
+                    </select>
+
+                    <div class="invalid-feedback">
+                        @error('account_type')
+                        <span id="createErrorAccountType">
+                            {{ $message }}
+                        </span>
+                        @enderror
+                    </div>
+                </div>
+                <div class="createSelectCategory mr-3">
                     <label for="createSelectCategory">科目名</label>
-                    <select name="category_id" id="createSelectCategory" class="form-control @error('category_id')is-invalid @enderror" disabled>
+                    <select name="category_id" id="createSelectCategory"
+                        class="form-control @error('category_id')is-invalid @enderror">
                         <option value="" id="option1" selected>---</option>
                     </select>
 
@@ -67,22 +104,24 @@
                         @enderror
                     </div>
                 </div>
-            </div>
 
-            <div class="crateCategory">
-                <div class="createKubunName mb-3">
-                    <label for="createKubunName">小科目名</label>
-                    <input type="text" name="kubun_name" id="createKubunName" class="form-control mr-1 @error('kubun_name')is-invalid @enderror" value="{{ old('kubun_name') }}" disabled>
+                <div class="crateCategory">
+                    <div class="createKubunName mb-3">
+                        <label for="createKubunName">小科目名</label>
+                        <input type="text" name="kubun_name" id="createKubunName"
+                            class="form-control mr-1 @error('kubun_name')is-invalid @enderror"
+                            value="{{ old('kubun_name') }}">
 
-                    <div class="invalid-feedback">
-                        @error('kubun_name')
-                        <span id="createErrorKubunName">
-                            {{ $message }}
-                        </span>
-                        @enderror
+                        <div class="invalid-feedback">
+                            @error('kubun_name')
+                            <span id="createErrorKubunName">
+                                {{ $message }}
+                            </span>
+                            @enderror
+                        </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
             <div class="col-md-10">
                 <input type="submit" name="" id="submit" class="btn btn-info mr-2" value="{{ __('Send') }}">

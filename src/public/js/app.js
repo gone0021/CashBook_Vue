@@ -1944,6 +1944,216 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/adminCreateCate.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/adminCreateCate.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["mDis", "mnVal", "csrf", "mCateAsset", "mCateExpense", "mCateIncome"],
+  data: function data() {
+    return {
+      accountType: ["資産", "費用", "収益"],
+      cataId: "",
+      mKubun: "",
+      asKubun: "",
+      plKubun: "",
+      // 置き換え用
+      rep: {}
+    };
+  },
+  mounted: function mounted() {
+    console.log("--- mount admin create cate ---");
+  },
+  updated: function updated() {
+    console.log("--- update admin create cate ---");
+  },
+  methods: {
+    chgTypeOne: function chgTypeOne() {
+      var chgKubun = document.querySelector("#createAccountType");
+      var kchild = document.querySelector("#opAdmCc0");
+      chgKubun.removeChild(kchild);
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/adminCreateKubun.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/adminCreateKubun.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["mDis", "mCate", "", "", "", ""],
+  data: function data() {
+    return {
+      accountType: ["資産", "費用", "収益"],
+      cataId: "",
+      mKubun: "",
+      asKubun: "",
+      plKubun: "",
+      // 置き換え用
+      rep: {}
+    };
+  },
+  mounted: function mounted() {
+    console.log("--- mount admin create cate ---");
+  },
+  updated: function updated() {
+    console.log("--- update admin create cate ---");
+  },
+  methods: {
+    chgTypeOne0: function chgTypeOne0() {
+      var chgKubun0 = document.querySelector("#createAccountType");
+      var kchild0 = document.querySelector("#opAdmCk0");
+      chgKubun0.removeChild(kchild0);
+      var chgKubun1 = document.querySelector("#createSelectCategory");
+      var kchild1 = document.querySelector("#opAdmCk1");
+      chgKubun1.removeChild(kchild1);
+    },
+    // chgTypeOne1: function () {
+    //   let chgKubun = document.querySelector("#createSelectCategory");
+    //   let kchild = document.querySelector("#opAdmCk1");
+    //   chgKubun.removeChild(kchild);
+    // },
+    chgType: function chgType(ev) {
+      var type = ev.target.value;
+      console.log(type);
+      this.$emit("m-chg-type", type);
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/mAcctCredit.vue?vue&type=script&lang=js&":
 /*!**********************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/mAcctCredit.vue?vue&type=script&lang=js& ***!
@@ -40045,6 +40255,207 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/adminCreateCate.vue?vue&type=template&id=da0dbac2&":
+/*!******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/adminCreateCate.vue?vue&type=template&id=da0dbac2& ***!
+  \******************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "crateCategory mb-3" }, [
+    _c("div", { staticClass: "createAccountType mr-3" }, [
+      _c("label", { attrs: { for: "createAccountType" } }, [
+        _vm._v("科目区分")
+      ]),
+      _vm._v(" "),
+      _c(
+        "select",
+        {
+          staticClass: "form-control",
+          attrs: {
+            name: "account_type",
+            id: "createAccountType",
+            disabled: _vm.mDis,
+            required: ""
+          },
+          on: {
+            "~change": function($event) {
+              return _vm.chgTypeOne()
+            }
+          }
+        },
+        [
+          _c("option", { attrs: { id: "opAdmCc0", value: "" } }, [
+            _vm._v("---")
+          ]),
+          _vm._v(" "),
+          _vm._l(_vm.accountType, function(type, i) {
+            return _c("option", { key: "type" + i, domProps: { value: i } }, [
+              _vm._v("\n        " + _vm._s(type) + "\n      ")
+            ])
+          })
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "invalid-feedback" })
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "createCategory" }, [
+      _c("label", { attrs: { for: "createCategory" } }, [_vm._v("科目名")]),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form-control",
+        attrs: {
+          type: "text",
+          name: "category_name",
+          id: "createCategory",
+          value: "",
+          disabled: _vm.mDis,
+          required: ""
+        }
+      }),
+      _vm._v(" "),
+      _c("div", { staticClass: "invalid-feedback" })
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/adminCreateKubun.vue?vue&type=template&id=1b2e949e&":
+/*!*******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/adminCreateKubun.vue?vue&type=template&id=1b2e949e& ***!
+  \*******************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "crateCategory" }, [
+    _c("div", { staticClass: "createAccountType align-top mr-3" }, [
+      _c("label", { attrs: { for: "createAccountType" } }, [
+        _vm._v("科目区分")
+      ]),
+      _vm._v(" "),
+      _c(
+        "select",
+        {
+          staticClass: "form-control",
+          attrs: {
+            name: "account_type",
+            id: "createAccountType",
+            required: ""
+          },
+          on: {
+            "~change": function($event) {
+              return _vm.chgTypeOne0()
+            },
+            change: function($event) {
+              return _vm.chgType($event)
+            }
+          }
+        },
+        [
+          _c("option", { attrs: { id: "opAdmCk0", value: "" } }, [
+            _vm._v("---")
+          ]),
+          _vm._v(" "),
+          _vm._l(_vm.accountType, function(type, i) {
+            return _c("option", { key: "type" + i, domProps: { value: i } }, [
+              _vm._v("\n        " + _vm._s(type) + "\n      ")
+            ])
+          })
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "invalid-feedback" })
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "createSelectCategory mr-3" }, [
+      _c("label", { attrs: { for: "createSelectCategory" } }, [
+        _vm._v("科目名")
+      ]),
+      _vm._v(" "),
+      _c(
+        "select",
+        {
+          staticClass: "form-control",
+          attrs: { name: "category_id", id: "createSelectCategory" }
+        },
+        [
+          _c("option", { attrs: { value: "", id: "opAdmCk1", selected: "" } }, [
+            _vm._v("---")
+          ]),
+          _vm._v(" "),
+          _vm._l(_vm.mCate, function(cate, i) {
+            return _c(
+              "option",
+              { key: "cate" + i, domProps: { value: cate.id } },
+              [_vm._v("\n        " + _vm._s(cate.category_name) + "\n      ")]
+            )
+          })
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "invalid-feedback" })
+    ]),
+    _vm._v(" "),
+    _vm._m(0)
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "crateCategory" }, [
+      _c("div", { staticClass: "createKubunName mb-3" }, [
+        _c("label", { attrs: { for: "createKubunName" } }, [
+          _vm._v("小科目名")
+        ]),
+        _vm._v(" "),
+        _c("input", {
+          staticClass: "form-control mr-1",
+          attrs: {
+            type: "text",
+            name: "kubun_name",
+            id: "createKubunName",
+            value: ""
+          }
+        }),
+        _vm._v(" "),
+        _c("div", { staticClass: "invalid-feedback" })
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/mAcctCredit.vue?vue&type=template&id=7618e884&":
 /*!**************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/mAcctCredit.vue?vue&type=template&id=7618e884& ***!
@@ -54251,15 +54662,20 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
+Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]); // home
+
 Vue.component('modal-nml', __webpack_require__(/*! ./components/modalNml.vue */ "./resources/js/components/modalNml.vue")["default"]);
 Vue.component('modal-acct', __webpack_require__(/*! ./components/modalAcct.vue */ "./resources/js/components/modalAcct.vue")["default"]);
 Vue.component('m-acct-debit', __webpack_require__(/*! ./components/mAcctDebit.vue */ "./resources/js/components/mAcctDebit.vue")["default"]);
-Vue.component('m-acct-credit', __webpack_require__(/*! ./components/mAcctCredit.vue */ "./resources/js/components/mAcctCredit.vue")["default"]);
+Vue.component('m-acct-credit', __webpack_require__(/*! ./components/mAcctCredit.vue */ "./resources/js/components/mAcctCredit.vue")["default"]); // items/index
+
 Vue.component('modal-dtl-nml', __webpack_require__(/*! ./components/modalDtlNml.vue */ "./resources/js/components/modalDtlNml.vue")["default"]);
 Vue.component('modal-dtl-acct', __webpack_require__(/*! ./components/modalDtlAcct.vue */ "./resources/js/components/modalDtlAcct.vue")["default"]);
 Vue.component('mda-debit', __webpack_require__(/*! ./components/mdaDebit.vue */ "./resources/js/components/mdaDebit.vue")["default"]);
-Vue.component('mda-credit', __webpack_require__(/*! ./components/mdaCredit.vue */ "./resources/js/components/mdaCredit.vue")["default"]);
+Vue.component('mda-credit', __webpack_require__(/*! ./components/mdaCredit.vue */ "./resources/js/components/mdaCredit.vue")["default"]); // admin
+
+Vue.component('admin-create-cate', __webpack_require__(/*! ./components/adminCreateCate.vue */ "./resources/js/components/adminCreateCate.vue")["default"]);
+Vue.component('admin-create-kubun', __webpack_require__(/*! ./components/adminCreateKubun.vue */ "./resources/js/components/adminCreateKubun.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -54277,30 +54693,40 @@ var app = new Vue({
     modalNomal: false,
     modalDtlNml: false,
     modalDtlAcct: false,
-    // --- ajax ---
+    // admin
+    // === ajax ===
     // urlの取得・保存
     rootUrl: "",
     // 取得した値の一時保存
     keepCate: [],
     keepItems: [],
     keepKubun: {},
-    // --- child ---
+    // === child ===
     // all共通
     propCate: {},
-    // home : 共通
+    // --- home ---
+    // 共通
     date: "",
-    // home : nomal
+    // nomal
     cateAsset: {},
     cateIncome: {},
     cateExpense: {},
     mnVal: {},
-    // home : account
-    // items/index : nomal
+    // account
+    // --- items ---
+    // nomal
     asItems: {},
     plItems: {},
     dnType: "",
-    // items/index : account
-    daItems: {}
+    // account
+    daItems: {},
+    // --- admin ---
+    // create
+    accountType: ["資産", "費用", "収益"],
+    adminCreate: "category",
+    admCate: [],
+    disCate: false,
+    disKubun: true
   },
   created: function created() {
     var _this = this;
@@ -54341,13 +54767,13 @@ var app = new Vue({
     }); // items/index : nomal
     // modal - home $ items : nomal
 
-    this.getCateDetail(0).then(function () {
+    this.getCateByAcct(0).then(function () {
       _this.cateAsset = _this.keepCate; // console.log(this.keepCate);
     });
-    this.getCateDetail(1).then(function () {
+    this.getCateByAcct(1).then(function () {
       _this.cateExpense = _this.keepCate; // console.log(this.keepCate);
     });
-    this.getCateDetail(2).then(function () {
+    this.getCateByAcct(2).then(function () {
       _this.cateIncome = _this.keepCate; // console.log(this.keepCate);
     });
   },
@@ -54449,7 +54875,25 @@ var app = new Vue({
 
       return detailNomal;
     }(),
-    // --- method ---
+    // --- ここからadmin ---
+    // cate
+    createCate: function createCate() {
+      this.disCate = false;
+      this.disKubun = true;
+    },
+    // kubun
+    createKubun: function createKubun() {
+      this.disCate = true;
+      this.disKubun = false;
+    },
+    adminChgType: function adminChgType(ev) {
+      var _this4 = this;
+
+      this.getCateByAcct(ev).then(function () {
+        _this4.admCate = _this4.keepCate;
+      });
+    },
+    // --- ここからmethod ---
     getItems: function getItems(bookNo) {
       return axios.get("../items/show/a", {
         params: {
@@ -54470,7 +54914,7 @@ var app = new Vue({
         console.error(e);
       });
     },
-    getCateDetail: function getCateDetail(type) {
+    getCateByAcct: function getCateByAcct(type) {
       var root = this.rootUrl;
       return axios.get("".concat(root, "/ajax/category_by_account"), {
         params: {
@@ -54596,6 +55040,144 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/adminCreateCate.vue":
+/*!*****************************************************!*\
+  !*** ./resources/js/components/adminCreateCate.vue ***!
+  \*****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _adminCreateCate_vue_vue_type_template_id_da0dbac2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./adminCreateCate.vue?vue&type=template&id=da0dbac2& */ "./resources/js/components/adminCreateCate.vue?vue&type=template&id=da0dbac2&");
+/* harmony import */ var _adminCreateCate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./adminCreateCate.vue?vue&type=script&lang=js& */ "./resources/js/components/adminCreateCate.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _adminCreateCate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _adminCreateCate_vue_vue_type_template_id_da0dbac2___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _adminCreateCate_vue_vue_type_template_id_da0dbac2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/adminCreateCate.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/adminCreateCate.vue?vue&type=script&lang=js&":
+/*!******************************************************************************!*\
+  !*** ./resources/js/components/adminCreateCate.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_adminCreateCate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./adminCreateCate.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/adminCreateCate.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_adminCreateCate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/adminCreateCate.vue?vue&type=template&id=da0dbac2&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/adminCreateCate.vue?vue&type=template&id=da0dbac2& ***!
+  \************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_adminCreateCate_vue_vue_type_template_id_da0dbac2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./adminCreateCate.vue?vue&type=template&id=da0dbac2& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/adminCreateCate.vue?vue&type=template&id=da0dbac2&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_adminCreateCate_vue_vue_type_template_id_da0dbac2___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_adminCreateCate_vue_vue_type_template_id_da0dbac2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/adminCreateKubun.vue":
+/*!******************************************************!*\
+  !*** ./resources/js/components/adminCreateKubun.vue ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _adminCreateKubun_vue_vue_type_template_id_1b2e949e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./adminCreateKubun.vue?vue&type=template&id=1b2e949e& */ "./resources/js/components/adminCreateKubun.vue?vue&type=template&id=1b2e949e&");
+/* harmony import */ var _adminCreateKubun_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./adminCreateKubun.vue?vue&type=script&lang=js& */ "./resources/js/components/adminCreateKubun.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _adminCreateKubun_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _adminCreateKubun_vue_vue_type_template_id_1b2e949e___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _adminCreateKubun_vue_vue_type_template_id_1b2e949e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/adminCreateKubun.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/adminCreateKubun.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/adminCreateKubun.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_adminCreateKubun_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./adminCreateKubun.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/adminCreateKubun.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_adminCreateKubun_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/adminCreateKubun.vue?vue&type=template&id=1b2e949e&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/adminCreateKubun.vue?vue&type=template&id=1b2e949e& ***!
+  \*************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_adminCreateKubun_vue_vue_type_template_id_1b2e949e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./adminCreateKubun.vue?vue&type=template&id=1b2e949e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/adminCreateKubun.vue?vue&type=template&id=1b2e949e&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_adminCreateKubun_vue_vue_type_template_id_1b2e949e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_adminCreateKubun_vue_vue_type_template_id_1b2e949e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

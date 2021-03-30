@@ -21,16 +21,22 @@ window.Vue = require('vue');
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
+// home
 Vue.component('modal-nml', require('./components/modalNml.vue').default);
 Vue.component('modal-acct', require('./components/modalAcct.vue').default);
 
 Vue.component('m-acct-debit', require('./components/mAcctDebit.vue').default);
 Vue.component('m-acct-credit', require('./components/mAcctCredit.vue').default);
 
+// items/index
 Vue.component('modal-dtl-nml', require('./components/modalDtlNml.vue').default);
 Vue.component('modal-dtl-acct', require('./components/modalDtlAcct.vue').default);
 Vue.component('mda-debit', require('./components/mdaDebit.vue').default);
 Vue.component('mda-credit', require('./components/mdaCredit.vue').default);
+
+// admin
+Vue.component('admin-create-cate', require('./components/adminCreateCate.vue').default);
+Vue.component('admin-create-kubun', require('./components/adminCreateKubun.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -50,7 +56,9 @@ const app = new Vue({
         modalDtlNml: false,
         modalDtlAcct: false,
 
-        // --- ajax ---
+        // admin
+
+        // === ajax ===
         // urlの取得・保存
         rootUrl: "",
         // 取得した値の一時保存
@@ -58,25 +66,36 @@ const app = new Vue({
         keepItems: [],
         keepKubun: {},
 
-        // --- child ---
+        // === child ===
         // all共通
         propCate: {},
 
-        // home : 共通
+        // --- home ---
+        // 共通
         date: "",
-        // home : nomal
+        // nomal
         cateAsset: {},
         cateIncome: {},
         cateExpense: {},
         mnVal: {},
-        // home : account
+        // account
 
-        // items/index : nomal
+        // --- items ---
+        // nomal
         asItems: {},
         plItems: {},
         dnType: "",
-        // items/index : account
+        // account
         daItems: {},
+
+        // --- admin ---
+        // create
+        accountType: ["資産", "費用", "収益"],
+        adminCreate: "category",
+        admCate: [],
+        disCate: false,
+        disKubun: true,
+
 
     },
     created: function () {
@@ -119,15 +138,15 @@ const app = new Vue({
 
         // items/index : nomal
         // modal - home $ items : nomal
-        this.getCateDetail(0).then(() => {
+        this.getCateByAcct(0).then(() => {
             this.cateAsset = this.keepCate;
             // console.log(this.keepCate);
         });
-        this.getCateDetail(1).then(() => {
+        this.getCateByAcct(1).then(() => {
             this.cateExpense = this.keepCate;
             // console.log(this.keepCate);
         });
-        this.getCateDetail(2).then(() => {
+        this.getCateByAcct(2).then(() => {
             this.cateIncome = this.keepCate;
             // console.log(this.keepCate);
         });
@@ -218,7 +237,24 @@ const app = new Vue({
             });
         },
 
-        // --- method ---
+        // --- ここからadmin ---
+        // cate
+        createCate: function () {
+            this.disCate = false;
+            this.disKubun = true;
+        },
+        // kubun
+        createKubun: function () {
+            this.disCate = true;
+            this.disKubun = false;
+        },
+        adminChgType: function (ev) {
+            this.getCateByAcct(ev).then(() => {
+                this.admCate = this.keepCate;
+            });
+        },
+
+        // --- ここからmethod ---
         getItems: function (bookNo) {
             return axios.get("../items/show/a", {
                 params: {
@@ -242,7 +278,7 @@ const app = new Vue({
                 console.error(e);
             });
         },
-        getCateDetail: function (type) {
+        getCateByAcct: function (type) {
             let root = this.rootUrl;
             return axios.get(`${root}/ajax/category_by_account`, {
                 params: {

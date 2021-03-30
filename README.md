@@ -1,2 +1,2 @@
-# CashBook_Vue
-以前に作成したCashBookのjavascriptをvue.jsで作成
+# laravel_vue_test
+laravelとvue.jsでspaのテスト
