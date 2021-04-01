@@ -27,10 +27,6 @@ form input[type="text"] {
     display: inline-block;
 }
 
-div .editSelectKubun {
-    display: none;
-}
-
 .editDiv select {
     width: 100px;
 }
@@ -39,10 +35,6 @@ div .editSelectKubun {
 .editSelectKubun select
 {
     width: 200px;
-}
-
-.editKubunName {
-    display: none;
 }
 
 #editAccountDel {
