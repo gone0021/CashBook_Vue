@@ -12,20 +12,21 @@
         <form action="{{ route('admin/store') }}" method="post" class="">
             @csrf
             <div class="checkbox mb-3">
-                <input type="radio" name="mode" value="category" class="mr-1" id="createSelect1" v-model="adminCreate" :click="createCate">
+                <input type="radio" name="mode" value="1" class="mr-1" id="createSelect1" v-model="admRadio" :click="createCate">
                 <label for="createSelect1" class="form-check-label mr-3">科目のみ作成</label>
 
+                {{-- ロジック残し --}}
                 {{-- <input type="radio" value="2" name="mode" class="mr-1" id="createSelect2" @if (session('validateMsg') == 'createKubun') checked @endif> --}}
 
-                <input type="radio" name="mode" value="kubun" class="mr-1" id="createSelect2" v-model="adminCreate" :click="createKubun">
+                <input type="radio" name="mode" value="2" class="mr-1" id="createSelect2" v-model="admRadio" :click="createKubun">
 
                 <label for="createSelect2" class="form-check-label mr-3">小科目のみ作成</label>
             </div>
 
             {{-- 科目のみ --}}
-            <admin-create-cate  v-if="adminCreate === 'category'" :m-dis="disCate"></admin-create-cate>
+            <admin-create-cate  v-if="admRadio == 1" :m-type="admAcctType" :m-dis="disCrtCate"></admin-create-cate>
 
-            {{-- <div class="crateCategory mb-3" v-if="adminCreate ==='category'">
+            {{-- <div class="crateCategory mb-3" v-if="admRadio ==='category'">
                 <div class="createAccountType mr-3">
                     <label for="createAccountType">科目区分</label>
                     <select name="account_type" id="createAccountType"
@@ -68,9 +69,9 @@
             </div> --}}
 
             {{-- 小科目のみ --}}
-            <admin-create-kubun v-if="adminCreate === 'kubun'" @m-chg-type="adminChgType($event)" :m-cate="admCate" :m-dis="disKubun"></admin-create-kubun>
+            <admin-create-kubun v-if="admRadio == 2" :m-type="admAcctType" :m-cate="admCate" :m-dis="disCrtKubun" @m-chg-type="adminChgType($event)" ></admin-create-kubun>
 
-            {{-- <div class="crateCategory" v-if="adminCreate ==='kubun'">
+            {{-- <div class="crateCategory" v-if="admRadio ==='kubun'">
                 <div class="createAccountType align-top mr-3">
                     <label for="createAccountType">科目区分</label>
                     <select name="account_type" id="createAccountType"

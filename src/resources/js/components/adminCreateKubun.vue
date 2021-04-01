@@ -11,7 +11,7 @@
         required
       >
         <option id="opAdmCk0" value="">---</option>
-        <option v-for="(type, i) in accountType" :value="i" :key="'type' + i">
+        <option v-for="(type, i) in mType" :value="i" :key="'type' + i">
           {{ type }}
         </option>
       </select>
@@ -26,11 +26,7 @@
     </div>
     <div class="createSelectCategory mr-3">
       <label for="createSelectCategory">科目名</label>
-      <select
-        name="category_id"
-        id="createSelectCategory"
-        class="form-control"
-      >
+      <select name="category_id" id="createSelectCategory" class="form-control">
         <option value="" id="opAdmCk1" selected>---</option>
 
         <option v-for="(cate, i) in mCate" :value="cate.id" :key="'cate' + i">
@@ -68,17 +64,11 @@
 
 <script>
 export default {
-  props: ["mDis", "mCate", "", "", "", ""],
+  props: ["mDis", "mCate", "mType", "", "", ""],
   data: function () {
     return {
-      accountType: ["資産", "費用", "収益"],
-      cataId: "",
-      mKubun: "",
-      asKubun: "",
-      plKubun: "",
-
+      // this
       // 置き換え用
-      rep: {},
     };
   },
   mounted: function () {
@@ -97,11 +87,6 @@ export default {
       let kchild1 = document.querySelector("#opAdmCk1");
       chgKubun1.removeChild(kchild1);
     },
-    // chgTypeOne1: function () {
-    //   let chgKubun = document.querySelector("#createSelectCategory");
-    //   let kchild = document.querySelector("#opAdmCk1");
-    //   chgKubun.removeChild(kchild);
-    // },
     chgType: function (ev) {
       let type = ev.target.value;
       console.log(type);

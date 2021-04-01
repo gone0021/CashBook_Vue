@@ -12,7 +12,7 @@
       >
         <option id="opAdmCc0" value="">---</option>
 
-        <option v-for="(type, i) in accountType" :value="i" :key="'type' + i">
+        <option v-for="(type, i) in mType" :value="i" :key="'type' + i">
           {{ type }}
         </option>
       </select>
@@ -51,17 +51,11 @@
 
 <script>
 export default {
-  props: ["mDis", "", "", "", "", ""],
+  props: ["mDis", "mType", "", "", "", ""],
   data: function () {
     return {
-      accountType: ["資産", "費用", "収益"],
-      cataId: "",
-      mKubun: "",
-      asKubun: "",
-      plKubun: "",
-
+      // this
       // 置き換え用
-      rep: {},
     };
   },
   mounted: function () {

@@ -21,22 +21,26 @@ window.Vue = require('vue');
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
-// home
+// --- home ---
 Vue.component('modal-nml', require('./components/modalNml.vue').default);
 Vue.component('modal-acct', require('./components/modalAcct.vue').default);
-
+// account's componet
 Vue.component('m-acct-debit', require('./components/mAcctDebit.vue').default);
 Vue.component('m-acct-credit', require('./components/mAcctCredit.vue').default);
 
-// items/index
+// --- items/index ---
 Vue.component('modal-dtl-nml', require('./components/modalDtlNml.vue').default);
 Vue.component('modal-dtl-acct', require('./components/modalDtlAcct.vue').default);
 Vue.component('mda-debit', require('./components/mdaDebit.vue').default);
 Vue.component('mda-credit', require('./components/mdaCredit.vue').default);
 
-// admin
+// --- admin ---
+// create
 Vue.component('admin-create-cate', require('./components/adminCreateCate.vue').default);
 Vue.component('admin-create-kubun', require('./components/adminCreateKubun.vue').default);
+// edit,delete
+Vue.component('admin-edit', require('./components/adminEdit.vue').default);
+Vue.component('admin-delete', require('./components/adminDelete.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -89,14 +93,22 @@ const app = new Vue({
         daItems: {},
 
         // --- admin ---
-        // create
-        accountType: ["資産", "費用", "収益"],
-        adminCreate: "category",
+        admAcctType: ["資産", "費用", "収益"],
+        admRadio: 1,
         admCate: [],
-        disCate: false,
-        disKubun: true,
+        // create
+        disCrtCate: false,
+        disCrtKubun: true,
 
-
+        // edit, delete
+        admKubun: [],
+        chg_flg: 0,
+        // edit
+        disEdtCate: false,
+        disEdtKubun: true,
+        // delete
+        disDelCate: false,
+        disDelKubun: true,
     },
     created: function () {
         // console.log("--- create app ---");
@@ -238,20 +250,43 @@ const app = new Vue({
         },
 
         // --- ここからadmin ---
-        // cate
-        createCate: function () {
-            this.disCate = false;
-            this.disKubun = true;
-        },
-        // kubun
-        createKubun: function () {
-            this.disCate = true;
-            this.disKubun = false;
-        },
+        // 共通:kubun, edit, delete
         adminChgType: function (ev) {
             this.getCateByAcct(ev).then(() => {
                 this.admCate = this.keepCate;
             });
+        },
+        // 共通:edit, delete
+        adminChgCate: function (ev) {
+            this.getKubun(ev).then(() => {
+                this.admKubun = this.keepKubun;
+            });
+        },
+
+        // --- crate---
+        // cate
+        createCate: function () {
+            this.disCrtCate = false;
+            this.disCrtKubun = true;
+        },
+        // kubun
+        createKubun: function () {
+            this.disCrtCate = true;
+            this.disCrtKubun = false;
+        },
+        // --- edit ---
+        editCate: function () {
+            this.chg_flg = 0;
+        },
+        editKubun: function () {
+            this.chg_flg = 0;
+        },
+        // --- delete ---
+        delCate: function () {
+            this.chg_flg = 0;
+        },
+        delKubun: function () {
+            this.chg_flg = 0;
         },
 
         // --- ここからmethod ---
@@ -286,6 +321,19 @@ const app = new Vue({
                 },
             }).then(function (res) {
                 this.keepCate = res.data;
+            }.bind(this)
+            ).catch(function (e) {
+                console.error(e);
+            });
+        },
+        getKubun: function (cid) {
+            let root = this.rootUrl;
+            return axios.get(`${root}/ajax/kubun_by_category`, {
+                params: {
+                    category_id: cid,
+                },
+            }).then(function (res) {
+                this.keepKubun = res.data;
             }.bind(this)
             ).catch(function (e) {
                 console.error(e);
