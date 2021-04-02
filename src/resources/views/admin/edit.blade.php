@@ -30,7 +30,7 @@
                 <label for="editSelect4" class="form-check-label mr-3">小科目の削除</label>
             </div>
 
-            <admin-edit v-if="admRadio == 1 || admRadio == 2" :m-type="admAcctType" :m-cate="admCate" :m-kubun="admKubun" :m-radio="admRadio" :m-chg-flg="chg_flg" @m-chg-type="adminChgType($event)" @m-chg-cate="adminChgCate($event)"></admin-edit>
+            <admin-edit :m-type="admAcctType" :m-cate="admCate" :m-kubun="admKubun" :m-radio="admRadio" @m-chg-type="adminChgType($event)" @m-chg-cate="adminChgCate($event)"></admin-edit>
 
             {{-- <div class="editDiv mb-3">
                 <div class="editAccountType mr-3">
@@ -104,11 +104,6 @@
                     @enderror
                 </div>
             </div> --}}
-
-            <div class="editAccountDel mb-4">
-                <input type="submit" name="submit" id="editAccountDel" class="btn-outline-danger form-control btnDel"
-                    value="{{ __('Delete')}}" disabled>
-            </div>
 
             <div class="editAccountUpdate col-md-10">
                 <input type="submit" name="submit" id="editAccountUpdate" class="btn btn-info btnUpdate mr-3"

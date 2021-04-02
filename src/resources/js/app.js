@@ -115,7 +115,6 @@ const app = new Vue({
 
         // date
         let dt = new Date();
-        console.log("date");
         var y = dt.getFullYear();
         var m = ("00" + (dt.getMonth() + 1)).slice(-2);
         var d = ("00" + dt.getDate()).slice(-2);
@@ -130,42 +129,45 @@ const app = new Vue({
         let indexAdmin = url.indexOf('/admin');
         if (indeHome > 0) {
             root = url.substr(0, indeHome)
-            console.log("home" + indeHome);
+            // console.log("home" + indeHome);
         } else if (indexItem > 0) {
             root = url.substr(0, indexItem)
-            console.log("imtes" + indexItem);
+            // console.log("imtes" + indexItem);
         } else if (indexAdmin > 0) {
             root = url.substr(0, indexAdmin)
-            console.log("admin" + indexAdmin);
+            // console.log("admin" + indexAdmin);
         }
         this.rootUrl = root;
         // console.log("root url : " + rootUrl);
 
-        console.log("-- get category --");
-        // modal - home : account
-        this.getCategory().then(() => {
-            this.propCate = this.keepCate;
-        });
+        if (!root) {
+            return;
+        } else {
+            console.log("-- get category --");
+            // modal - home : account
+            this.getCategory().then(() => {
+                this.propCate = this.keepCate;
+            });
 
-
-        // items/index : nomal
-        // modal - home $ items : nomal
-        this.getCateByAcct(0).then(() => {
-            this.cateAsset = this.keepCate;
-            // console.log(this.keepCate);
-        });
-        this.getCateByAcct(1).then(() => {
-            this.cateExpense = this.keepCate;
-            // console.log(this.keepCate);
-        });
-        this.getCateByAcct(2).then(() => {
-            this.cateIncome = this.keepCate;
-            // console.log(this.keepCate);
-        });
+            // items/index : nomal
+            // modal - home & items : nomal
+            this.getCateByAcct(0).then(() => {
+                this.cateAsset = this.keepCate;
+                // console.log(this.keepCate);
+            });
+            this.getCateByAcct(1).then(() => {
+                this.cateExpense = this.keepCate;
+                // console.log(this.keepCate);
+            });
+            this.getCateByAcct(2).then(() => {
+                this.cateIncome = this.keepCate;
+                // console.log(this.keepCate);
+            });
+        }
 
     },
     mounted: function () {
-        console.log("--- mounted app.js ---");
+        // console.log("--- mounted app.js ---");
     },
     updated: function () {
         // console.log("--- updated app.js ---");
@@ -226,7 +228,7 @@ const app = new Vue({
         },
 
         detailNomal: async function (bookNo) {
-            console.log("--- click detsil nomal ---");
+            // console.log("--- click detsil nomal ---");
 
             this.bookNo = bookNo
 
@@ -276,17 +278,13 @@ const app = new Vue({
         },
         // --- edit ---
         editCate: function () {
-            this.chg_flg = 0;
         },
         editKubun: function () {
-            this.chg_flg = 0;
         },
         // --- delete ---
         delCate: function () {
-            this.chg_flg = 0;
         },
         delKubun: function () {
-            this.chg_flg = 0;
         },
 
         // --- ここからmethod ---

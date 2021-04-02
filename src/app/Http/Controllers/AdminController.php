@@ -73,6 +73,7 @@ class AdminController extends Controller
 
     public function update(Request $req)
     {
+        // dd($req->all());
         if ($req->mode == 1 || $req->mode == 3) {  // category
             $id = $req->category_id;
 
@@ -87,7 +88,7 @@ class AdminController extends Controller
                     $dbCategory->category_name = $req->category_name;
                     $dbCategory->update();
                 }
-            } elseif ($req->submit == 'Delete') {
+            } elseif ($req->submit == 'delete') {
                 $validator = Validator::make($req->all(), Category::$ruleDel, Category::$msgDel);
                 if ($validator->fails()) {
                     $param = ['validateMsg' => 'editCategoryDel'];
@@ -118,7 +119,7 @@ class AdminController extends Controller
                         Kubun::find($id)->fill($val)->update();
                     }
                 }
-            } elseif ($req->submit == 'Delete') {
+            } elseif ($req->submit == 'delete') {
                 $validator = Validator::make($req->all(), Kubun::$ruleDel, Kubun::$msgDel);
                 if ($validator->fails()) {
                     $param = ['validateMsg' => 'editKubunDel'];

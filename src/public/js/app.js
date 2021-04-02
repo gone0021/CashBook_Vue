@@ -2382,14 +2382,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["mDis", "mCate", "mType", "mRadio", "mKubun", "", ""],
+  props: ["mDis", "mCate", "mType", "mRadio", "mKubun", "mChgFlg", ""],
   data: function data() {
     return {
       // this
       disCate: true,
       disKubun: true,
-      evn_flg: 0,
+      disDel: true,
+      chg_flg: 0,
       // 置き換え用
       radio: this.mRadio
     };
@@ -2404,15 +2420,31 @@ __webpack_require__.r(__webpack_exports__);
         if (val == 1) {
           this.disCate = false;
           this.disKubun = true;
-        } else {
+          this.disDel = true;
+        } else if (val == 2) {
           this.disCate = false;
           this.disKubun = false;
+          this.disDel = true;
+        } else {
+          this.disCate = true;
+          this.disKubun = true;
+          this.disDel = false;
+        } // chg_flg
+
+
+        if ((val == 2 || val == 4) && this.chg_flg == 2) {
+          return;
+        } else if ((val == 2 || val == 4) && this.chg_flg == 4) {
+          return;
+        } else {
+          this.chg_flg = 0;
         }
       }
     }
   },
   creaated: function creaated() {
-    // disabled
+    console.log("--- mount admin create cate ---");
+
     if (this.mRadio == 1) {
       this.disCate = false;
       this.disKubun = true;
@@ -2422,16 +2454,11 @@ __webpack_require__.r(__webpack_exports__);
     } else {
       this.disCate = true;
       this.disKubun = true;
-    } //
-
-
-    this.evn_flg = 0;
+    }
   },
-  mounted: function mounted() {
-    console.log("--- mount admin create cate ---");
+  mounted: function mounted() {// console.log("--- mount admin mouted cate ---");
   },
-  updated: function updated() {
-    console.log("--- update admin create cate ---");
+  updated: function updated() {// console.log("--- update admin updated cate ---");
   },
   methods: {
     chgTypeOne: function chgTypeOne() {
@@ -2443,20 +2470,27 @@ __webpack_require__.r(__webpack_exports__);
       chgKubun1.removeChild(kchild1);
     },
     chgType: function chgType(ev) {
-      var type = ev.target.value;
-      console.log(type);
+      var type = ev.target.value; //   console.log(type);
+
       this.$emit("m-chg-type", type);
     },
     chgCate: function chgCate(ev) {
-      if (this.radio === "2" && this.evn_flg == 0) {
+      if ((this.radio === "2" || this.radio === "4") && this.chg_flg == 0) {
         var chgKubun = document.querySelector("#editSelectKubun");
         var kchild = document.querySelector("#opAdmEdt2");
         chgKubun.removeChild(kchild);
-        this.evn_flg = 1;
+
+        if (this.radio === "2") {
+          this.chg_flg = 2;
+        } else if (this.radio === "4") {
+          this.chg_flg = 4;
+        } else {
+          this.chg_flg = 1;
+        }
       }
 
-      var type = ev.target.value;
-      console.log(type);
+      var type = ev.target.value; //   console.log(type);
+
       this.$emit("m-chg-cate", type);
     }
   }
@@ -40989,8 +41023,8 @@ var render = function() {
         _c("div", { staticClass: "invalid-feedback" })
       ]),
       _vm._v(" "),
-      _vm.radio == 2
-        ? _c("div", { staticClass: "editSelectKubun mr-3" }, [
+      _vm.radio == 2 || _vm.radio == 4
+        ? _c("div", { key: "kubun", staticClass: "editSelectKubun mr-3" }, [
             _c("label", { attrs: { for: "editSelectKubun" } }, [
               _vm._v("小科目名")
             ]),
@@ -41074,7 +41108,22 @@ var render = function() {
             _c("div", { staticClass: "invalid-feedback" })
           ])
         : _vm._e()
-    ])
+    ]),
+    _vm._v(" "),
+    _vm.radio == 3 || _vm.radio == 4
+      ? _c("div", { staticClass: "editAccountDel mb-4" }, [
+          _c("input", {
+            staticClass: "btn-outline-danger form-control btnDel",
+            attrs: {
+              type: "submit",
+              name: "submit",
+              id: "editAccountDel",
+              value: "delete",
+              disabled: _vm.disDel
+            }
+          })
+        ])
+      : _vm._e()
   ])
 }
 var staticRenderFns = []
@@ -55376,7 +55425,6 @@ var app = new Vue({
     // console.log("--- create app ---");
     // date
     var dt = new Date();
-    console.log("date");
     var y = dt.getFullYear();
     var m = ("00" + (dt.getMonth() + 1)).slice(-2);
     var d = ("00" + dt.getDate()).slice(-2);
@@ -55390,37 +55438,37 @@ var app = new Vue({
     var indexAdmin = url.indexOf('/admin');
 
     if (indeHome > 0) {
-      root = url.substr(0, indeHome);
-      console.log("home" + indeHome);
+      root = url.substr(0, indeHome); // console.log("home" + indeHome);
     } else if (indexItem > 0) {
-      root = url.substr(0, indexItem);
-      console.log("imtes" + indexItem);
+      root = url.substr(0, indexItem); // console.log("imtes" + indexItem);
     } else if (indexAdmin > 0) {
-      root = url.substr(0, indexAdmin);
-      console.log("admin" + indexAdmin);
+      root = url.substr(0, indexAdmin); // console.log("admin" + indexAdmin);
     }
 
     this.rootUrl = root; // console.log("root url : " + rootUrl);
 
-    console.log("-- get category --"); // modal - home : account
+    if (!root) {
+      return;
+    } else {
+      console.log("-- get category --"); // modal - home : account
 
-    this.getCategory().then(function () {
-      _this.propCate = _this.keepCate;
-    }); // items/index : nomal
-    // modal - home $ items : nomal
+      this.getCategory().then(function () {
+        _this.propCate = _this.keepCate;
+      }); // items/index : nomal
+      // modal - home & items : nomal
 
-    this.getCateByAcct(0).then(function () {
-      _this.cateAsset = _this.keepCate; // console.log(this.keepCate);
-    });
-    this.getCateByAcct(1).then(function () {
-      _this.cateExpense = _this.keepCate; // console.log(this.keepCate);
-    });
-    this.getCateByAcct(2).then(function () {
-      _this.cateIncome = _this.keepCate; // console.log(this.keepCate);
-    });
+      this.getCateByAcct(0).then(function () {
+        _this.cateAsset = _this.keepCate; // console.log(this.keepCate);
+      });
+      this.getCateByAcct(1).then(function () {
+        _this.cateExpense = _this.keepCate; // console.log(this.keepCate);
+      });
+      this.getCateByAcct(2).then(function () {
+        _this.cateIncome = _this.keepCate; // console.log(this.keepCate);
+      });
+    }
   },
-  mounted: function mounted() {
-    console.log("--- mounted app.js ---");
+  mounted: function mounted() {// console.log("--- mounted app.js ---");
   },
   updated: function updated() {// console.log("--- updated app.js ---");
   },
@@ -55484,7 +55532,7 @@ var app = new Vue({
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                console.log("--- click detsil nomal ---");
+                // console.log("--- click detsil nomal ---");
                 this.bookNo = bookNo;
                 this.getItems(bookNo).then(function () {
                   // getKubunの値を資産・損益に区別して保存
@@ -55503,7 +55551,7 @@ var app = new Vue({
                   _this3.modalDtlNml = true;
                 });
 
-              case 3:
+              case 2:
               case "end":
                 return _context.stop();
             }
@@ -55546,19 +55594,11 @@ var app = new Vue({
       this.disCrtKubun = false;
     },
     // --- edit ---
-    editCate: function editCate() {
-      this.chg_flg = 0;
-    },
-    editKubun: function editKubun() {
-      this.chg_flg = 0;
-    },
+    editCate: function editCate() {},
+    editKubun: function editKubun() {},
     // --- delete ---
-    delCate: function delCate() {
-      this.chg_flg = 0;
-    },
-    delKubun: function delKubun() {
-      this.chg_flg = 0;
-    },
+    delCate: function delCate() {},
+    delKubun: function delKubun() {},
     // --- ここからmethod ---
     getItems: function getItems(bookNo) {
       return axios.get("../items/show/a", {
