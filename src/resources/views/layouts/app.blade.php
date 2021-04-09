@@ -149,6 +149,10 @@
         </main>
 
     </div>
+    <script>
+        let sesMsg = @json(session('validateMsg'));
+        let adminIndex = @json(route('admin/index'));
+    </script>
 </body>
 
 </html>
