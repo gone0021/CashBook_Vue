@@ -36,11 +36,9 @@ Vue.component('mda-credit', require('./components/mdaCredit.vue').default);
 
 // --- admin ---
 // create
-Vue.component('admin-create-cate', require('./components/adminCreateCate.vue').default);
-Vue.component('admin-create-kubun', require('./components/adminCreateKubun.vue').default);
+Vue.component('admin-create-kubun', require('./components/adminCreate.vue').default);
 // edit,delete
 Vue.component('admin-edit', require('./components/adminEdit.vue').default);
-Vue.component('admin-delete', require('./components/adminDelete.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -52,6 +50,9 @@ Vue.use(window["vue-js-modal"].default);
 const app = new Vue({
     el: '#app',
     data: {
+        // メモ：sessionはapp.bladeでjsonへ変換してjsへ渡している
+        // --- this ---
+        sesMsg: sesMsg, // デバッグ用
         //  --- if ---
         // modal
         glay: false,
@@ -102,25 +103,12 @@ const app = new Vue({
 
         // edit, delete
         admKubun: [],
-        chg_flg: 0,
         // edit
-        disEdtCate: false,
-        disEdtKubun: true,
         // delete
-        disDelCate: false,
-        disDelKubun: true,
     },
     created: function () {
         // console.log("--- create app ---");
-
-        // date
-        let dt = new Date();
-        var y = dt.getFullYear();
-        var m = ("00" + (dt.getMonth() + 1)).slice(-2);
-        var d = ("00" + dt.getDate()).slice(-2);
-        this.date = y + "-" + m + "-" + d;
-        // console.log("date : " + this.date);
-
+        // --- 共通 ---
         // get url : use in axios
         let root = "";
         let url = location.href;
@@ -165,6 +153,14 @@ const app = new Vue({
             });
         }
 
+        // --- home ---
+        // date
+        let dt = new Date();
+        var y = dt.getFullYear();
+        var m = ("00" + (dt.getMonth() + 1)).slice(-2);
+        var d = ("00" + dt.getDate()).slice(-2);
+        this.date = y + "-" + m + "-" + d;
+        // console.log("date : " + this.date);
     },
     mounted: function () {
         // console.log("--- mounted app.js ---");
@@ -263,28 +259,6 @@ const app = new Vue({
             this.getKubun(ev).then(() => {
                 this.admKubun = this.keepKubun;
             });
-        },
-
-        // --- crate---
-        // cate
-        createCate: function () {
-            this.disCrtCate = false;
-            this.disCrtKubun = true;
-        },
-        // kubun
-        createKubun: function () {
-            this.disCrtCate = true;
-            this.disCrtKubun = false;
-        },
-        // --- edit ---
-        editCate: function () {
-        },
-        editKubun: function () {
-        },
-        // --- delete ---
-        delCate: function () {
-        },
-        delKubun: function () {
         },
 
         // --- ここからmethod ---

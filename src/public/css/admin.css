@@ -8,11 +8,11 @@ form input[type="text"] {
 /* ------------------------ */
 /* admin edit */
 /* ------------------------ */
-.crateCategory div {
+.createDiv div {
     display: inline-block;
 }
 
-.crateCategory select {
+.createDiv select {
     width: 100px;
 }
 
