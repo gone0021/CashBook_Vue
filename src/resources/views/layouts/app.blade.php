@@ -16,6 +16,10 @@
     <script src="https://cdn.jsdelivr.net/npm/vue-js-modal@1.3.31/dist/index.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-js-modal@1.3.31/dist/styles.css">
 
+    {{-- vee-validate --}}
+    <script src="https://cdn.jsdelivr.net/npm/vee-validate@2.2.15/dist/vee-validate.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vee-validate@2.2.15/dist/locale/ja.js"></script>
+
     {{-- <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
     <script src="{{ asset('js/home.js') }}"></script>
@@ -151,7 +155,6 @@
     </div>
     <script>
         let sesMsg = @json(session('validateMsg'));
-        let adminIndex = @json(route('admin/index'));
     </script>
 </body>
 
