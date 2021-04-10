@@ -1944,382 +1944,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/adminCreateCate.vue?vue&type=script&lang=js&":
-/*!**************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/adminCreateCate.vue?vue&type=script&lang=js& ***!
-  \**************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["mDis", "mType", "", "", "", ""],
-  data: function data() {
-    return {// this
-      // 置き換え用
-    };
-  },
-  mounted: function mounted() {
-    console.log("--- mount admin create cate ---");
-  },
-  updated: function updated() {
-    console.log("--- update admin create cate ---");
-  },
-  methods: {
-    chgTypeOne: function chgTypeOne() {
-      var chgKubun = document.querySelector("#createAccountType");
-      var kchild = document.querySelector("#opAdmCc0");
-      chgKubun.removeChild(kchild);
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/adminCreateKubun.vue?vue&type=script&lang=js&":
-/*!***************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/adminCreateKubun.vue?vue&type=script&lang=js& ***!
-  \***************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["mCate", "mType", "errors", "", ""],
-  data: function data() {
-    return {
-      // this
-      radio: 1,
-      disCate: true,
-      disKubun: true,
-      // app.bladeでjsonへ変換
-      adminIndex: adminIndex,
-      // bind:hrefで仕様
-      sesMsg: sesMsg,
-      // 使ってない：ただのメモ
-      // バリデーションの表示チェック
-      validType: false,
-      validCateId: false,
-      validCateName: false,
-      validKubunName: false,
-      classValidType: "",
-      classValidCateId: "",
-      classValidCateName: "",
-      classValidKubunName: "",
-      // categoryを変更したかチェック
-      chgCate_flg: 0 // 置き換え用
-
-    };
-  },
-  watch: {
-    radio: {
-      immediate: true,
-      handler: function handler(val) {
-        this.radio = val; // ラジオボタンによるdisabledの設定
-
-        if (val == 1) {
-          this.disCate = false;
-          this.disKubun = true;
-        } else if (val == 2) {
-          this.disCate = true;
-          this.disKubun = false;
-        } // バリデーションメッセージの表示設定
-
-
-        if (sesMsg === "createCategory") {
-          if (val == 1) {
-            this.showValidCate();
-          } else {
-            this.hiddenValid();
-          }
-        } else if (sesMsg === "createKubun") {
-          if (val == 2) {
-            this.showValidKubun();
-          } else {
-            this.hiddenValid();
-          }
-        }
-      }
-    }
-  },
-  created: function created() {
-    // バリデーションエラーからのリダイレクト
-    if (sesMsg === "createCategory") {
-      this.radio = 1;
-    } else if (sesMsg === "createKubun") {
-      this.radio = 2;
-    }
-  },
-  mounted: function mounted() {
-    console.log("--- mount admin create cate ---");
-  },
-  updated: function updated() {
-    console.log("--- update admin create cate ---");
-  },
-  methods: {
-    chgTypeOne0: function chgTypeOne0() {
-      var chgKubun0 = document.querySelector("#createAccountType");
-      var kchild0 = document.querySelector("#opAdmCk0");
-      chgKubun0.removeChild(kchild0);
-      var chgKubun1 = document.querySelector("#createSelectCategory");
-      var kchild1 = document.querySelector("#opAdmCk1");
-      chgKubun1.removeChild(kchild1);
-    },
-    chgType: function chgType(ev) {
-      var type = ev.target.value;
-      console.log(type);
-      this.$emit("m-chg-type", type);
-    },
-    // --- method ---
-    showValidCate: function showValidCate() {
-      this.validType = true;
-      this.validCateName = true;
-      this.classValidType = "is-invalid";
-      this.classValidCateName = "is-invalid";
-    },
-    showValidKubun: function showValidKubun() {
-      this.validType = true;
-      this.validCateId = true;
-      this.validKubunName = true;
-      this.classValidType = "is-invalid";
-      this.classValidCateId = "is-invalid";
-      this.classValidKubunName = "is-invalid";
-    },
-    hiddenValid: function hiddenValid() {
-      this.validType = false;
-      this.validCateId = false;
-      this.validCateName = false;
-      this.validKubunName = false;
-      this.classValidType = "";
-      this.classValidCateId = "";
-      this.classValidCateName = "";
-      this.classValidKubunName = "";
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/adminDelete.vue?vue&type=script&lang=js&":
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/adminCreate.vue?vue&type=script&lang=js&":
 /*!**********************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/adminDelete.vue?vue&type=script&lang=js& ***!
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/adminCreate.vue?vue&type=script&lang=js& ***!
   \**********************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -2394,18 +2021,187 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["mDis", "mCate", "", "", "", ""],
+  props: ["mCate", "mType", "mErrors", "csrf"],
   data: function data() {
     return {
-      accountType: ["資産", "費用", "収益"],
-      cataId: "",
-      mKubun: "",
-      asKubun: "",
-      plKubun: "",
-      // 置き換え用
-      rep: {}
+      // --- this ---
+      radio: 1,
+      disCate: true,
+      disKubun: true,
+      evSubmit: "",
+      // model
+      categoryName: "",
+      kubunName: "",
+      // バリデーションエラー
+      errorCate: "",
+      errorKubun: "",
+      // app.bladeでjsonへ変換
+      sesMsg: sesMsg,
+      // 使ってない：ただのメモ
+      // バリデーションの表示チェック
+      validType: false,
+      validCateId: false,
+      validCateName: false,
+      validKubunName: false,
+      classValidType: "",
+      classValidCateId: "",
+      classValidCateName: "",
+      classValidKubunName: "",
+      // categoryを変更したかチェック
+      chgCate_flg: 0 // 置き換え用
+
     };
+  },
+  watch: {
+    radio: {
+      immediate: true,
+      handler: function handler(val) {
+        this.radio = val; // ラジオボタンによるdisabledの設定
+
+        if (val == 1) {
+          this.disCate = false;
+          this.disKubun = true;
+        } else if (val == 2) {
+          this.disCate = true;
+          this.disKubun = false;
+        } // バリデーションメッセージの表示設定
+
+
+        if (sesMsg === "createCategory") {
+          if (val == 1) {
+            this.showValidCate();
+          } else {
+            this.hiddenValid();
+          }
+        }
+
+        if (sesMsg === "createKubun") {
+          if (val == 2) {
+            this.showValidKubun();
+          } else {
+            this.hiddenValid();
+          }
+        }
+      }
+    }
+  },
+  created: function created() {
+    // バリデーションエラーからのリダイレクト
+    if (sesMsg === "createCategory") {
+      this.radio = 1;
+    } else if (sesMsg === "createKubun") {
+      this.radio = 2;
+    }
   },
   mounted: function mounted() {
     console.log("--- mount admin create cate ---");
@@ -2422,15 +2218,70 @@ __webpack_require__.r(__webpack_exports__);
       var kchild1 = document.querySelector("#opAdmCk1");
       chgKubun1.removeChild(kchild1);
     },
-    // chgTypeOne1: function () {
-    //   let chgKubun = document.querySelector("#createSelectCategory");
-    //   let kchild = document.querySelector("#opAdmCk1");
-    //   chgKubun.removeChild(kchild);
-    // },
     chgType: function chgType(ev) {
       var type = ev.target.value;
       console.log(type);
       this.$emit("m-chg-type", type);
+    },
+    checkForm: function checkForm(ev) {
+      var cate = this.categoryName;
+      var kubun = this.kubunName;
+
+      if (!this.disCate) {
+        if (cate.length > 20) {
+          this.errorCate = "科目名は20文字までで入力してください";
+          this.classValidCateName = "is-invalid";
+          ev.preventDefault();
+        }
+      }
+
+      if (!this.disKubun) {
+        if (kubun.length > 20) {
+          this.errorKubun = "小科目名は20文字までで入力してください";
+          this.classValidKubunName = "is-invalid";
+          ev.preventDefault();
+        }
+      }
+    },
+    // --- method ---
+    showValidCate: function showValidCate() {
+      this.validType = true;
+      this.validCateName = true;
+
+      if (this.mErrors.account_type) {
+        this.classValidType = "is-invalid";
+      }
+
+      if (this.mErrors.category_name) {
+        this.classValidCateName = "is-invalid";
+      }
+    },
+    showValidKubun: function showValidKubun() {
+      this.validType = true;
+      this.validCateId = true;
+      this.validKubunName = true;
+
+      if (this.mErrors.account_type) {
+        this.classValidType = "is-invalid";
+      }
+
+      if (this.mErrors.category_id) {
+        this.classValidCateId = "is-invalid";
+      }
+
+      if (this.mErrors.kubun_name) {
+        this.classValidKubunName = "is-invalid";
+      }
+    },
+    hiddenValid: function hiddenValid() {
+      this.validType = false;
+      this.validCateId = false;
+      this.validCateName = false;
+      this.validKubunName = false;
+      this.classValidType = "";
+      this.classValidCateId = "";
+      this.classValidCateName = "";
+      this.classValidKubunName = "";
     }
   }
 });
@@ -2679,8 +2530,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["mType", "mCate", "mKubun", "errors", "href"],
+  props: ["mType", "mCate", "mKubun", "mErrors", "csrf"],
   data: function data() {
     return {
       // this
@@ -2688,9 +2550,13 @@ __webpack_require__.r(__webpack_exports__);
       disCate: true,
       disKubun: true,
       disDel: true,
+      // model
+      categoryName: "",
+      kubunName: "",
+      // バリデーションエラー
+      errorCate: "",
+      errorKubun: "",
       // app.bladeでjsonへ変換
-      adminIndex: adminIndex,
-      // bind:hrefで仕様
       sesMsg: sesMsg,
       // 使ってない：ただのメモ
       // バリデーションの表示チェック
@@ -2714,7 +2580,7 @@ __webpack_require__.r(__webpack_exports__);
       // プロパティの値が変更になったら即実行
       immediate: true,
       handler: function handler(val) {
-        this.radio = val;
+        this.radio = val; // ラジオボタンによるdisabledの設定
 
         if (val == 1) {
           this.disCate = false;
@@ -2764,7 +2630,11 @@ __webpack_require__.r(__webpack_exports__);
           } else {
             this.hiddenValid();
           }
-        }
+        } // バリデーションエラー時のinputの赤枠
+        // if (this.mErrors.category_name) {
+        //     classValidCateName = "is-invalid";
+        // }
+
       }
     }
   },
@@ -2822,14 +2692,53 @@ __webpack_require__.r(__webpack_exports__);
 
       this.$emit("m-chg-cate", type);
     },
+    mDel: function mDel(ev) {
+      var msg = ["削除してもよろしいですか？"].join("\n");
+
+      if (!window.confirm(msg)) {
+        ev.preventDefault();
+      }
+    },
+    checkForm: function checkForm(ev) {
+      var cate = this.categoryName;
+      var kubun = this.kubunName;
+
+      if (!this.disCate) {
+        if (cate.length > 2) {
+          this.errorCate = "科目名は20文字までで入力してください";
+          this.classValidCateName = "is-invalid";
+          ev.preventDefault();
+        }
+      }
+
+      if (!this.disKubun) {
+        if (kubun.length > 2) {
+          this.errorKubun = "小科目名は20文字までで入力してください";
+          this.classValidKubunName = "is-invalid";
+          ev.preventDefault();
+        }
+      }
+    },
     // --- method ---
     showValidCate: function showValidCate() {
       this.validType = true;
       this.validCateId = true;
       this.validCateName = true;
-      this.classValidType = "is-invalid";
-      this.classValidCateId = "is-invalid";
-      this.classValidCateName = "is-invalid";
+
+      if (this.mErrors.account_type) {
+        this.classValidType = "is-invalid";
+      }
+
+      if (this.mErrors.category_id) {
+        this.classValidCateId = "is-invalid";
+      }
+
+      if (this.mErrors.category_name) {
+        this.classValidCateName = "is-invalid";
+      } //   this.classValidType = "is-invalid";
+      //   this.classValidCateId = "is-invalid";
+      //   this.classValidCateName = "is-invalid";
+
     },
     showValidKubun: function showValidKubun() {
       this.validType = true;
@@ -40975,409 +40884,9 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/adminCreateCate.vue?vue&type=template&id=da0dbac2&":
-/*!******************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/adminCreateCate.vue?vue&type=template&id=da0dbac2& ***!
-  \******************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "crateCategory mb-3" }, [
-    _c("div", { staticClass: "createAccountType mr-3" }, [
-      _c("label", { attrs: { for: "createAccountType" } }, [
-        _vm._v("科目区分")
-      ]),
-      _vm._v(" "),
-      _c(
-        "select",
-        {
-          staticClass: "form-control",
-          attrs: {
-            name: "account_type",
-            id: "createAccountType",
-            disabled: _vm.mDis,
-            required: ""
-          },
-          on: {
-            "~change": function($event) {
-              return _vm.chgTypeOne()
-            }
-          }
-        },
-        [
-          _c("option", { attrs: { id: "opAdmCc0", value: "" } }, [
-            _vm._v("---")
-          ]),
-          _vm._v(" "),
-          _vm._l(_vm.mType, function(type, i) {
-            return _c("option", { key: "type" + i, domProps: { value: i } }, [
-              _vm._v("\n        " + _vm._s(type) + "\n      ")
-            ])
-          })
-        ],
-        2
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "invalid-feedback" })
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "createCategory" }, [
-      _c("label", { attrs: { for: "createCategory" } }, [_vm._v("科目名")]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: {
-          type: "text",
-          name: "category_name",
-          id: "createCategory",
-          value: "",
-          disabled: _vm.mDis,
-          required: ""
-        }
-      }),
-      _vm._v(" "),
-      _c("div", { staticClass: "invalid-feedback" })
-    ])
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/adminCreateKubun.vue?vue&type=template&id=1b2e949e&":
-/*!*******************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/adminCreateKubun.vue?vue&type=template&id=1b2e949e& ***!
-  \*******************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "crate" }, [
-    _c("div", { staticClass: "checkbox mb-3" }, [
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.radio,
-            expression: "radio"
-          }
-        ],
-        staticClass: "mr-1",
-        attrs: { type: "radio", name: "mode", value: "1", id: "createSelect1" },
-        domProps: { checked: _vm._q(_vm.radio, "1") },
-        on: {
-          change: function($event) {
-            _vm.radio = "1"
-          }
-        }
-      }),
-      _vm._v(" "),
-      _c(
-        "label",
-        {
-          staticClass: "form-check-label mr-3",
-          attrs: { for: "createSelect1" }
-        },
-        [_vm._v("科目のみ作成")]
-      ),
-      _vm._v(" "),
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.radio,
-            expression: "radio"
-          }
-        ],
-        staticClass: "mr-1",
-        attrs: { type: "radio", name: "mode", value: "2", id: "createSelect2" },
-        domProps: { checked: _vm._q(_vm.radio, "2") },
-        on: {
-          change: function($event) {
-            _vm.radio = "2"
-          }
-        }
-      }),
-      _vm._v(" "),
-      _c(
-        "label",
-        {
-          staticClass: "form-check-label mr-3",
-          attrs: { for: "createSelect2" }
-        },
-        [_vm._v("小科目のみ作成")]
-      )
-    ]),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "createDiv mb-3" },
-      [
-        _c("div", { staticClass: "createAccountType align-top mr-3" }, [
-          _c("label", { attrs: { for: "createAccountType" } }, [
-            _vm._v("科目区分")
-          ]),
-          _vm._v(" "),
-          _c(
-            "select",
-            {
-              staticClass: "form-control",
-              class: _vm.classValidType,
-              attrs: { name: "account_type", id: "createAccountType" },
-              on: {
-                "~change": function($event) {
-                  return _vm.chgTypeOne0()
-                },
-                change: function($event) {
-                  return _vm.chgType($event)
-                }
-              }
-            },
-            [
-              _c("option", { attrs: { id: "opAdmCk0", value: "" } }, [
-                _vm._v("---")
-              ]),
-              _vm._v(" "),
-              _vm._l(_vm.mType, function(type, i) {
-                return _c(
-                  "option",
-                  { key: "type" + i, domProps: { value: i } },
-                  [_vm._v("\n          " + _vm._s(type) + "\n        ")]
-                )
-              })
-            ],
-            2
-          ),
-          _vm._v(" "),
-          _vm.errors.account_type
-            ? _c(
-                "div",
-                { staticClass: "invalid-feedback" },
-                [
-                  _vm.validType
-                    ? _vm._l(_vm.errors.account_type, function(acctType, i) {
-                        return _c("p", { key: "errAcctType" + i }, [
-                          _vm._v(
-                            "\n            " + _vm._s(acctType) + "\n          "
-                          )
-                        ])
-                      })
-                    : _vm._e()
-                ],
-                2
-              )
-            : _vm._e()
-        ]),
-        _vm._v(" "),
-        _vm.radio == 1
-          ? [
-              _c("div", { staticClass: "createCategory" }, [
-                _c("label", { attrs: { for: "createCategory" } }, [
-                  _vm._v("科目名")
-                ]),
-                _vm._v(" "),
-                _c("input", {
-                  staticClass: "form-control",
-                  class: _vm.classValidCateName,
-                  attrs: {
-                    type: "text",
-                    name: "category_name",
-                    id: "createCategory",
-                    value: "",
-                    disabled: _vm.disCate
-                  }
-                }),
-                _vm._v(" "),
-                _vm.errors.category_name
-                  ? _c(
-                      "div",
-                      { staticClass: "invalid-feedback" },
-                      [
-                        _vm.validCateName
-                          ? _vm._l(_vm.errors.category_name, function(
-                              cName,
-                              i
-                            ) {
-                              return _c("p", { key: "errCateName" + i }, [
-                                _vm._v(
-                                  "\n              " +
-                                    _vm._s(cName) +
-                                    "\n            "
-                                )
-                              ])
-                            })
-                          : _vm._e()
-                      ],
-                      2
-                    )
-                  : _vm._e()
-              ])
-            ]
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.radio == 2
-          ? [
-              _c("div", { staticClass: "createSelectCategory mr-3" }, [
-                _c("label", { attrs: { for: "createSelectCategory" } }, [
-                  _vm._v("科目名")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "select",
-                  {
-                    staticClass: "form-control",
-                    class: _vm.classValidCateId,
-                    attrs: {
-                      name: "category_id",
-                      id: "createSelectCategory",
-                      disabled: _vm.disKubun
-                    }
-                  },
-                  [
-                    _c(
-                      "option",
-                      { attrs: { value: "", id: "opAdmCk1", selected: "" } },
-                      [_vm._v("---")]
-                    ),
-                    _vm._v(" "),
-                    _vm._l(_vm.mCate, function(cate, i) {
-                      return _c(
-                        "option",
-                        { key: "cate" + i, domProps: { value: cate.id } },
-                        [
-                          _vm._v(
-                            "\n            " +
-                              _vm._s(cate.category_name) +
-                              "\n          "
-                          )
-                        ]
-                      )
-                    })
-                  ],
-                  2
-                ),
-                _vm._v(" "),
-                _vm.errors.category_id
-                  ? _c(
-                      "div",
-                      { staticClass: "invalid-feedback" },
-                      [
-                        _vm.validCateId
-                          ? _vm._l(_vm.errors.category_id, function(cId, i) {
-                              return _c("p", { key: "errCateName" + i }, [
-                                _vm._v(
-                                  "\n              " +
-                                    _vm._s(cId) +
-                                    "\n            "
-                                )
-                              ])
-                            })
-                          : _vm._e()
-                      ],
-                      2
-                    )
-                  : _vm._e()
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "createKubunName" }, [
-                _c("label", { attrs: { for: "createKubunName" } }, [
-                  _vm._v("小科目名")
-                ]),
-                _vm._v(" "),
-                _c("input", {
-                  staticClass: "form-control mr-1",
-                  class: _vm.classValidKubunName,
-                  attrs: {
-                    type: "text",
-                    name: "kubun_name",
-                    id: "createKubunName",
-                    value: "",
-                    disabled: _vm.disKubun
-                  }
-                }),
-                _vm._v(" "),
-                _vm.errors.category_id
-                  ? _c("div", {}, [
-                      _vm.errors.kubun_name
-                        ? _c(
-                            "div",
-                            { staticClass: "invalid-feedback" },
-                            [
-                              _vm.validKubunName
-                                ? _vm._l(_vm.errors.kubun_name, function(
-                                    kName,
-                                    i
-                                  ) {
-                                    return _c(
-                                      "span",
-                                      { key: "errKubunName" + i },
-                                      [
-                                        _vm._v(
-                                          "\n                " +
-                                            _vm._s(kName) +
-                                            "\n              "
-                                        )
-                                      ]
-                                    )
-                                  })
-                                : _vm._e()
-                            ],
-                            2
-                          )
-                        : _vm._e()
-                    ])
-                  : _vm._e()
-              ])
-            ]
-          : _vm._e()
-      ],
-      2
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "col-md-10" }, [
-      _c("input", {
-        staticClass: "btn btn-info mr-2",
-        attrs: { type: "submit", name: "", id: "submit", value: "Send" }
-      }),
-      _vm._v(" "),
-      _c(
-        "a",
-        { staticClass: "btn btn-light", attrs: { href: _vm.adminIndex } },
-        [_vm._v(" Return ")]
-      )
-    ])
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/adminDelete.vue?vue&type=template&id=068d7842&":
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/adminCreate.vue?vue&type=template&id=35af62a0&":
 /*!**************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/adminDelete.vue?vue&type=template&id=068d7842& ***!
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/adminCreate.vue?vue&type=template&id=35af62a0& ***!
   \**************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -41390,78 +40899,388 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "crateCategory" }, [
-    _c("div", { staticClass: "createAccountType align-top mr-3" }, [
-      _c("label", { attrs: { for: "createAccountType" } }, [
-        _vm._v("科目区分")
-      ]),
-      _vm._v(" "),
-      _c(
-        "select",
-        {
-          staticClass: "form-control",
-          attrs: {
-            name: "account_type",
-            id: "createAccountType",
-            required: ""
-          },
-          on: {
-            "~change": function($event) {
-              return _vm.chgTypeOne0()
+  return _c("div", { staticClass: "crate" }, [
+    _c(
+      "form",
+      {
+        attrs: { action: "./store", method: "post" },
+        on: { submit: _vm.checkForm }
+      },
+      [
+        _c("input", {
+          attrs: { type: "hidden", name: "_token" },
+          domProps: { value: _vm.csrf }
+        }),
+        _vm._v(" "),
+        _c("div", { staticClass: "checkbox mb-3" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.radio,
+                expression: "radio"
+              }
+            ],
+            staticClass: "mr-1",
+            attrs: {
+              type: "radio",
+              name: "mode",
+              value: "1",
+              id: "createSelect1"
             },
-            change: function($event) {
-              return _vm.chgType($event)
+            domProps: { checked: _vm._q(_vm.radio, "1") },
+            on: {
+              change: function($event) {
+                _vm.radio = "1"
+              }
             }
-          }
-        },
-        [
-          _c("option", { attrs: { id: "opAdmCk0", value: "" } }, [
-            _vm._v("---")
-          ]),
+          }),
           _vm._v(" "),
-          _vm._l(_vm.accountType, function(type, i) {
-            return _c("option", { key: "type" + i, domProps: { value: i } }, [
-              _vm._v("\n        " + _vm._s(type) + "\n      ")
-            ])
-          })
-        ],
-        2
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "invalid-feedback" })
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "createSelectCategory mr-3" }, [
-      _c("label", { attrs: { for: "createSelectCategory" } }, [
-        _vm._v("科目名")
-      ]),
-      _vm._v(" "),
-      _c(
-        "select",
-        {
-          staticClass: "form-control",
-          attrs: { name: "category_id", id: "createSelectCategory" }
-        },
-        [
-          _c("option", { attrs: { value: "", id: "opAdmCk1", selected: "" } }, [
-            _vm._v("---")
-          ]),
+          _c(
+            "label",
+            {
+              staticClass: "form-check-label mr-3",
+              attrs: { for: "createSelect1" }
+            },
+            [_vm._v("科目のみ作成")]
+          ),
           _vm._v(" "),
-          _vm._l(_vm.mCate, function(cate, i) {
-            return _c(
-              "option",
-              { key: "cate" + i, domProps: { value: cate.id } },
-              [_vm._v("\n        " + _vm._s(cate.category_name) + "\n      ")]
-            )
-          })
-        ],
-        2
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "invalid-feedback" })
-    ]),
-    _vm._v(" "),
-    _vm._m(0)
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.radio,
+                expression: "radio"
+              }
+            ],
+            staticClass: "mr-1",
+            attrs: {
+              type: "radio",
+              name: "mode",
+              value: "2",
+              id: "createSelect2"
+            },
+            domProps: { checked: _vm._q(_vm.radio, "2") },
+            on: {
+              change: function($event) {
+                _vm.radio = "2"
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "label",
+            {
+              staticClass: "form-check-label mr-3",
+              attrs: { for: "createSelect2" }
+            },
+            [_vm._v("小科目のみ作成")]
+          )
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "createDiv mb-3" },
+          [
+            _c("div", { staticClass: "createAccountType align-top mr-3" }, [
+              _c("label", { attrs: { for: "createAccountType" } }, [
+                _vm._v("科目区分")
+              ]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  staticClass: "form-control",
+                  class: _vm.classValidType,
+                  attrs: {
+                    name: "account_type",
+                    id: "createAccountType",
+                    required: ""
+                  },
+                  on: {
+                    "~change": function($event) {
+                      return _vm.chgTypeOne0()
+                    },
+                    change: function($event) {
+                      return _vm.chgType($event)
+                    }
+                  }
+                },
+                [
+                  _c("option", { attrs: { id: "opAdmCk0", value: "" } }, [
+                    _vm._v("---")
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.mType, function(type, i) {
+                    return _c(
+                      "option",
+                      { key: "type" + i, domProps: { value: i } },
+                      [_vm._v("\n            " + _vm._s(type) + "\n          ")]
+                    )
+                  })
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _vm.mErrors.account_type
+                ? _c(
+                    "span",
+                    { staticClass: "invalid-feedback" },
+                    [
+                      _vm.validType
+                        ? _vm._l(_vm.mErrors.account_type, function(
+                            acctType,
+                            i
+                          ) {
+                            return _c("div", { key: "errAcctType" + i }, [
+                              _vm._v(
+                                "\n              " +
+                                  _vm._s(acctType) +
+                                  "\n            "
+                              )
+                            ])
+                          })
+                        : _vm._e()
+                    ],
+                    2
+                  )
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _vm.radio == 1
+              ? [
+                  _c("div", { staticClass: "createCategory" }, [
+                    _c("label", { attrs: { for: "createCategory" } }, [
+                      _vm._v("科目名")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.categoryName,
+                          expression: "categoryName"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      class: _vm.classValidCateName,
+                      attrs: {
+                        type: "text",
+                        name: "category_name",
+                        id: "createCategory",
+                        required: "",
+                        disabled: _vm.disCate
+                      },
+                      domProps: { value: _vm.categoryName },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.categoryName = $event.target.value
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm.errorCate
+                      ? _c("div", { staticClass: "invalid-feedback mt-1" }, [
+                          _vm._v(
+                            "\n            " +
+                              _vm._s(_vm.errorCate) +
+                              "\n          "
+                          )
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.mErrors.category_name
+                      ? _c(
+                          "span",
+                          { staticClass: "invalid-feedback" },
+                          [
+                            _vm.validCateName
+                              ? _vm._l(_vm.mErrors.category_name, function(
+                                  cName,
+                                  i
+                                ) {
+                                  return _c("div", { key: "errCateName" + i }, [
+                                    _vm._v(
+                                      "\n                " +
+                                        _vm._s(cName) +
+                                        "\n              "
+                                    )
+                                  ])
+                                })
+                              : _vm._e()
+                          ],
+                          2
+                        )
+                      : _vm._e()
+                  ])
+                ]
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.radio == 2
+              ? [
+                  _c(
+                    "div",
+                    { staticClass: "createSelectCategory mr-3 align-top" },
+                    [
+                      _c("label", { attrs: { for: "createSelectCategory" } }, [
+                        _vm._v("科目名")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          staticClass: "form-control",
+                          class: _vm.classValidCateId,
+                          attrs: {
+                            name: "category_id",
+                            id: "createSelectCategory",
+                            required: "",
+                            disabled: _vm.disKubun
+                          }
+                        },
+                        [
+                          _c(
+                            "option",
+                            {
+                              attrs: { value: "", id: "opAdmCk1", selected: "" }
+                            },
+                            [_vm._v("---")]
+                          ),
+                          _vm._v(" "),
+                          _vm._l(_vm.mCate, function(cate, i) {
+                            return _c(
+                              "option",
+                              { key: "cate" + i, domProps: { value: cate.id } },
+                              [
+                                _vm._v(
+                                  "\n              " +
+                                    _vm._s(cate.category_name) +
+                                    "\n            "
+                                )
+                              ]
+                            )
+                          })
+                        ],
+                        2
+                      ),
+                      _vm._v(" "),
+                      _vm.mErrors.category_id
+                        ? _c(
+                            "span",
+                            { staticClass: "invalid-feedback" },
+                            [
+                              _vm.validCateId
+                                ? _vm._l(_vm.mErrors.category_id, function(
+                                    cId,
+                                    i
+                                  ) {
+                                    return _c(
+                                      "div",
+                                      { key: "errCateName" + i },
+                                      [
+                                        _vm._v(
+                                          "\n                " +
+                                            _vm._s(cId) +
+                                            "\n              "
+                                        )
+                                      ]
+                                    )
+                                  })
+                                : _vm._e()
+                            ],
+                            2
+                          )
+                        : _vm._e()
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "createKubunName align-top" }, [
+                    _c("label", { attrs: { for: "createKubunName" } }, [
+                      _vm._v("小科目名")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.kubunName,
+                          expression: "kubunName"
+                        }
+                      ],
+                      staticClass: "form-control mr-1",
+                      class: _vm.classValidKubunName,
+                      attrs: {
+                        type: "text",
+                        name: "kubun_name",
+                        id: "createKubunName",
+                        required: "",
+                        disabled: _vm.disKubun
+                      },
+                      domProps: { value: _vm.kubunName },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.kubunName = $event.target.value
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm.errorKubun
+                      ? _c("div", { staticClass: "invalid-feedback mt-1" }, [
+                          _vm._v(
+                            "\n            " +
+                              _vm._s(_vm.errorKubun) +
+                              "\n          "
+                          )
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.mErrors.kubun_name
+                      ? _c(
+                          "span",
+                          { staticClass: "invalid-feedback" },
+                          [
+                            _vm.validKubunName
+                              ? _vm._l(_vm.mErrors.kubun_name, function(
+                                  kName,
+                                  i
+                                ) {
+                                  return _c(
+                                    "div",
+                                    { key: "errKubunName" + i },
+                                    [
+                                      _vm._v(
+                                        "\n                " +
+                                          _vm._s(kName) +
+                                          "\n              "
+                                      )
+                                    ]
+                                  )
+                                })
+                              : _vm._e()
+                          ],
+                          2
+                        )
+                      : _vm._e()
+                  ])
+                ]
+              : _vm._e()
+          ],
+          2
+        ),
+        _vm._v(" "),
+        _vm._m(0)
+      ]
+    )
   ])
 }
 var staticRenderFns = [
@@ -41469,23 +41288,14 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "crateCategory" }, [
-      _c("div", { staticClass: "createKubunName mb-3" }, [
-        _c("label", { attrs: { for: "createKubunName" } }, [
-          _vm._v("小科目名")
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control mr-1",
-          attrs: {
-            type: "text",
-            name: "kubun_name",
-            id: "createKubunName",
-            value: ""
-          }
-        }),
-        _vm._v(" "),
-        _c("div", { staticClass: "invalid-feedback" })
+    return _c("div", { staticClass: "col-md-10" }, [
+      _c("input", {
+        staticClass: "btn btn-info mr-2",
+        attrs: { type: "submit", name: "", id: "submit", value: "Send" }
+      }),
+      _vm._v(" "),
+      _c("a", { staticClass: "btn btn-light", attrs: { href: "./index" } }, [
+        _vm._v(" Return ")
       ])
     ])
   }
@@ -41512,247 +41322,244 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "edit" }, [
-    _c("div", { staticClass: "checkbox mb-3" }, [
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.radio,
-            expression: "radio"
-          }
-        ],
-        staticClass: "mr-1",
-        attrs: { type: "radio", value: "1", name: "mode", id: "editSelect1" },
-        domProps: { checked: _vm._q(_vm.radio, "1") },
-        on: {
-          change: function($event) {
-            _vm.radio = "1"
-          }
-        }
-      }),
-      _vm._v(" "),
-      _c(
-        "label",
-        { staticClass: "form-check-label mr-3", attrs: { for: "editSelect1" } },
-        [_vm._v("科目のみ編集")]
-      ),
-      _vm._v(" "),
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.radio,
-            expression: "radio"
-          }
-        ],
-        staticClass: "mr-1",
-        attrs: { type: "radio", value: "2", name: "mode", id: "editSelect2" },
-        domProps: { checked: _vm._q(_vm.radio, "2") },
-        on: {
-          change: function($event) {
-            _vm.radio = "2"
-          }
-        }
-      }),
-      _vm._v(" "),
-      _c(
-        "label",
-        { staticClass: "form-check-label mr-3", attrs: { for: "editSelect2" } },
-        [_vm._v("小科目のみ編集")]
-      ),
-      _vm._v(" "),
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.radio,
-            expression: "radio"
-          }
-        ],
-        staticClass: "mr-1",
-        attrs: { type: "radio", value: "3", name: "mode", id: "editSelect3" },
-        domProps: { checked: _vm._q(_vm.radio, "3") },
-        on: {
-          change: function($event) {
-            _vm.radio = "3"
-          }
-        }
-      }),
-      _vm._v(" "),
-      _c(
-        "label",
-        { staticClass: "form-check-label mr-3", attrs: { for: "editSelect3" } },
-        [_vm._v("科目の削除")]
-      ),
-      _vm._v(" "),
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.radio,
-            expression: "radio"
-          }
-        ],
-        staticClass: "mr-1",
-        attrs: { type: "radio", value: "4", name: "mode", id: "editSelect4" },
-        domProps: { checked: _vm._q(_vm.radio, "4") },
-        on: {
-          change: function($event) {
-            _vm.radio = "4"
-          }
-        }
-      }),
-      _vm._v(" "),
-      _c(
-        "label",
-        { staticClass: "form-check-label mr-3", attrs: { for: "editSelect4" } },
-        [_vm._v("小科目の削除")]
-      )
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "editDiv mb-3" }, [
-      _c("div", { staticClass: "editAccountType mr-3" }, [
-        _c("label", { attrs: { for: "editAccountType" } }, [
-          _vm._v("科目区分")
-        ]),
+    _c(
+      "form",
+      {
+        attrs: { action: "./update", method: "post" },
+        on: { submit: _vm.checkForm }
+      },
+      [
+        _c("input", {
+          attrs: { type: "hidden", name: "_token" },
+          domProps: { value: _vm.csrf }
+        }),
         _vm._v(" "),
-        _c(
-          "select",
-          {
-            staticClass: "form-control",
-            class: _vm.classValidType,
-            attrs: { name: "account_type", id: "editAccountType" },
-            on: {
-              "~change": function($event) {
-                return _vm.chgTypeOne()
-              },
-              change: function($event) {
-                return _vm.chgType($event)
+        _c("div", { staticClass: "checkbox mb-3" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.radio,
+                expression: "radio"
               }
-            }
-          },
-          [
-            _c("option", { attrs: { id: "opAdmEdt0", value: "" } }, [
-              _vm._v("---")
-            ]),
-            _vm._v(" "),
-            _vm._l(_vm.mType, function(type, i) {
-              return _c("option", { key: "type" + i, domProps: { value: i } }, [
-                _vm._v("\n          " + _vm._s(type) + "\n        ")
-              ])
-            })
-          ],
-          2
-        ),
-        _vm._v(" "),
-        _vm.errors.account_type
-          ? _c(
-              "div",
-              { staticClass: "invalid-feedback" },
-              [
-                _vm.validType
-                  ? _vm._l(_vm.errors.account_type, function(acctType, i) {
-                      return _c("p", { key: "errAcctType" + i }, [
-                        _vm._v(
-                          "\n            " + _vm._s(acctType) + "\n          "
-                        )
-                      ])
-                    })
-                  : _vm._e()
-              ],
-              2
-            )
-          : _vm._e()
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "createSelectCategory mr-3" }, [
-        _c("label", { attrs: { for: "editSelectCategory" } }, [
-          _vm._v("科目名")
-        ]),
-        _vm._v(" "),
-        _c(
-          "select",
-          {
-            staticClass: "form-control",
-            class: _vm.classValidCateId,
-            attrs: { name: "category_id", id: "editSelectCategory" },
+            ],
+            staticClass: "mr-1",
+            attrs: {
+              type: "radio",
+              value: "1",
+              name: "mode",
+              id: "editSelect1"
+            },
+            domProps: { checked: _vm._q(_vm.radio, "1") },
             on: {
               change: function($event) {
-                return _vm.chgCate($event)
+                _vm.radio = "1"
               }
             }
-          },
-          [
-            _c(
-              "option",
-              { attrs: { value: "", id: "opAdmEdt1", selected: "" } },
-              [_vm._v("---")]
-            ),
-            _vm._v(" "),
-            _vm._l(_vm.mCate, function(cate, i) {
-              return _c(
-                "option",
-                { key: "cate" + i, domProps: { value: cate.id } },
-                [
-                  _vm._v(
-                    "\n          " + _vm._s(cate.category_name) + "\n        "
-                  )
-                ]
-              )
-            })
-          ],
-          2
-        ),
+          }),
+          _vm._v(" "),
+          _c(
+            "label",
+            {
+              staticClass: "form-check-label mr-3",
+              attrs: { for: "editSelect1" }
+            },
+            [_vm._v("科目のみ編集")]
+          ),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.radio,
+                expression: "radio"
+              }
+            ],
+            staticClass: "mr-1",
+            attrs: {
+              type: "radio",
+              value: "2",
+              name: "mode",
+              id: "editSelect2"
+            },
+            domProps: { checked: _vm._q(_vm.radio, "2") },
+            on: {
+              change: function($event) {
+                _vm.radio = "2"
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "label",
+            {
+              staticClass: "form-check-label mr-3",
+              attrs: { for: "editSelect2" }
+            },
+            [_vm._v("小科目のみ編集")]
+          ),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.radio,
+                expression: "radio"
+              }
+            ],
+            staticClass: "mr-1",
+            attrs: {
+              type: "radio",
+              value: "3",
+              name: "mode",
+              id: "editSelect3"
+            },
+            domProps: { checked: _vm._q(_vm.radio, "3") },
+            on: {
+              change: function($event) {
+                _vm.radio = "3"
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "label",
+            {
+              staticClass: "form-check-label mr-3",
+              attrs: { for: "editSelect3" }
+            },
+            [_vm._v("科目の削除")]
+          ),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.radio,
+                expression: "radio"
+              }
+            ],
+            staticClass: "mr-1",
+            attrs: {
+              type: "radio",
+              value: "4",
+              name: "mode",
+              id: "editSelect4"
+            },
+            domProps: { checked: _vm._q(_vm.radio, "4") },
+            on: {
+              change: function($event) {
+                _vm.radio = "4"
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "label",
+            {
+              staticClass: "form-check-label mr-3",
+              attrs: { for: "editSelect4" }
+            },
+            [_vm._v("小科目の削除")]
+          )
+        ]),
         _vm._v(" "),
-        _vm.errors.category_id
-          ? _c(
-              "div",
-              { staticClass: "invalid-feedback" },
-              [
-                _vm.validCateId
-                  ? _vm._l(_vm.errors.category_id, function(cId, i) {
-                      return _c("p", { key: "errCateId" + i }, [
-                        _vm._v("\n            " + _vm._s(cId) + "\n          ")
-                      ])
-                    })
-                  : _vm._e()
-              ],
-              2
-            )
-          : _vm._e()
-      ]),
-      _vm._v(" "),
-      _vm.radio == 2 || _vm.radio == 4
-        ? _c("div", { key: "kubun", staticClass: "editSelectKubun mr-3" }, [
-            _c("label", { attrs: { for: "editSelectKubun" } }, [
-              _vm._v("小科目名")
+        _c("div", { staticClass: "editDiv mb-3" }, [
+          _c("div", { staticClass: "editAccountType align-top mr-3" }, [
+            _c("label", { attrs: { for: "editAccountType" } }, [
+              _vm._v("科目区分")
             ]),
             _vm._v(" "),
             _c(
               "select",
               {
                 staticClass: "form-control",
-                class: _vm.classValidKubunId,
-                attrs: { name: "kubun_id", id: "editSelectKubun" }
+                class: _vm.classValidType,
+                attrs: { name: "account_type", id: "editAccountType" },
+                on: {
+                  "~change": function($event) {
+                    return _vm.chgTypeOne()
+                  },
+                  change: function($event) {
+                    return _vm.chgType($event)
+                  }
+                }
+              },
+              [
+                _c("option", { attrs: { id: "opAdmEdt0", value: "" } }, [
+                  _vm._v("---")
+                ]),
+                _vm._v(" "),
+                _vm._l(_vm.mType, function(type, i) {
+                  return _c(
+                    "option",
+                    { key: "type" + i, domProps: { value: i } },
+                    [_vm._v("\n            " + _vm._s(type) + "\n          ")]
+                  )
+                })
+              ],
+              2
+            ),
+            _vm._v(" "),
+            _vm.mErrors.account_type
+              ? _c(
+                  "span",
+                  { staticClass: "invalid-feedback" },
+                  [
+                    _vm.validType
+                      ? _vm._l(_vm.mErrors.account_type, function(acctType, i) {
+                          return _c("div", { key: "errAcctType" + i }, [
+                            _vm._v(
+                              "\n              " +
+                                _vm._s(acctType) +
+                                "\n            "
+                            )
+                          ])
+                        })
+                      : _vm._e()
+                  ],
+                  2
+                )
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "createSelectCategory align-top mr-3" }, [
+            _c("label", { attrs: { for: "editSelectCategory" } }, [
+              _vm._v("科目名")
+            ]),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                staticClass: "form-control",
+                class: _vm.classValidCateId,
+                attrs: { name: "category_id", id: "editSelectCategory" },
+                on: {
+                  change: function($event) {
+                    return _vm.chgCate($event)
+                  }
+                }
               },
               [
                 _c(
                   "option",
-                  { attrs: { value: "", id: "opAdmEdt2", selected: "" } },
+                  { attrs: { value: "", id: "opAdmEdt1", selected: "" } },
                   [_vm._v("---")]
                 ),
                 _vm._v(" "),
-                _vm._l(_vm.mKubun, function(kubun, i) {
+                _vm._l(_vm.mCate, function(cate, i) {
                   return _c(
                     "option",
-                    { key: "kubun" + i, domProps: { value: kubun.id } },
+                    { key: "cate" + i, domProps: { value: cate.id } },
                     [
                       _vm._v(
-                        "\n          " + _vm._s(kubun.kubun_name) + "\n        "
+                        "\n            " +
+                          _vm._s(cate.category_name) +
+                          "\n          "
                       )
                     ]
                   )
@@ -41761,16 +41568,76 @@ var render = function() {
               2
             ),
             _vm._v(" "),
-            _vm.errors.category_id
-              ? _c("div", {}, [
-                  _vm.errors.kubun_id
+            _vm.mErrors.category_id
+              ? _c(
+                  "span",
+                  { staticClass: "invalid-feedback" },
+                  [
+                    _vm.validCateId
+                      ? _vm._l(_vm.mErrors.category_id, function(cId, i) {
+                          return _c("div", { key: "errCateId" + i }, [
+                            _vm._v(
+                              "\n              " +
+                                _vm._s(cId) +
+                                "\n            "
+                            )
+                          ])
+                        })
+                      : _vm._e()
+                  ],
+                  2
+                )
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _vm.radio == 2 || _vm.radio == 4
+            ? _c(
+                "div",
+                { key: "kubun", staticClass: "editSelectKubun align-top mr-3" },
+                [
+                  _c("label", { attrs: { for: "editSelectKubun" } }, [
+                    _vm._v("小科目名")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "select",
+                    {
+                      staticClass: "form-control",
+                      class: _vm.classValidKubunId,
+                      attrs: { name: "kubun_id", id: "editSelectKubun" }
+                    },
+                    [
+                      _c(
+                        "option",
+                        { attrs: { value: "", id: "opAdmEdt2", selected: "" } },
+                        [_vm._v("---")]
+                      ),
+                      _vm._v(" "),
+                      _vm._l(_vm.mKubun, function(kubun, i) {
+                        return _c(
+                          "option",
+                          { key: "kubun" + i, domProps: { value: kubun.id } },
+                          [
+                            _vm._v(
+                              "\n            " +
+                                _vm._s(kubun.kubun_name) +
+                                "\n          "
+                            )
+                          ]
+                        )
+                      })
+                    ],
+                    2
+                  ),
+                  _vm._v(" "),
+                  _vm.mErrors.kubun_id
                     ? _c(
-                        "div",
+                        "span",
                         { staticClass: "invalid-feedback" },
                         [
                           _vm.validKubunId
-                            ? _vm._l(_vm.errors.kubun_id, function(kId, i) {
-                                return _c("p", { key: "errKubunId" + i }, [
+                            ? _vm._l(_vm.mErrors.kubun_id, function(kId, i) {
+                                return _c("div", { key: "errKubunId" + i }, [
                                   _vm._v(
                                     "\n              " +
                                       _vm._s(kId) +
@@ -41783,138 +41650,190 @@ var render = function() {
                         2
                       )
                     : _vm._e()
-                ])
-              : _vm._e()
-          ])
-        : _vm._e()
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "crateCategory" }, [
-      _vm.radio == 1
-        ? _c("div", { staticClass: "editCategoryName mb-4" }, [
-            _c("label", { attrs: { for: "editCategoryName" } }, [
-              _vm._v("変更（科目名）")
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              staticClass: "form-control mb-1",
-              class: _vm.classValidCateName,
-              attrs: {
-                type: "text",
-                id: "editCategoryName",
-                name: "category_name",
-                value: "",
-                placeholder: "入力してください",
-                disabled: _vm.disCate
-              }
-            }),
-            _vm._v(" "),
-            _vm.errors.category_name
-              ? _c(
-                  "div",
-                  { staticClass: "invalid-feedback" },
-                  [
-                    _vm.validCateName
-                      ? _vm._l(_vm.errors.category_name, function(cName, i) {
-                          return _c("p", { key: "errCateName" + i }, [
-                            _vm._v(
-                              "\n            " + _vm._s(cName) + "\n          "
-                            )
-                          ])
-                        })
-                      : _vm._e()
+                ]
+              )
+            : _vm._e()
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "crateCategory" }, [
+          _vm.radio == 1
+            ? _c("div", { staticClass: "editCategoryName align-top mb-4" }, [
+                _c("label", { attrs: { for: "editCategoryName" } }, [
+                  _vm._v("変更（科目名）")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.categoryName,
+                      expression: "categoryName"
+                    }
                   ],
-                  2
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.errors.category_name
-              ? _c("div", { staticClass: "invalid-feedback" })
-              : _vm._e()
-          ])
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.radio == 2
-        ? _c("div", { staticClass: "editKubunName mb-4" }, [
-            _c("label", { attrs: { for: "editKubunName" } }, [
-              _vm._v("変更（小科目名）")
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              staticClass: "form-control mb-1",
-              class: _vm.classValidKubunName,
-              attrs: {
-                type: "text",
-                id: "editKubunName",
-                name: "kubun_name",
-                value: "",
-                placeholder: "入力してください",
-                disabled: _vm.disKubun
-              }
-            }),
-            _vm._v(" "),
-            _vm.errors.category_id
-              ? _c("div", {}, [
-                  _vm.errors.kubun_name
-                    ? _c(
-                        "div",
-                        { staticClass: "invalid-feedback" },
-                        [
-                          _vm.validKubunName
-                            ? _vm._l(_vm.errors.kubun_name, function(kName, i) {
-                                return _c("span", { key: "errKubunName" + i }, [
-                                  _vm._v(
-                                    "\n              " +
-                                      _vm._s(kName) +
-                                      "\n            "
-                                  )
-                                ])
-                              })
-                            : _vm._e()
-                        ],
-                        2
+                  staticClass: "form-control mb-1",
+                  class: _vm.classValidCateName,
+                  attrs: {
+                    type: "text",
+                    id: "editCategoryName",
+                    name: "category_name",
+                    placeholder: "入力してください",
+                    disabled: _vm.disCate
+                  },
+                  domProps: { value: _vm.categoryName },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.categoryName = $event.target.value
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm.errorCate
+                  ? _c("div", { staticClass: "invalid-feedback mt-1" }, [
+                      _vm._v(
+                        "\n          " + _vm._s(_vm.errorCate) + "\n        "
                       )
-                    : _vm._e()
-                ])
-              : _vm._e()
-          ])
-        : _vm._e()
-    ]),
-    _vm._v(" "),
-    _vm.radio == 3 || _vm.radio == 4
-      ? _c("div", { staticClass: "editAccountDel mb-4" }, [
-          _c("input", {
-            staticClass: "btn-outline-danger form-control btnDel",
-            attrs: {
-              type: "submit",
-              name: "submit",
-              id: "editAccountDel",
-              value: "delete",
-              disabled: _vm.disDel
-            }
-          })
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.mErrors.category_name
+                  ? _c(
+                      "span",
+                      { staticClass: "invalid-feedback" },
+                      [
+                        _vm.validCateName
+                          ? _vm._l(_vm.mErrors.category_name, function(
+                              cName,
+                              i
+                            ) {
+                              return _c("div", { key: "errCateName" + i }, [
+                                _vm._v(
+                                  "\n              " +
+                                    _vm._s(cName) +
+                                    "\n            "
+                                )
+                              ])
+                            })
+                          : _vm._e()
+                      ],
+                      2
+                    )
+                  : _vm._e()
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.radio == 2
+            ? _c("div", { staticClass: "editKubunName align-top mb-4" }, [
+                _c("label", { attrs: { for: "editKubunName" } }, [
+                  _vm._v("変更（小科目名）")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.kubunName,
+                      expression: "kubunName"
+                    }
+                  ],
+                  staticClass: "form-control mb-1",
+                  class: _vm.classValidKubunName,
+                  attrs: {
+                    type: "text",
+                    id: "editKubunName",
+                    name: "kubun_name",
+                    value: "",
+                    placeholder: "入力してください",
+                    disabled: _vm.disKubun
+                  },
+                  domProps: { value: _vm.kubunName },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.kubunName = $event.target.value
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm.errorKubun
+                  ? _c("div", { staticClass: "invalid-feedback mt-1" }, [
+                      _vm._v(
+                        "\n          " + _vm._s(_vm.errorKubun) + "\n        "
+                      )
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.mErrors.kubun_name
+                  ? _c(
+                      "span",
+                      { staticClass: "invalid-feedback" },
+                      [
+                        _vm.validKubunName
+                          ? _vm._l(_vm.mErrors.kubun_name, function(kName, i) {
+                              return _c("div", { key: "errKubunName" + i }, [
+                                _vm._v(
+                                  "\n              " +
+                                    _vm._s(kName) +
+                                    "\n            "
+                                )
+                              ])
+                            })
+                          : _vm._e()
+                      ],
+                      2
+                    )
+                  : _vm._e()
+              ])
+            : _vm._e()
+        ]),
+        _vm._v(" "),
+        _vm.radio == 3 || _vm.radio == 4
+          ? _c("div", { staticClass: "editAccountDel mb-4" }, [
+              _c("input", {
+                staticClass: "btn-outline-danger form-control btnDel",
+                attrs: {
+                  type: "submit",
+                  name: "submit",
+                  id: "editAccountDel",
+                  value: "delete",
+                  disabled: _vm.disDel
+                },
+                on: {
+                  click: function($event) {
+                    return _vm.mDel($event)
+                  }
+                }
+              })
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _c("div", { staticClass: "editAccountUpdate ml-3" }, [
+          _vm.radio == 1 || _vm.radio == 2
+            ? _c("input", {
+                staticClass: "btn btn-info btnUpdate mr-3",
+                attrs: {
+                  type: "submit",
+                  name: "submit",
+                  id: "editAccountUpdate",
+                  value: "Update"
+                }
+              })
+            : _vm._e(),
+          _vm._v(" "),
+          _c(
+            "a",
+            { staticClass: "btn btn-light", attrs: { href: "./index" } },
+            [_vm._v(" Return ")]
+          )
         ])
-      : _vm._e(),
-    _vm._v(" "),
-    _c("div", { staticClass: "editAccountUpdate ml-3" }, [
-      _vm.radio == 1 || _vm.radio == 2
-        ? _c("input", {
-            staticClass: "btn btn-info btnUpdate mr-3",
-            attrs: {
-              type: "submit",
-              name: "submit",
-              id: "editAccountUpdate",
-              value: "Update"
-            }
-          })
-        : _vm._e(),
-      _vm._v(" "),
-      _c(
-        "a",
-        { staticClass: "btn btn-light", attrs: { href: _vm.adminIndex } },
-        [_vm._v(" Return ")]
-      )
-    ])
+      ]
+    )
   ])
 }
 var staticRenderFns = []
@@ -56144,18 +56063,38 @@ Vue.component('mda-debit', __webpack_require__(/*! ./components/mdaDebit.vue */ 
 Vue.component('mda-credit', __webpack_require__(/*! ./components/mdaCredit.vue */ "./resources/js/components/mdaCredit.vue")["default"]); // --- admin ---
 // create
 
-Vue.component('admin-create-cate', __webpack_require__(/*! ./components/adminCreateCate.vue */ "./resources/js/components/adminCreateCate.vue")["default"]);
-Vue.component('admin-create-kubun', __webpack_require__(/*! ./components/adminCreateKubun.vue */ "./resources/js/components/adminCreateKubun.vue")["default"]); // edit,delete
+Vue.component('admin-create-kubun', __webpack_require__(/*! ./components/adminCreate.vue */ "./resources/js/components/adminCreate.vue")["default"]); // edit,delete
 
 Vue.component('admin-edit', __webpack_require__(/*! ./components/adminEdit.vue */ "./resources/js/components/adminEdit.vue")["default"]);
-Vue.component('admin-delete', __webpack_require__(/*! ./components/adminDelete.vue */ "./resources/js/components/adminDelete.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.use(window["vue-js-modal"]["default"]);
+Vue.use(VeeValidate, {
+  locale: 'ja',
+  fastExit: false,
+  // 検証メッセージ
+  dictionary: {
+    ja: {
+      messages: {
+        max: function max(field, param) {
+          return field + "は" + param + "文字までで入力してください";
+        },
+        required: function required(field, param) {
+          return field + "を入力してください";
+        }
+      } // // data-vv-asの代わり（イメージ）の引数
+      // attributes: {
+      //     name: '氏名',
+      //     age: '年齢',
+      //     sex: '性別'
+      // }
+
+    }
+  }
+});
 var app = new Vue({
   el: '#app',
   data: {
@@ -56538,155 +56477,17 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/adminCreateCate.vue":
-/*!*****************************************************!*\
-  !*** ./resources/js/components/adminCreateCate.vue ***!
-  \*****************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _adminCreateCate_vue_vue_type_template_id_da0dbac2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./adminCreateCate.vue?vue&type=template&id=da0dbac2& */ "./resources/js/components/adminCreateCate.vue?vue&type=template&id=da0dbac2&");
-/* harmony import */ var _adminCreateCate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./adminCreateCate.vue?vue&type=script&lang=js& */ "./resources/js/components/adminCreateCate.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _adminCreateCate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _adminCreateCate_vue_vue_type_template_id_da0dbac2___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _adminCreateCate_vue_vue_type_template_id_da0dbac2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/adminCreateCate.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/adminCreateCate.vue?vue&type=script&lang=js&":
-/*!******************************************************************************!*\
-  !*** ./resources/js/components/adminCreateCate.vue?vue&type=script&lang=js& ***!
-  \******************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_adminCreateCate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./adminCreateCate.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/adminCreateCate.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_adminCreateCate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/adminCreateCate.vue?vue&type=template&id=da0dbac2&":
-/*!************************************************************************************!*\
-  !*** ./resources/js/components/adminCreateCate.vue?vue&type=template&id=da0dbac2& ***!
-  \************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_adminCreateCate_vue_vue_type_template_id_da0dbac2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./adminCreateCate.vue?vue&type=template&id=da0dbac2& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/adminCreateCate.vue?vue&type=template&id=da0dbac2&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_adminCreateCate_vue_vue_type_template_id_da0dbac2___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_adminCreateCate_vue_vue_type_template_id_da0dbac2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./resources/js/components/adminCreateKubun.vue":
-/*!******************************************************!*\
-  !*** ./resources/js/components/adminCreateKubun.vue ***!
-  \******************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _adminCreateKubun_vue_vue_type_template_id_1b2e949e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./adminCreateKubun.vue?vue&type=template&id=1b2e949e& */ "./resources/js/components/adminCreateKubun.vue?vue&type=template&id=1b2e949e&");
-/* harmony import */ var _adminCreateKubun_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./adminCreateKubun.vue?vue&type=script&lang=js& */ "./resources/js/components/adminCreateKubun.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _adminCreateKubun_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _adminCreateKubun_vue_vue_type_template_id_1b2e949e___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _adminCreateKubun_vue_vue_type_template_id_1b2e949e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/adminCreateKubun.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/adminCreateKubun.vue?vue&type=script&lang=js&":
-/*!*******************************************************************************!*\
-  !*** ./resources/js/components/adminCreateKubun.vue?vue&type=script&lang=js& ***!
-  \*******************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_adminCreateKubun_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./adminCreateKubun.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/adminCreateKubun.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_adminCreateKubun_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/adminCreateKubun.vue?vue&type=template&id=1b2e949e&":
-/*!*************************************************************************************!*\
-  !*** ./resources/js/components/adminCreateKubun.vue?vue&type=template&id=1b2e949e& ***!
-  \*************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_adminCreateKubun_vue_vue_type_template_id_1b2e949e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./adminCreateKubun.vue?vue&type=template&id=1b2e949e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/adminCreateKubun.vue?vue&type=template&id=1b2e949e&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_adminCreateKubun_vue_vue_type_template_id_1b2e949e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_adminCreateKubun_vue_vue_type_template_id_1b2e949e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./resources/js/components/adminDelete.vue":
+/***/ "./resources/js/components/adminCreate.vue":
 /*!*************************************************!*\
-  !*** ./resources/js/components/adminDelete.vue ***!
+  !*** ./resources/js/components/adminCreate.vue ***!
   \*************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _adminDelete_vue_vue_type_template_id_068d7842___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./adminDelete.vue?vue&type=template&id=068d7842& */ "./resources/js/components/adminDelete.vue?vue&type=template&id=068d7842&");
-/* harmony import */ var _adminDelete_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./adminDelete.vue?vue&type=script&lang=js& */ "./resources/js/components/adminDelete.vue?vue&type=script&lang=js&");
+/* harmony import */ var _adminCreate_vue_vue_type_template_id_35af62a0___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./adminCreate.vue?vue&type=template&id=35af62a0& */ "./resources/js/components/adminCreate.vue?vue&type=template&id=35af62a0&");
+/* harmony import */ var _adminCreate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./adminCreate.vue?vue&type=script&lang=js& */ "./resources/js/components/adminCreate.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -56696,9 +56497,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _adminDelete_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _adminDelete_vue_vue_type_template_id_068d7842___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _adminDelete_vue_vue_type_template_id_068d7842___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _adminCreate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _adminCreate_vue_vue_type_template_id_35af62a0___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _adminCreate_vue_vue_type_template_id_35af62a0___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -56708,38 +56509,38 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/adminDelete.vue"
+component.options.__file = "resources/js/components/adminCreate.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/adminDelete.vue?vue&type=script&lang=js&":
+/***/ "./resources/js/components/adminCreate.vue?vue&type=script&lang=js&":
 /*!**************************************************************************!*\
-  !*** ./resources/js/components/adminDelete.vue?vue&type=script&lang=js& ***!
+  !*** ./resources/js/components/adminCreate.vue?vue&type=script&lang=js& ***!
   \**************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_adminDelete_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./adminDelete.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/adminDelete.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_adminDelete_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_adminCreate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./adminCreate.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/adminCreate.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_adminCreate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/adminDelete.vue?vue&type=template&id=068d7842&":
+/***/ "./resources/js/components/adminCreate.vue?vue&type=template&id=35af62a0&":
 /*!********************************************************************************!*\
-  !*** ./resources/js/components/adminDelete.vue?vue&type=template&id=068d7842& ***!
+  !*** ./resources/js/components/adminCreate.vue?vue&type=template&id=35af62a0& ***!
   \********************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_adminDelete_vue_vue_type_template_id_068d7842___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./adminDelete.vue?vue&type=template&id=068d7842& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/adminDelete.vue?vue&type=template&id=068d7842&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_adminDelete_vue_vue_type_template_id_068d7842___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_adminCreate_vue_vue_type_template_id_35af62a0___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./adminCreate.vue?vue&type=template&id=35af62a0& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/adminCreate.vue?vue&type=template&id=35af62a0&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_adminCreate_vue_vue_type_template_id_35af62a0___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_adminDelete_vue_vue_type_template_id_068d7842___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_adminCreate_vue_vue_type_template_id_35af62a0___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
