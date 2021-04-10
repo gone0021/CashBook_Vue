@@ -1,162 +1,175 @@
 <template>
   <div class="crate">
     <!-- template -->
-    <!-- ラジオボタン -->
-    <div class="checkbox mb-3">
-      <input
-        type="radio"
-        name="mode"
-        value="1"
-        class="mr-1"
-        id="createSelect1"
-        v-model="radio"
-      />
-      <label for="createSelect1" class="form-check-label mr-3"
-        >科目のみ作成</label
-      >
-
-      <input
-        type="radio"
-        name="mode"
-        value="2"
-        class="mr-1"
-        id="createSelect2"
-        v-model="radio"
-      />
-      <label for="createSelect2" class="form-check-label mr-3"
-        >小科目のみ作成</label
-      >
-    </div>
-
-    <!-- 入力 -->
-    <div class="createDiv mb-3">
-      <div class="createAccountType align-top mr-3">
-        <label for="createAccountType">科目区分</label>
-        <select
-          name="account_type"
-          id="createAccountType"
-          class="form-control"
-          :class="classValidType"
-          @change.once="chgTypeOne0()"
-          @change="chgType($event)"
+    <form action="./store" method="post" class="" @submit="checkForm">
+      <input type="hidden" name="_token" :value="csrf" />
+      <!-- ラジオボタン -->
+      <div class="checkbox mb-3">
+        <input
+          type="radio"
+          name="mode"
+          value="1"
+          class="mr-1"
+          id="createSelect1"
+          v-model="radio"
+        />
+        <label for="createSelect1" class="form-check-label mr-3"
+          >科目のみ作成</label
         >
-          <option id="opAdmCk0" value="">---</option>
-          <option v-for="(type, i) in mType" :value="i" :key="'type' + i">
-            {{ type }}
-          </option>
-        </select>
 
-        <div class="invalid-feedback" v-if="errors.account_type">
-          <template v-if="validType">
-            <p
-              v-for="(acctType, i) in errors.account_type"
-              :key="'errAcctType' + i"
-            >
-              {{ acctType }}
-            </p>
-          </template>
-        </div>
+        <input
+          type="radio"
+          name="mode"
+          value="2"
+          class="mr-1"
+          id="createSelect2"
+          v-model="radio"
+        />
+        <label for="createSelect2" class="form-check-label mr-3"
+          >小科目のみ作成</label
+        >
       </div>
 
-      <!-- 科目のみ -->
-      <template v-if="radio == 1">
-        <div class="createCategory">
-          <label for="createCategory">科目名</label>
-          <input
-            type="text"
-            name="category_name"
-            id="createCategory"
-            class="form-control"
-            :class="classValidCateName"
-            value=""
-            :disabled="disCate"
-          />
-
-          <div class="invalid-feedback" v-if="errors.category_name">
-            <template v-if="validCateName">
-              <p
-                v-for="(cName, i) in errors.category_name"
-                :key="'errCateName' + i"
-              >
-                {{ cName }}
-              </p>
-            </template>
-          </div>
-        </div>
-      </template>
-
-      <!-- 小科目のみ -->
-      <template v-if="radio == 2">
-        <div class="createSelectCategory mr-3">
-          <label for="createSelectCategory">科目名</label>
+      <!-- 入力 -->
+      <div class="createDiv mb-3">
+        <div class="createAccountType align-top mr-3">
+          <label for="createAccountType">科目区分</label>
           <select
-            name="category_id"
-            id="createSelectCategory"
+            name="account_type"
+            id="createAccountType"
             class="form-control"
-            :class="classValidCateId"
-            :disabled="disKubun"
+            :class="classValidType"
+            required
+            @change.once="chgTypeOne0()"
+            @change="chgType($event)"
           >
-            <option value="" id="opAdmCk1" selected>---</option>
-            <option
-              v-for="(cate, i) in mCate"
-              :value="cate.id"
-              :key="'cate' + i"
-            >
-              {{ cate.category_name }}
+            <option id="opAdmCk0" value="">---</option>
+            <option v-for="(type, i) in mType" :value="i" :key="'type' + i">
+              {{ type }}
             </option>
           </select>
 
-          <div class="invalid-feedback" v-if="errors.category_id">
-            <template v-if="validCateId">
-              <p
-                v-for="(cId, i) in errors.category_id"
-                :key="'errCateName' + i"
+          <span class="invalid-feedback" v-if="mErrors.account_type">
+            <template v-if="validType">
+              <div
+                v-for="(acctType, i) in mErrors.account_type"
+                :key="'errAcctType' + i"
               >
-                {{ cId }}
-              </p>
+                {{ acctType }}
+              </div>
             </template>
-          </div>
+          </span>
         </div>
 
-        <div class="createKubunName">
-          <label for="createKubunName">小科目名</label>
-          <input
-            type="text"
-            name="kubun_name"
-            id="createKubunName"
-            class="form-control mr-1"
-            :class="classValidKubunName"
-            value=""
-            :disabled="disKubun"
-          />
+        <!-- 科目のみ -->
+        <template v-if="radio == 1">
+          <div class="createCategory">
+            <label for="createCategory">科目名</label>
+            <input
+              type="text"
+              name="category_name"
+              id="createCategory"
+              class="form-control"
+              required
+              :class="classValidCateName"
+              :disabled="disCate"
+              v-model="categoryName"
+            />
 
-          <div class="" v-if="errors.category_id">
-            <div class="invalid-feedback" v-if="errors.kubun_name">
+            <div class="invalid-feedback mt-1" v-if="errorCate">
+              {{ errorCate }}
+            </div>
+
+            <span class="invalid-feedback" v-if="mErrors.category_name">
+              <template v-if="validCateName">
+                <div
+                  v-for="(cName, i) in mErrors.category_name"
+                  :key="'errCateName' + i"
+                >
+                  {{ cName }}
+                </div>
+              </template>
+            </span>
+          </div>
+        </template>
+
+        <!-- 小科目のみ -->
+        <template v-if="radio == 2">
+          <div class="createSelectCategory mr-3 align-top">
+            <label for="createSelectCategory">科目名</label>
+            <select
+              name="category_id"
+              id="createSelectCategory"
+              class="form-control"
+              required
+              :class="classValidCateId"
+              :disabled="disKubun"
+            >
+              <option value="" id="opAdmCk1" selected>---</option>
+              <option
+                v-for="(cate, i) in mCate"
+                :value="cate.id"
+                :key="'cate' + i"
+              >
+                {{ cate.category_name }}
+              </option>
+            </select>
+
+            <span class="invalid-feedback" v-if="mErrors.category_id">
+              <template v-if="validCateId">
+                <div
+                  v-for="(cId, i) in mErrors.category_id"
+                  :key="'errCateName' + i"
+                >
+                  {{ cId }}
+                </div>
+              </template>
+            </span>
+          </div>
+
+          <div class="createKubunName align-top">
+            <label for="createKubunName">小科目名</label>
+            <input
+              type="text"
+              name="kubun_name"
+              id="createKubunName"
+              class="form-control mr-1"
+              required
+              :class="classValidKubunName"
+              :disabled="disKubun"
+              v-model="kubunName"
+            />
+
+            <div class="invalid-feedback mt-1" v-if="errorKubun">
+              {{ errorKubun }}
+            </div>
+
+            <span class="invalid-feedback" v-if="mErrors.kubun_name">
               <template v-if="validKubunName">
-                <span
-                  v-for="(kName, i) in errors.kubun_name"
+                <div
+                  v-for="(kName, i) in mErrors.kubun_name"
                   :key="'errKubunName' + i"
                 >
                   {{ kName }}
-                </span>
+                </div>
               </template>
-            </div>
+            </span>
           </div>
-        </div>
-      </template>
-    </div>
+        </template>
+      </div>
 
-    <!-- ボタン -->
-    <div class="col-md-10">
-      <input
-        type="submit"
-        name=""
-        id="submit"
-        class="btn btn-info mr-2"
-        value="Send"
-      />
-      <a :href="adminIndex" class="btn btn-light"> Return </a>
-    </div>
+      <!-- ボタン -->
+      <div class="col-md-10">
+        <input
+          type="submit"
+          name=""
+          id="submit"
+          class="btn btn-info mr-2"
+          value="Send"
+        />
+        <a href="./index" class="btn btn-light"> Return </a>
+      </div>
+    </form>
 
     <!-- template -->
   </div>
@@ -164,16 +177,24 @@
 
 <script>
 export default {
-  props: ["mCate", "mType", "errors", "", ""],
+  props: ["mCate", "mType", "mErrors", "csrf"],
   data: function () {
     return {
-      // this
+      // --- this ---
       radio: 1,
       disCate: true,
       disKubun: true,
+      evSubmit: "",
+      // model
+      categoryName: "",
+      kubunName: "",
+      // バリデーションエラー
+      errorCate: "",
+      errorKubun: "",
+
       // app.bladeでjsonへ変換
-      adminIndex: adminIndex, // bind:hrefで仕様
       sesMsg: sesMsg, // 使ってない：ただのメモ
+
       // バリデーションの表示チェック
       validType: false,
       validCateId: false,
@@ -184,6 +205,7 @@ export default {
       classValidCateId: "",
       classValidCateName: "",
       classValidKubunName: "",
+
       // categoryを変更したかチェック
       chgCate_flg: 0,
       // 置き換え用
@@ -210,7 +232,8 @@ export default {
           } else {
             this.hiddenValid();
           }
-        } else if (sesMsg === "createKubun") {
+        }
+        if (sesMsg === "createKubun") {
           if (val == 2) {
             this.showValidKubun();
           } else {
@@ -249,21 +272,50 @@ export default {
       console.log(type);
       this.$emit("m-chg-type", type);
     },
+    checkForm: function (ev) {
+      let cate = this.categoryName;
+      let kubun = this.kubunName;
+      if (!this.disCate) {
+        if (cate.length > 20) {
+          this.errorCate = "科目名は20文字までで入力してください";
+          this.classValidCateName = "is-invalid";
+          ev.preventDefault();
+        }
+      }
+
+      if (!this.disKubun) {
+        if (kubun.length > 20) {
+          this.errorKubun = "小科目名は20文字までで入力してください";
+          this.classValidKubunName = "is-invalid";
+          ev.preventDefault();
+        }
+      }
+    },
 
     // --- method ---
     showValidCate() {
       this.validType = true;
       this.validCateName = true;
-      this.classValidType = "is-invalid";
-      this.classValidCateName = "is-invalid";
+      if (this.mErrors.account_type) {
+        this.classValidType = "is-invalid";
+      }
+      if (this.mErrors.category_name) {
+        this.classValidCateName = "is-invalid";
+      }
     },
     showValidKubun() {
       this.validType = true;
       this.validCateId = true;
       this.validKubunName = true;
-      this.classValidType = "is-invalid";
-      this.classValidCateId = "is-invalid";
-      this.classValidKubunName = "is-invalid";
+      if (this.mErrors.account_type) {
+        this.classValidType = "is-invalid";
+      }
+      if (this.mErrors.category_id) {
+        this.classValidCateId = "is-invalid";
+      }
+      if (this.mErrors.kubun_name) {
+        this.classValidKubunName = "is-invalid";
+      }
     },
     hiddenValid() {
       this.validType = false;

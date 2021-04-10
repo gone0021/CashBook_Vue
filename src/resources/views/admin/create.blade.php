@@ -4,13 +4,10 @@
 
 <div class="card-body">
     <div class="create">
-        <form action="{{ route('admin/store') }}" method="post" class="">
-            @csrf
-            {{-- <div>{{session('validateMsg')}}</div> --}}
-            <admin-create-kubun :m-type="admAcctType" :m-cate="admCate" :errors="{{ $errors }}"
-                v-on:m-chg-type="adminChgType($event)">
-            </admin-create-kubun>
-        </form>
+        <div>{{session('validateMsg')}}</div>
+        <admin-create-kubun :m-type="admAcctType" :m-cate="admCate" :m-errors="{{ $errors }}"
+            :csrf="{{json_encode(csrf_token())}}" v-on:m-chg-type="adminChgType($event)">
+        </admin-create-kubun>
     </div>
 </div>
 
