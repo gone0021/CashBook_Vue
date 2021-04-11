@@ -46,30 +46,6 @@ Vue.component('admin-edit', require('./components/adminEdit.vue').default);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
- Vue.use(VeeValidate, {
-    locale: 'ja',
-    fastExit: false,
-    // 検証メッセージ
-    dictionary: {
-        ja: {
-            messages: {
-                max: function (field, param) {
-                    return field + "は" + param + "文字までで入力してください";
-                },
-                required: function (field, param) {
-                    return field + "を入力してください";
-                },
-            },
-            // // data-vv-asの代わり（イメージ）の引数
-            // attributes: {
-            //     name: '氏名',
-            //     age: '年齢',
-            //     sex: '性別'
-            // }
-        }
-    }
-});
-
 Vue.use(window["vue-js-modal"].default);
 const app = new Vue({
     el: '#app',
