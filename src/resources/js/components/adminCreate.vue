@@ -40,10 +40,9 @@
             class="form-control"
             :class="classValidType"
             required
-            @change.once="chgTypeOne0()"
             @change="chgType($event)"
           >
-            <option id="opAdmCk0" value="">---</option>
+            <option v-if="op1" selected>---</option>
             <option v-for="(type, i) in mType" :value="i" :key="'type' + i">
               {{ type }}
             </option>
@@ -105,7 +104,8 @@
               :class="classValidCateId"
               :disabled="disKubun"
             >
-              <option value="" id="opAdmCk1" selected>---</option>
+              <!-- <option v-if="op2">---</option> -->
+              <option v-if="op1" selected>---</option>
               <option
                 v-for="(cate, i) in mCate"
                 :value="cate.id"
@@ -185,26 +185,29 @@ export default {
       disCate: true,
       disKubun: true,
       evSubmit: "",
-      // model
+      // optionの最初の値
+      op1: true,
+      op2: true,
+
+      // model：fromバリデーション用
       categoryName: "",
       kubunName: "",
       // バリデーションエラー
       errorCate: "",
       errorKubun: "",
-
-      // app.bladeでjsonへ変換
-      sesMsg: sesMsg, // 使ってない：ただのメモ
-
       // バリデーションの表示チェック
       validType: false,
       validCateId: false,
       validCateName: false,
       validKubunName: false,
-
+      // is-invalidのクラス名
       classValidType: "",
       classValidCateId: "",
       classValidCateName: "",
       classValidKubunName: "",
+
+      // app.bladeでjsonへ変換
+      sesMsg: sesMsg, // 使ってない：ただのメモ
 
       // categoryを変更したかチェック
       chgCate_flg: 0,
@@ -216,6 +219,11 @@ export default {
       immediate: true,
       handler(val) {
         this.radio = val;
+        // optionの最初の値
+        // ：切り替えごと表示するかしないかで使い勝手の判断が微妙
+        // this.op1 = true;
+        // this.op2 = true;
+
         // ラジオボタンによるdisabledの設定
         if (val == 1) {
           this.disCate = false;
@@ -258,20 +266,21 @@ export default {
     console.log("--- update admin create cate ---");
   },
   methods: {
-    chgTypeOne0: function () {
-      let chgKubun0 = document.querySelector("#createAccountType");
-      let kchild0 = document.querySelector("#opAdmCk0");
-      chgKubun0.removeChild(kchild0);
-
-      let chgKubun1 = document.querySelector("#createSelectCategory");
-      let kchild1 = document.querySelector("#opAdmCk1");
-      chgKubun1.removeChild(kchild1);
-    },
     chgType: function (ev) {
+      // 最初のoptionを隠す
+      this.disOp1 = true;
+      this.hideOp1 = true;
+      this.disOp2 = true;
+      this.hideOp2 = true;
+      this.op1 = false;
+      this.op2 = false;
+
       let type = ev.target.value;
       console.log(type);
       this.$emit("m-chg-type", type);
     },
+    // --- form ---
+    // バリデーション
     checkForm: function (ev) {
       let cate = this.categoryName;
       let kubun = this.kubunName;
