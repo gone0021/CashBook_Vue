@@ -2131,7 +2131,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["mCate", "mType", "mErrors", "csrf"],
+  props: ["pCate", "pType", "pErrors", "csrf"],
   data: function data() {
     return {
       // --- this ---
@@ -2139,24 +2139,28 @@ __webpack_require__.r(__webpack_exports__);
       disCate: true,
       disKubun: true,
       evSubmit: "",
-      // model
+      // optionの最初の値
+      op1: true,
+      op2: true,
+      // model：fromバリデーション用
       categoryName: "",
       kubunName: "",
       // バリデーションエラー
       errorCate: "",
       errorKubun: "",
-      // app.bladeでjsonへ変換
-      sesMsg: sesMsg,
-      // 使ってない：ただのメモ
       // バリデーションの表示チェック
       validType: false,
       validCateId: false,
       validCateName: false,
       validKubunName: false,
+      // is-invalidのクラス名
       classValidType: "",
       classValidCateId: "",
       classValidCateName: "",
       classValidKubunName: "",
+      // app.bladeでjsonへ変換
+      sesMsg: sesMsg,
+      // 使ってない：ただのメモ
       // categoryを変更したかチェック
       chgCate_flg: 0 // 置き換え用
 
@@ -2166,7 +2170,11 @@ __webpack_require__.r(__webpack_exports__);
     radio: {
       immediate: true,
       handler: function handler(val) {
-        this.radio = val; // ラジオボタンによるdisabledの設定
+        this.radio = val; // optionの最初の値
+        // ：切り替えごと表示するかしないかで使い勝手の判断が微妙
+        // this.op1 = true;
+        // this.op2 = true;
+        // ラジオボタンによるdisabledの設定
 
         if (val == 1) {
           this.disCate = false;
@@ -2210,19 +2218,20 @@ __webpack_require__.r(__webpack_exports__);
     console.log("--- update admin create cate ---");
   },
   methods: {
-    chgTypeOne0: function chgTypeOne0() {
-      var chgKubun0 = document.querySelector("#createAccountType");
-      var kchild0 = document.querySelector("#opAdmCk0");
-      chgKubun0.removeChild(kchild0);
-      var chgKubun1 = document.querySelector("#createSelectCategory");
-      var kchild1 = document.querySelector("#opAdmCk1");
-      chgKubun1.removeChild(kchild1);
-    },
     chgType: function chgType(ev) {
+      // 最初のoptionを隠す
+      this.disOp1 = true;
+      this.hideOp1 = true;
+      this.disOp2 = true;
+      this.hideOp2 = true;
+      this.op1 = false;
+      this.op2 = false;
       var type = ev.target.value;
       console.log(type);
-      this.$emit("m-chg-type", type);
+      this.$emit("chg-type", type);
     },
+    // --- form ---
+    // バリデーション
     checkForm: function checkForm(ev) {
       var cate = this.categoryName;
       var kubun = this.kubunName;
@@ -2248,11 +2257,11 @@ __webpack_require__.r(__webpack_exports__);
       this.validType = true;
       this.validCateName = true;
 
-      if (this.mErrors.account_type) {
+      if (this.pErrors.account_type) {
         this.classValidType = "is-invalid";
       }
 
-      if (this.mErrors.category_name) {
+      if (this.pErrors.category_name) {
         this.classValidCateName = "is-invalid";
       }
     },
@@ -2261,15 +2270,15 @@ __webpack_require__.r(__webpack_exports__);
       this.validCateId = true;
       this.validKubunName = true;
 
-      if (this.mErrors.account_type) {
+      if (this.pErrors.account_type) {
         this.classValidType = "is-invalid";
       }
 
-      if (this.mErrors.category_id) {
+      if (this.pErrors.category_id) {
         this.classValidCateId = "is-invalid";
       }
 
-      if (this.mErrors.kubun_name) {
+      if (this.pErrors.kubun_name) {
         this.classValidKubunName = "is-invalid";
       }
     },
@@ -2541,8 +2550,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["mType", "mCate", "mKubun", "mErrors", "csrf"],
+  props: ["pType", "pCate", "pKubun", "pErrors", "csrf"],
   data: function data() {
     return {
       // this
@@ -2550,28 +2565,32 @@ __webpack_require__.r(__webpack_exports__);
       disCate: true,
       disKubun: true,
       disDel: true,
-      // model
+      noKubun: false,
+      // optionの最初の値
+      op1: true,
+      op2: true,
+      op3: true,
+      // model：fromバリデーション用
       categoryName: "",
       kubunName: "",
       // バリデーションエラー
       errorCate: "",
       errorKubun: "",
-      // app.bladeでjsonへ変換
-      sesMsg: sesMsg,
-      // 使ってない：ただのメモ
       // バリデーションの表示チェック
       validType: false,
       validCateId: false,
       validKubunId: false,
       validCateName: false,
       validKubunName: false,
+      // is-invalidのクラス名
       classValidType: "",
       classValidCateId: "",
       classValidKubunId: "",
       classValidCateName: "",
       classValidKubunName: "",
-      // categoryを変更したかチェック
-      chgCate_flg: 0 // 置き換え用
+      // app.bladeでjsonへ変換
+      sesMsg: sesMsg // 使ってない：ただのメモ
+      // 置き換え用
 
     };
   },
@@ -2580,7 +2599,8 @@ __webpack_require__.r(__webpack_exports__);
       // プロパティの値が変更になったら即実行
       immediate: true,
       handler: function handler(val) {
-        this.radio = val; // ラジオボタンによるdisabledの設定
+        this.radio = val; // console.log("watch raido : " + val);
+        // ラジオボタンによるdisabledの設定
 
         if (val == 1) {
           this.disCate = false;
@@ -2594,15 +2614,6 @@ __webpack_require__.r(__webpack_exports__);
           this.disCate = true;
           this.disKubun = true;
           this.disDel = false;
-        } // chgCate_flg
-
-
-        if ((val == 2 || val == 4) && this.chgCate_flg == 2) {
-          return;
-        } else if ((val == 2 || val == 4) && this.chgCate_flg == 4) {
-          return;
-        } else {
-          this.chgCate_flg = 0;
         } // バリデーションメッセージの表示設定
 
 
@@ -2630,16 +2641,12 @@ __webpack_require__.r(__webpack_exports__);
           } else {
             this.hiddenValid();
           }
-        } // バリデーションエラー時のinputの赤枠
-        // if (this.mErrors.category_name) {
-        //     classValidCateName = "is-invalid";
-        // }
-
+        }
       }
     }
   },
   created: function created() {
-    console.log("--- mount admin edit created ---"); // バリデーションエラーからのリダイレクト
+    console.log("--- create admin edit created ---"); // バリデーションエラーからのリダイレクト時のraidoを選択
 
     if (sesMsg === "editCategory") {
       this.radio = 1;
@@ -2656,55 +2663,44 @@ __webpack_require__.r(__webpack_exports__);
   updated: function updated() {// console.log("--- update admin updated cate ---");
   },
   methods: {
-    chgTypeOne: function chgTypeOne() {
-      // 科目区分の最初の値を削除
-      var chgKubun0 = document.querySelector("#editAccountType");
-      var kchild0 = document.querySelector("#opAdmEdt0");
-      chgKubun0.removeChild(kchild0); // 科目名の最初の値を削除
-
-      var chgKubun1 = document.querySelector("#editSelectCategory");
-      var kchild1 = document.querySelector("#opAdmEdt1");
-      chgKubun1.removeChild(kchild1);
-    },
     chgType: function chgType(ev) {
+      // 最初のoptionを隠す
+      this.op1 = false;
       var type = ev.target.value; //   console.log(type);
 
-      this.$emit("m-chg-type", type);
+      this.$emit("chg-type", type);
     },
     chgCate: function chgCate(ev) {
-      // 小科目を変更する際のみ小科目の最初の値を削除
-      if ((this.radio === "2" || this.radio === "4") && this.chgCate_flg == 0) {
-        var chgKubun = document.querySelector("#editSelectKubun");
-        var kchild = document.querySelector("#opAdmEdt2");
-        chgKubun.removeChild(kchild);
+      // 最初のoptionを隠す
+      this.op2 = false;
+      this.op3 = false; // nokubunの表示許可
 
-        if (this.radio === "2") {
-          this.chgCate_flg = 2;
-        } else if (this.radio === "4") {
-          this.chgCate_flg = 4;
-        } else {
-          this.chgCate_flg = 1;
-        }
-      } // category_idから区分を取得
+      this.noKubun = true; // category_idから区分を取得
 
+      var cid = ev.target.value; // console.log(type);
 
-      var type = ev.target.value; // console.log(type);
+      this.$emit("chg-cate", cid);
 
-      this.$emit("m-chg-cate", type);
+      if (!this.pKubun.length) {
+        this.disOp3 = true;
+        this.hideOp3 = true; // this.noKubun = true;
+      }
     },
-    mDel: function mDel(ev) {
+    // --- form ---
+    onDel: function onDel(ev) {
       var msg = ["削除してもよろしいですか？"].join("\n");
 
       if (!window.confirm(msg)) {
         ev.preventDefault();
       }
     },
+    // バリデーション
     checkForm: function checkForm(ev) {
       var cate = this.categoryName;
       var kubun = this.kubunName;
 
       if (!this.disCate) {
-        if (cate.length > 2) {
+        if (cate.length > 20) {
           this.errorCate = "科目名は20文字までで入力してください";
           this.classValidCateName = "is-invalid";
           ev.preventDefault();
@@ -2712,7 +2708,7 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       if (!this.disKubun) {
-        if (kubun.length > 2) {
+        if (kubun.length > 20) {
           this.errorKubun = "小科目名は20文字までで入力してください";
           this.classValidKubunName = "is-invalid";
           ev.preventDefault();
@@ -2725,20 +2721,17 @@ __webpack_require__.r(__webpack_exports__);
       this.validCateId = true;
       this.validCateName = true;
 
-      if (this.mErrors.account_type) {
+      if (this.pErrors.account_type) {
         this.classValidType = "is-invalid";
       }
 
-      if (this.mErrors.category_id) {
+      if (this.pErrors.category_id) {
         this.classValidCateId = "is-invalid";
       }
 
-      if (this.mErrors.category_name) {
+      if (this.pErrors.category_name) {
         this.classValidCateName = "is-invalid";
-      } //   this.classValidType = "is-invalid";
-      //   this.classValidCateId = "is-invalid";
-      //   this.classValidCateName = "is-invalid";
-
+      }
     },
     showValidKubun: function showValidKubun() {
       this.validType = true;
@@ -4375,57 +4368,44 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["mDate", "mnVal", "csrf", "mCateAsset", "mCateExpense", "mCateIncome"],
+  props: ["csrf", "pDate", "pVal", "pCateAsset", "pCateExpense", "pCateIncome", "pKubun1", "pKubun2"],
   data: function data() {
     return {
       cataId: "",
       mKubun: "",
       asKubun: "",
       plKubun: "",
-      // 置き換え用
-      rep: {}
+      // optionの最初の値
+      op1: true,
+      op2: true,
+      op3: true,
+      op4: true,
+      // model：fromバリデーション用
+      date: this.pDate,
+      categoryName: "",
+      kubunName: "" // 置き換え用
+
     };
   },
   mounted: function mounted() {
-    console.log("--- mount modal nomal ---"); // console.log("date = " + this.mDate);
+    console.log("--- mount modal nomal ---"); // console.log("date = " + this.pDate);
   },
   updated: function updated() {
     console.log("--- update modal nomal ---");
   },
   methods: {
-    delNaCateTop: function delNaCateTop() {
-      var chgCategory = document.querySelector("#inpNaCategory");
-      var child = document.querySelector("#opna0");
-      chgCategory.removeChild(child);
-    },
-    delNpCateTop: function delNpCateTop() {
-      var bCategory = document.querySelector("#inpNpCategory");
-      var child = document.querySelector("#opnp0");
-      bCategory.removeChild(child);
-    },
-    getKubunNomal: function getKubunNomal(ev, args) {
+    chgCate1: function chgCate1(ev) {
+      this.op1 = false;
+      this.op2 = false;
       var cid = ev.target.value;
-      axios.get("./ajax/kubun_by_category", {
-        params: {
-          category_id: cid
-        }
-      }).then(function (res) {
-        var data = res.data;
-        console.log("getkubun-nomal");
-        console.log(data);
-
-        if (args == "asset") {
-          this.asKubun = res.data;
-        } else {
-          this.plKubun = res.data;
-        }
-      }.bind(this))["catch"](function (e) {
-        console.error(e);
-      });
+      this.$emit("chg-cate1", cid);
+    },
+    chgCate2: function chgCate2(ev, args) {
+      this.op3 = false;
+      this.op4 = false;
+      var cid = ev.target.value;
+      this.$emit("chg-cate2", cid);
     }
   }
 });
@@ -41000,20 +40980,17 @@ var render = function() {
                     required: ""
                   },
                   on: {
-                    "~change": function($event) {
-                      return _vm.chgTypeOne0()
-                    },
                     change: function($event) {
                       return _vm.chgType($event)
                     }
                   }
                 },
                 [
-                  _c("option", { attrs: { id: "opAdmCk0", value: "" } }, [
-                    _vm._v("---")
-                  ]),
+                  _vm.op1
+                    ? _c("option", { attrs: { selected: "" } }, [_vm._v("---")])
+                    : _vm._e(),
                   _vm._v(" "),
-                  _vm._l(_vm.mType, function(type, i) {
+                  _vm._l(_vm.pType, function(type, i) {
                     return _c(
                       "option",
                       { key: "type" + i, domProps: { value: i } },
@@ -41024,13 +41001,13 @@ var render = function() {
                 2
               ),
               _vm._v(" "),
-              _vm.mErrors.account_type
+              _vm.pErrors.account_type
                 ? _c(
                     "span",
                     { staticClass: "invalid-feedback" },
                     [
                       _vm.validType
-                        ? _vm._l(_vm.mErrors.account_type, function(
+                        ? _vm._l(_vm.pErrors.account_type, function(
                             acctType,
                             i
                           ) {
@@ -41095,13 +41072,13 @@ var render = function() {
                         ])
                       : _vm._e(),
                     _vm._v(" "),
-                    _vm.mErrors.category_name
+                    _vm.pErrors.category_name
                       ? _c(
                           "span",
                           { staticClass: "invalid-feedback" },
                           [
                             _vm.validCateName
-                              ? _vm._l(_vm.mErrors.category_name, function(
+                              ? _vm._l(_vm.pErrors.category_name, function(
                                   cName,
                                   i
                                 ) {
@@ -41145,15 +41122,13 @@ var render = function() {
                           }
                         },
                         [
-                          _c(
-                            "option",
-                            {
-                              attrs: { value: "", id: "opAdmCk1", selected: "" }
-                            },
-                            [_vm._v("---")]
-                          ),
+                          _vm.op1
+                            ? _c("option", { attrs: { selected: "" } }, [
+                                _vm._v("---")
+                              ])
+                            : _vm._e(),
                           _vm._v(" "),
-                          _vm._l(_vm.mCate, function(cate, i) {
+                          _vm._l(_vm.pCate, function(cate, i) {
                             return _c(
                               "option",
                               { key: "cate" + i, domProps: { value: cate.id } },
@@ -41170,13 +41145,13 @@ var render = function() {
                         2
                       ),
                       _vm._v(" "),
-                      _vm.mErrors.category_id
+                      _vm.pErrors.category_id
                         ? _c(
                             "span",
                             { staticClass: "invalid-feedback" },
                             [
                               _vm.validCateId
-                                ? _vm._l(_vm.mErrors.category_id, function(
+                                ? _vm._l(_vm.pErrors.category_id, function(
                                     cId,
                                     i
                                   ) {
@@ -41244,13 +41219,13 @@ var render = function() {
                         ])
                       : _vm._e(),
                     _vm._v(" "),
-                    _vm.mErrors.kubun_name
+                    _vm.pErrors.kubun_name
                       ? _c(
                           "span",
                           { staticClass: "invalid-feedback" },
                           [
                             _vm.validKubunName
-                              ? _vm._l(_vm.mErrors.kubun_name, function(
+                              ? _vm._l(_vm.pErrors.kubun_name, function(
                                   kName,
                                   i
                                 ) {
@@ -41479,22 +41454,23 @@ var render = function() {
               {
                 staticClass: "form-control",
                 class: _vm.classValidType,
-                attrs: { name: "account_type", id: "editAccountType" },
+                attrs: {
+                  name: "account_type",
+                  id: "editAccountType",
+                  required: ""
+                },
                 on: {
-                  "~change": function($event) {
-                    return _vm.chgTypeOne()
-                  },
                   change: function($event) {
                     return _vm.chgType($event)
                   }
                 }
               },
               [
-                _c("option", { attrs: { id: "opAdmEdt0", value: "" } }, [
-                  _vm._v("---")
-                ]),
+                _vm.op1
+                  ? _c("option", { attrs: { selected: "" } }, [_vm._v("---")])
+                  : _vm._e(),
                 _vm._v(" "),
-                _vm._l(_vm.mType, function(type, i) {
+                _vm._l(_vm.pType, function(type, i) {
                   return _c(
                     "option",
                     { key: "type" + i, domProps: { value: i } },
@@ -41505,13 +41481,13 @@ var render = function() {
               2
             ),
             _vm._v(" "),
-            _vm.mErrors.account_type
+            _vm.pErrors.account_type
               ? _c(
                   "span",
                   { staticClass: "invalid-feedback" },
                   [
                     _vm.validType
-                      ? _vm._l(_vm.mErrors.account_type, function(acctType, i) {
+                      ? _vm._l(_vm.pErrors.account_type, function(acctType, i) {
                           return _c("div", { key: "errAcctType" + i }, [
                             _vm._v(
                               "\n              " +
@@ -41537,7 +41513,11 @@ var render = function() {
               {
                 staticClass: "form-control",
                 class: _vm.classValidCateId,
-                attrs: { name: "category_id", id: "editSelectCategory" },
+                attrs: {
+                  name: "category_id",
+                  id: "editSelectCategory",
+                  required: ""
+                },
                 on: {
                   change: function($event) {
                     return _vm.chgCate($event)
@@ -41545,13 +41525,11 @@ var render = function() {
                 }
               },
               [
-                _c(
-                  "option",
-                  { attrs: { value: "", id: "opAdmEdt1", selected: "" } },
-                  [_vm._v("---")]
-                ),
+                _vm.op2
+                  ? _c("option", { attrs: { selected: "" } }, [_vm._v("---")])
+                  : _vm._e(),
                 _vm._v(" "),
-                _vm._l(_vm.mCate, function(cate, i) {
+                _vm._l(_vm.pCate, function(cate, i) {
                   return _c(
                     "option",
                     { key: "cate" + i, domProps: { value: cate.id } },
@@ -41568,13 +41546,13 @@ var render = function() {
               2
             ),
             _vm._v(" "),
-            _vm.mErrors.category_id
+            _vm.pErrors.category_id
               ? _c(
                   "span",
                   { staticClass: "invalid-feedback" },
                   [
                     _vm.validCateId
-                      ? _vm._l(_vm.mErrors.category_id, function(cId, i) {
+                      ? _vm._l(_vm.pErrors.category_id, function(cId, i) {
                           return _c("div", { key: "errCateId" + i }, [
                             _vm._v(
                               "\n              " +
@@ -41604,16 +41582,20 @@ var render = function() {
                     {
                       staticClass: "form-control",
                       class: _vm.classValidKubunId,
-                      attrs: { name: "kubun_id", id: "editSelectKubun" }
+                      attrs: {
+                        name: "kubun_id",
+                        id: "editSelectKubun",
+                        required: ""
+                      }
                     },
                     [
-                      _c(
-                        "option",
-                        { attrs: { value: "", id: "opAdmEdt2", selected: "" } },
-                        [_vm._v("---")]
-                      ),
+                      _vm.op3
+                        ? _c("option", { attrs: { selected: "" } }, [
+                            _vm._v("---")
+                          ])
+                        : _vm._e(),
                       _vm._v(" "),
-                      _vm._l(_vm.mKubun, function(kubun, i) {
+                      _vm._l(_vm.pKubun, function(kubun, i) {
                         return _c(
                           "option",
                           { key: "kubun" + i, domProps: { value: kubun.id } },
@@ -41625,18 +41607,24 @@ var render = function() {
                             )
                           ]
                         )
-                      })
+                      }),
+                      _vm._v(" "),
+                      !_vm.pKubun.length && _vm.noKubun
+                        ? _c("option", { attrs: { value: "0", id: "" } }, [
+                            _vm._v("\n            小科目なし\n          ")
+                          ])
+                        : _vm._e()
                     ],
                     2
                   ),
                   _vm._v(" "),
-                  _vm.mErrors.kubun_id
+                  _vm.pErrors.kubun_id
                     ? _c(
                         "span",
                         { staticClass: "invalid-feedback" },
                         [
                           _vm.validKubunId
-                            ? _vm._l(_vm.mErrors.kubun_id, function(kId, i) {
+                            ? _vm._l(_vm.pErrors.kubun_id, function(kId, i) {
                                 return _c("div", { key: "errKubunId" + i }, [
                                   _vm._v(
                                     "\n              " +
@@ -41678,6 +41666,7 @@ var render = function() {
                     id: "editCategoryName",
                     name: "category_name",
                     placeholder: "入力してください",
+                    required: "",
                     disabled: _vm.disCate
                   },
                   domProps: { value: _vm.categoryName },
@@ -41699,13 +41688,13 @@ var render = function() {
                     ])
                   : _vm._e(),
                 _vm._v(" "),
-                _vm.mErrors.category_name
+                _vm.pErrors.category_name
                   ? _c(
                       "span",
                       { staticClass: "invalid-feedback" },
                       [
                         _vm.validCateName
-                          ? _vm._l(_vm.mErrors.category_name, function(
+                          ? _vm._l(_vm.pErrors.category_name, function(
                               cName,
                               i
                             ) {
@@ -41748,6 +41737,7 @@ var render = function() {
                     name: "kubun_name",
                     value: "",
                     placeholder: "入力してください",
+                    required: "",
                     disabled: _vm.disKubun
                   },
                   domProps: { value: _vm.kubunName },
@@ -41769,13 +41759,13 @@ var render = function() {
                     ])
                   : _vm._e(),
                 _vm._v(" "),
-                _vm.mErrors.kubun_name
+                _vm.pErrors.kubun_name
                   ? _c(
                       "span",
                       { staticClass: "invalid-feedback" },
                       [
                         _vm.validKubunName
-                          ? _vm._l(_vm.mErrors.kubun_name, function(kName, i) {
+                          ? _vm._l(_vm.pErrors.kubun_name, function(kName, i) {
                               return _c("div", { key: "errKubunName" + i }, [
                                 _vm._v(
                                   "\n              " +
@@ -41806,7 +41796,7 @@ var render = function() {
                 },
                 on: {
                   click: function($event) {
-                    return _vm.mDel($event)
+                    return _vm.onDel($event)
                   }
                 }
               })
@@ -43572,6 +43562,14 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "inpNmlinputDate" }, [
             _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.date,
+                  expression: "date"
+                }
+              ],
               staticClass: "form-control",
               attrs: {
                 type: "date",
@@ -43579,7 +43577,15 @@ var render = function() {
                 id: "inpNmlDate",
                 required: ""
               },
-              domProps: { value: _vm.mDate }
+              domProps: { value: _vm.date },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.date = $event.target.value
+                }
+              }
             })
           ])
         ]),
@@ -43591,12 +43597,12 @@ var render = function() {
           _vm._v(" "),
           _c("input", {
             attrs: { type: "hidden", name: "debit_credit[]", id: "inpNmlDc0" },
-            domProps: { value: _vm.mnVal.dc0 }
+            domProps: { value: _vm.pVal.dc0 }
           }),
           _vm._v(" "),
           _c("div", { staticClass: "inpNaCategory" }, [
             _c("label", { attrs: { for: "inpNaCategory" } }, [
-              _vm._v(_vm._s(_vm.mnVal.title))
+              _vm._v(_vm._s(_vm.pVal.title))
             ]),
             _vm._v(" "),
             _c(
@@ -43610,25 +43616,22 @@ var render = function() {
                 },
                 on: {
                   change: function($event) {
-                    return _vm.getKubunNomal($event, "asset")
+                    return _vm.chgCate1($event)
                   }
                 }
               },
               [
-                _c(
-                  "option",
-                  {
-                    staticClass: "selectFormatNomalAccet",
-                    attrs: { value: "", id: "opna0" }
-                  },
-                  [_vm._v("\n            選択してください\n          ")]
-                ),
+                _vm.op1
+                  ? _c("option", { attrs: { selected: "" } }, [
+                      _vm._v("選択してください")
+                    ])
+                  : _vm._e(),
                 _vm._v(" "),
-                _vm._l(_vm.mCateAsset, function(cateDeb) {
+                _vm._l(_vm.pCateAsset, function(cateDeb) {
                   return _c(
                     "option",
                     {
-                      key: "categoryDebit" + _vm.mnVal.name + cateDeb.id,
+                      key: "categoryDebit" + _vm.pVal.name + cateDeb.id,
                       domProps: { value: cateDeb.id }
                     },
                     [
@@ -43654,21 +43657,29 @@ var render = function() {
                 staticClass: "form-control",
                 attrs: { name: "kubun_id[]", id: "inpNaKubun", required: "" }
               },
-              _vm._l(_vm.asKubun, function(ask, i) {
-                return _c(
-                  "option",
-                  {
-                    key: "asset-kubun" + _vm.mnVal.name + i,
-                    domProps: { value: ask.id }
-                  },
-                  [
-                    _vm._v(
-                      "\n            " + _vm._s(ask.kubun_name) + "\n          "
-                    )
-                  ]
-                )
-              }),
-              0
+              [
+                _vm.op2
+                  ? _c("option", { attrs: { selected: "" } }, [_vm._v("---")])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm._l(_vm.pKubun1, function(ask, i) {
+                  return _c(
+                    "option",
+                    {
+                      key: "asset-kubun" + _vm.pVal.name + i,
+                      domProps: { value: ask.id }
+                    },
+                    [
+                      _vm._v(
+                        "\n            " +
+                          _vm._s(ask.kubun_name) +
+                          "\n          "
+                      )
+                    ]
+                  )
+                })
+              ],
+              2
             )
           ])
         ]),
@@ -43676,7 +43687,7 @@ var render = function() {
         _c("div", { staticClass: "inpNp" }, [
           _c("input", {
             attrs: { type: "hidden", name: "debit_credit[]", id: "inpNmlDc" },
-            domProps: { value: _vm.mnVal.dc1 }
+            domProps: { value: _vm.pVal.dc1 }
           }),
           _vm._v(" "),
           _c("div", { staticClass: "inpNpCategory" }, [
@@ -43695,26 +43706,23 @@ var render = function() {
                 },
                 on: {
                   change: function($event) {
-                    return _vm.getKubunNomal($event, "pl")
+                    return _vm.chgCate2($event, "pl")
                   }
                 }
               },
               [
-                _c(
-                  "option",
-                  {
-                    staticClass: "selectFormatNomalPl",
-                    attrs: { value: "", id: "opnp0" }
-                  },
-                  [_vm._v("\n            選択してください\n          ")]
-                ),
+                _vm.op3
+                  ? _c("option", { attrs: { selected: "" } }, [
+                      _vm._v("選択してください")
+                    ])
+                  : _vm._e(),
                 _vm._v(" "),
-                _vm.mnVal.name == "income"
-                  ? _vm._l(_vm.mCateIncome, function(catePl) {
+                _vm.pVal.name == "income"
+                  ? _vm._l(_vm.pCateIncome, function(catePl) {
                       return _c(
                         "option",
                         {
-                          key: "categoryCredit" + _vm.mnVal.name + catePl.id,
+                          key: "categoryCredit" + _vm.pVal.name + catePl.id,
                           domProps: { value: catePl.id }
                         },
                         [
@@ -43728,12 +43736,12 @@ var render = function() {
                     })
                   : _vm._e(),
                 _vm._v(" "),
-                _vm.mnVal.name == "expense"
-                  ? _vm._l(_vm.mCateExpense, function(catePl) {
+                _vm.pVal.name == "expense"
+                  ? _vm._l(_vm.pCateExpense, function(catePl) {
                       return _c(
                         "option",
                         {
-                          key: "categoryCredit" + _vm.mnVal.name + catePl.id,
+                          key: "categoryCredit" + _vm.pVal.name + catePl.id,
                           domProps: { value: catePl.id }
                         },
                         [
@@ -43760,21 +43768,29 @@ var render = function() {
                 staticClass: "form-control",
                 attrs: { name: "kubun_id[]", id: "inpNpKubun", required: "" }
               },
-              _vm._l(_vm.plKubun, function(plk, i) {
-                return _c(
-                  "option",
-                  {
-                    key: "pl-kubun" + _vm.mnVal.name + i,
-                    domProps: { value: plk.id }
-                  },
-                  [
-                    _vm._v(
-                      "\n            " + _vm._s(plk.kubun_name) + "\n          "
-                    )
-                  ]
-                )
-              }),
-              0
+              [
+                _vm.op4
+                  ? _c("option", { attrs: { selected: "" } }, [_vm._v("---")])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm._l(_vm.pKubun2, function(plk, i) {
+                  return _c(
+                    "option",
+                    {
+                      key: "pl-kubun" + _vm.pVal.name + i,
+                      domProps: { value: plk.id }
+                    },
+                    [
+                      _vm._v(
+                        "\n            " +
+                          _vm._s(plk.kubun_name) +
+                          "\n          "
+                      )
+                    ]
+                  )
+                })
+              ],
+              2
             )
           ])
         ]),
@@ -56072,29 +56088,7 @@ Vue.component('admin-edit', __webpack_require__(/*! ./components/adminEdit.vue *
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.use(VeeValidate, {
-  locale: 'ja',
-  fastExit: false,
-  // 検証メッセージ
-  dictionary: {
-    ja: {
-      messages: {
-        max: function max(field, param) {
-          return field + "は" + param + "文字までで入力してください";
-        },
-        required: function required(field, param) {
-          return field + "を入力してください";
-        }
-      } // // data-vv-asの代わり（イメージ）の引数
-      // attributes: {
-      //     name: '氏名',
-      //     age: '年齢',
-      //     sex: '性別'
-      // }
-
-    }
-  }
-});
+Vue.use(window["vue-js-modal"]["default"]);
 var app = new Vue({
   el: '#app',
   data: {
@@ -56120,6 +56114,11 @@ var app = new Vue({
     // === child ===
     // all共通
     propCate: {},
+    cAcctType: ["資産", "費用", "収益"],
+    cCate: [],
+    cKubun: [],
+    cKubun1: [],
+    cKubun2: [],
     // --- home ---
     // 共通
     date: "",
@@ -56135,17 +56134,7 @@ var app = new Vue({
     plItems: {},
     dnType: "",
     // account
-    daItems: {},
-    // --- admin ---
-    admAcctType: ["資産", "費用", "収益"],
-    admRadio: 1,
-    admCate: [],
-    // create
-    disCrtCate: false,
-    disCrtKubun: true,
-    // edit, delete
-    admKubun: [] // edit
-    // delete
+    daItems: {} // --- admin ---
 
   },
   created: function created() {
@@ -56243,21 +56232,37 @@ var app = new Vue({
         dc1: 2
       };
     },
+    homeChgCate1: function homeChgCate1(ev) {
+      var _this2 = this;
+
+      console.log("get kubun id : " + ev);
+      this.getKubun(ev).then(function () {
+        _this2.cKubun1 = _this2.keepKubun;
+      });
+    },
+    homeChgCate2: function homeChgCate2(ev) {
+      var _this3 = this;
+
+      console.log("get kubun id : " + ev);
+      this.getKubun(ev).then(function () {
+        _this3.cKubun2 = _this3.keepKubun;
+      });
+    },
     // --- ここからitems/index ---
     detailAccount: function detailAccount(bookNo) {
-      var _this2 = this;
+      var _this4 = this;
 
       this.getItems(bookNo).then(function () {
         // getKubunの値を資産・損益に区別して保存
-        _this2.daItems = _this2.keepItems; // 値を代入してからモーダルを表示
+        _this4.daItems = _this4.keepItems; // 値を代入してからモーダルを表示
 
-        _this2.glay = true;
-        _this2.modalDtlAcct = true;
+        _this4.glay = true;
+        _this4.modalDtlAcct = true;
       });
     },
     detailNomal: function () {
       var _detailNomal = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(bookNo) {
-        var _this3 = this;
+        var _this5 = this;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
@@ -56267,19 +56272,19 @@ var app = new Vue({
                 this.bookNo = bookNo;
                 this.getItems(bookNo).then(function () {
                   // getKubunの値を資産・損益に区別して保存
-                  var keepAll = _this3.keepItems; // childへ渡す値の振り分け
+                  var keepAll = _this5.keepItems; // childへ渡す値の振り分け
 
                   if (keepAll[0].account_type === "0") {
-                    _this3.asItems = keepAll[0];
-                    _this3.plItems = keepAll[1];
+                    _this5.asItems = keepAll[0];
+                    _this5.plItems = keepAll[1];
                   } else {
-                    _this3.plItems = keepAll[0];
-                    _this3.asItems = keepAll[1];
+                    _this5.plItems = keepAll[0];
+                    _this5.asItems = keepAll[1];
                   } // 値を代入してからモーダルを表示
 
 
-                  _this3.glay = true;
-                  _this3.modalDtlNml = true;
+                  _this5.glay = true;
+                  _this5.modalDtlNml = true;
                 });
 
               case 2:
@@ -56299,18 +56304,18 @@ var app = new Vue({
     // --- ここからadmin ---
     // 共通:kubun, edit, delete
     adminChgType: function adminChgType(ev) {
-      var _this4 = this;
+      var _this6 = this;
 
       this.getCateByAcct(ev).then(function () {
-        _this4.admCate = _this4.keepCate;
+        _this6.cCate = _this6.keepCate;
       });
     },
     // 共通:edit, delete
     adminChgCate: function adminChgCate(ev) {
-      var _this5 = this;
+      var _this7 = this;
 
       this.getKubun(ev).then(function () {
-        _this5.admKubun = _this5.keepKubun;
+        _this7.cKubun = _this7.keepKubun;
       });
     },
     // --- ここからmethod ---

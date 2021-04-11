@@ -74,6 +74,11 @@ const app = new Vue({
         // === child ===
         // all共通
         propCate: {},
+        cAcctType:  ["資産", "費用", "収益"],
+        cCate: [],
+        cKubun: [],
+        cKubun1: [],
+        cKubun2: [],
 
         // --- home ---
         // 共通
@@ -94,17 +99,7 @@ const app = new Vue({
         daItems: {},
 
         // --- admin ---
-        admAcctType: ["資産", "費用", "収益"],
-        admRadio: 1,
-        admCate: [],
-        // create
-        disCrtCate: false,
-        disCrtKubun: true,
 
-        // edit, delete
-        admKubun: [],
-        // edit
-        // delete
     },
     created: function () {
         // console.log("--- create app ---");
@@ -210,6 +205,18 @@ const app = new Vue({
                 dc1: 2,
             };
         },
+        homeChgCate1: function (ev) {
+            console.log("get kubun id : "+ ev);
+            this.getKubun(ev).then(() => {
+                this.cKubun1 = this.keepKubun;
+            });
+        },
+        homeChgCate2: function (ev) {
+            console.log("get kubun id : "+ ev);
+            this.getKubun(ev).then(() => {
+                this.cKubun2 = this.keepKubun;
+            });
+        },
 
         // --- ここからitems/index ---
         detailAccount: function (bookNo) {
@@ -251,13 +258,13 @@ const app = new Vue({
         // 共通:kubun, edit, delete
         adminChgType: function (ev) {
             this.getCateByAcct(ev).then(() => {
-                this.admCate = this.keepCate;
+                this.cCate = this.keepCate;
             });
         },
         // 共通:edit, delete
         adminChgCate: function (ev) {
             this.getKubun(ev).then(() => {
-                this.admKubun = this.keepKubun;
+                this.cKubun = this.keepKubun;
             });
         },
 

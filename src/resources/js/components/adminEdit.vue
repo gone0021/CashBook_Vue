@@ -67,15 +67,15 @@
             @change="chgType($event)"
           >
             <option v-if="op1" selected>---</option>
-            <option v-for="(type, i) in mType" :value="i" :key="'type' + i">
+            <option v-for="(type, i) in pType" :value="i" :key="'type' + i">
               {{ type }}
             </option>
           </select>
 
-          <span class="invalid-feedback" v-if="mErrors.account_type">
+          <span class="invalid-feedback" v-if="pErrors.account_type">
             <template v-if="validType">
               <div
-                v-for="(acctType, i) in mErrors.account_type"
+                v-for="(acctType, i) in pErrors.account_type"
                 :key="'errAcctType' + i"
               >
                 {{ acctType }}
@@ -96,7 +96,7 @@
           >
             <option v-if="op2" selected>---</option>
             <option
-              v-for="(cate, i) in mCate"
+              v-for="(cate, i) in pCate"
               :value="cate.id"
               :key="'cate' + i"
             >
@@ -104,10 +104,10 @@
             </option>
           </select>
 
-          <span class="invalid-feedback" v-if="mErrors.category_id">
+          <span class="invalid-feedback" v-if="pErrors.category_id">
             <template v-if="validCateId">
               <div
-                v-for="(cId, i) in mErrors.category_id"
+                v-for="(cId, i) in pErrors.category_id"
                 :key="'errCateId' + i"
               >
                 {{ cId }}
@@ -132,21 +132,21 @@
           >
             <option v-if="op3" selected>---</option>
             <option
-              v-for="(kubun, i) in mKubun"
+              v-for="(kubun, i) in pKubun"
               :value="kubun.id"
               :key="'kubun' + i"
             >
               {{ kubun.kubun_name }}
             </option>
-            <option value="0" id="" v-if="!mKubun.length && noKubun">
+            <option value="0" id="" v-if="!pKubun.length && noKubun">
               小科目なし
             </option>
           </select>
 
           <!-- categoryは段合わせ用 -->
-          <span class="invalid-feedback" v-if="mErrors.kubun_id">
+          <span class="invalid-feedback" v-if="pErrors.kubun_id">
             <template v-if="validKubunId">
-              <div v-for="(kId, i) in mErrors.kubun_id" :key="'errKubunId' + i">
+              <div v-for="(kId, i) in pErrors.kubun_id" :key="'errKubunId' + i">
                 {{ kId }}
               </div>
             </template>
@@ -173,10 +173,10 @@
             {{ errorCate }}
           </div>
 
-          <span class="invalid-feedback" v-if="mErrors.category_name">
+          <span class="invalid-feedback" v-if="pErrors.category_name">
             <template v-if="validCateName">
               <div
-                v-for="(cName, i) in mErrors.category_name"
+                v-for="(cName, i) in pErrors.category_name"
                 :key="'errCateName' + i"
               >
                 {{ cName }}
@@ -205,10 +205,10 @@
             {{ errorKubun }}
           </div>
 
-          <span class="invalid-feedback" v-if="mErrors.kubun_name">
+          <span class="invalid-feedback" v-if="pErrors.kubun_name">
             <template v-if="validKubunName">
               <div
-                v-for="(kName, i) in mErrors.kubun_name"
+                v-for="(kName, i) in pErrors.kubun_name"
                 :key="'errKubunName' + i"
               >
                 {{ kName }}
@@ -250,7 +250,7 @@
 
 <script>
 export default {
-  props: ["mType", "mCate", "mKubun", "mErrors", "csrf"],
+  props: ["pType", "pCate", "pKubun", "pErrors", "csrf"],
   data: function () {
     return {
       // this
@@ -367,7 +367,7 @@ export default {
       this.op1 = false;
       let type = ev.target.value;
       //   console.log(type);
-      this.$emit("m-chg-type", type);
+      this.$emit("chg-type", type);
     },
     chgCate: function (ev) {
       // 最初のoptionを隠す
@@ -377,11 +377,11 @@ export default {
       this.noKubun = true;
 
       // category_idから区分を取得
-      let type = ev.target.value;
+      let cid = ev.target.value;
       // console.log(type);
-      this.$emit("m-chg-cate", type);
+      this.$emit("chg-cate", cid);
 
-      if (!this.mKubun.length) {
+      if (!this.pKubun.length) {
         this.disOp3 = true;
         this.hideOp3 = true;
         // this.noKubun = true;
@@ -420,13 +420,13 @@ export default {
       this.validType = true;
       this.validCateId = true;
       this.validCateName = true;
-      if (this.mErrors.account_type) {
+      if (this.pErrors.account_type) {
         this.classValidType = "is-invalid";
       }
-      if (this.mErrors.category_id) {
+      if (this.pErrors.category_id) {
         this.classValidCateId = "is-invalid";
       }
-      if (this.mErrors.category_name) {
+      if (this.pErrors.category_name) {
         this.classValidCateName = "is-invalid";
       }
     },

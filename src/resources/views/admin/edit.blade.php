@@ -7,9 +7,9 @@
 
         {{-- <div>{{session('validateMsg')}}
     </div> --}}
-    <admin-edit :m-type="admAcctType" :m-cate="admCate" :m-kubun="admKubun" :m-errors="{{ $errors }}"
-        :csrf="{{json_encode(csrf_token())}}" v-on:m-chg-type="adminChgType($event)"
-        v-on:m-chg-cate="adminChgCate($event)">
+    <admin-edit :p-type="cAcctType" :p-cate="cCate" :p-kubun="cKubun" :p-errors="{{ $errors }}"
+        :csrf="{{json_encode(csrf_token())}}" v-on:chg-type="adminChgType($event)"
+        v-on:chg-cate="adminChgCate($event)">
     </admin-edit>
 </div>
 </div>

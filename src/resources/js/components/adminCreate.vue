@@ -43,15 +43,15 @@
             @change="chgType($event)"
           >
             <option v-if="op1" selected>---</option>
-            <option v-for="(type, i) in mType" :value="i" :key="'type' + i">
+            <option v-for="(type, i) in pType" :value="i" :key="'type' + i">
               {{ type }}
             </option>
           </select>
 
-          <span class="invalid-feedback" v-if="mErrors.account_type">
+          <span class="invalid-feedback" v-if="pErrors.account_type">
             <template v-if="validType">
               <div
-                v-for="(acctType, i) in mErrors.account_type"
+                v-for="(acctType, i) in pErrors.account_type"
                 :key="'errAcctType' + i"
               >
                 {{ acctType }}
@@ -79,10 +79,10 @@
               {{ errorCate }}
             </div>
 
-            <span class="invalid-feedback" v-if="mErrors.category_name">
+            <span class="invalid-feedback" v-if="pErrors.category_name">
               <template v-if="validCateName">
                 <div
-                  v-for="(cName, i) in mErrors.category_name"
+                  v-for="(cName, i) in pErrors.category_name"
                   :key="'errCateName' + i"
                 >
                   {{ cName }}
@@ -107,7 +107,7 @@
               <!-- <option v-if="op2">---</option> -->
               <option v-if="op1" selected>---</option>
               <option
-                v-for="(cate, i) in mCate"
+                v-for="(cate, i) in pCate"
                 :value="cate.id"
                 :key="'cate' + i"
               >
@@ -115,10 +115,10 @@
               </option>
             </select>
 
-            <span class="invalid-feedback" v-if="mErrors.category_id">
+            <span class="invalid-feedback" v-if="pErrors.category_id">
               <template v-if="validCateId">
                 <div
-                  v-for="(cId, i) in mErrors.category_id"
+                  v-for="(cId, i) in pErrors.category_id"
                   :key="'errCateName' + i"
                 >
                   {{ cId }}
@@ -144,10 +144,10 @@
               {{ errorKubun }}
             </div>
 
-            <span class="invalid-feedback" v-if="mErrors.kubun_name">
+            <span class="invalid-feedback" v-if="pErrors.kubun_name">
               <template v-if="validKubunName">
                 <div
-                  v-for="(kName, i) in mErrors.kubun_name"
+                  v-for="(kName, i) in pErrors.kubun_name"
                   :key="'errKubunName' + i"
                 >
                   {{ kName }}
@@ -177,7 +177,7 @@
 
 <script>
 export default {
-  props: ["mCate", "mType", "mErrors", "csrf"],
+  props: ["pCate", "pType", "pErrors", "csrf"],
   data: function () {
     return {
       // --- this ---
@@ -277,7 +277,7 @@ export default {
 
       let type = ev.target.value;
       console.log(type);
-      this.$emit("m-chg-type", type);
+      this.$emit("chg-type", type);
     },
     // --- form ---
     // バリデーション
@@ -305,10 +305,10 @@ export default {
     showValidCate() {
       this.validType = true;
       this.validCateName = true;
-      if (this.mErrors.account_type) {
+      if (this.pErrors.account_type) {
         this.classValidType = "is-invalid";
       }
-      if (this.mErrors.category_name) {
+      if (this.pErrors.category_name) {
         this.classValidCateName = "is-invalid";
       }
     },
@@ -316,13 +316,13 @@ export default {
       this.validType = true;
       this.validCateId = true;
       this.validKubunName = true;
-      if (this.mErrors.account_type) {
+      if (this.pErrors.account_type) {
         this.classValidType = "is-invalid";
       }
-      if (this.mErrors.category_id) {
+      if (this.pErrors.category_id) {
         this.classValidCateId = "is-invalid";
       }
-      if (this.mErrors.kubun_name) {
+      if (this.pErrors.kubun_name) {
         this.classValidKubunName = "is-invalid";
       }
     },
