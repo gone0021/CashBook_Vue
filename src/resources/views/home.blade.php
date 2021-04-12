@@ -60,8 +60,12 @@
         :m-cate="propCate" :m-action="'new'"></modal-acct>
 
     </modal-nomal>
-    <modal-nml v-show="modalNomal" :csrf="{{json_encode(csrf_token())}}" :m-date="date" :mn-val="mnVal"
-        :m-cate-asset="cateAsset" :m-cate-expense="cateExpense" :m-cate-income="cateIncome"></modal-nml>
+    <modal-nml v-show="modalNomal" :csrf="{{json_encode(csrf_token())}}" :p-date="date" :p-val="mnVal"
+        :p-cate-asset="cateAsset" :p-cate-expense="cateExpense" :p-cate-income="cateIncome"
+        :p-kubun1="cKubun1" :p-kubun2="cKubun2"
+        v-on:chg-cate1="homeChgCate1($event)"
+        v-on:chg-cate2="homeChgCate2($event)"
+        ></modal-nml>
     {{-- vue-js-modal --}}
     {{-- <modal-nomal :csrf="{{json_encode(csrf_token())}}" :nm-obj="mnVal" :m-cate="category" :key="mnVal.name">
 

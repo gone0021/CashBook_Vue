@@ -11,7 +11,7 @@
     :minHeight="480"
   > -->
   <div id="modalNomal" class="nomalModalInner">
-    <form action="./items/store" method="post">
+    <form action="./items/store" method="post" @submit="checkForm">
       <input type="hidden" name="_token" :value="csrf" />
 
       <div class="inpNmlDate">
@@ -22,9 +22,14 @@
             name="date"
             id="inpNmlDate"
             class="form-control"
-            :value="mDate"
+            :class="classValidDate"
+            v-model="date"
             required
+            @blur="validDate()"
           />
+          <div class="invalid-feedback mt-1" v-if="errorDate">
+            {{ errorDate }}
+          </div>
         </div>
       </div>
 
@@ -36,24 +41,22 @@
           type="hidden"
           name="debit_credit[]"
           id="inpNmlDc0"
-          :value="mnVal.dc0"
+          :value="pVal.dc0"
         />
         <div class="inpNaCategory">
-          <label for="inpNaCategory">{{ mnVal.title }}</label>
+          <label for="inpNaCategory">{{ pVal.title }}</label>
           <select
             name="category_id[]"
             id="inpNaCategory"
             class="form-control"
             required
-            @change="getKubunNomal($event, 'asset')"
+            @change="chgCate1($event)"
           >
-            <option value="" class="selectFormatNomalAccet" id="opna0">
-              選択してください
-            </option>
+            <option value="" v-if="op1" selected>選択してください</option>
             <option
-              v-for="cateDeb in mCateAsset"
+              v-for="cateDeb in pCateAsset"
               :value="cateDeb.id"
-              :key="'categoryDebit' + mnVal.name + cateDeb.id"
+              :key="'categoryDebit' + pVal.name + cateDeb.id"
             >
               {{ cateDeb.category_name }}
             </option>
@@ -68,10 +71,11 @@
             class="form-control"
             required
           >
+            <option value="" v-if="op2" selected>---</option>
             <option
-              v-for="(ask, i) in asKubun"
+              v-for="(ask, i) in pKubun1"
               :value="ask.id"
-              :key="'asset-kubun' + mnVal.name + i"
+              :key="'asset-kubun' + pVal.name + i"
             >
               {{ ask.kubun_name }}
             </option>
@@ -85,7 +89,7 @@
           type="hidden"
           name="debit_credit[]"
           id="inpNmlDc"
-          :value="mnVal.dc1"
+          :value="pVal.dc1"
         />
         <div class="inpNpCategory">
           <label for="inpNpCategory">内容：</label>
@@ -94,26 +98,23 @@
             id="inpNpCategory"
             class="form-control"
             required
-            @change="getKubunNomal($event, 'pl')"
+            @change="chgCate2($event, 'pl')"
           >
-            <option value="" class="selectFormatNomalPl" id="opnp0">
-              選択してください
-            </option>
-
-            <template v-if="mnVal.name == 'income'">
+            <option value="" v-if="op3" selected>選択してください</option>
+            <template v-if="pVal.name == 'income'">
               <option
-                v-for="catePl in mCateIncome"
+                v-for="catePl in pCateIncome"
                 :value="catePl.id"
-                :key="'categoryCredit' + mnVal.name + catePl.id"
+                :key="'categoryCredit' + pVal.name + catePl.id"
               >
                 {{ catePl.category_name }}
               </option>
             </template>
-            <template v-if="mnVal.name == 'expense'">
+            <template value="" v-if="pVal.name == 'expense'">
               <option
-                v-for="catePl in mCateExpense"
+                v-for="catePl in pCateExpense"
                 :value="catePl.id"
-                :key="'categoryCredit' + mnVal.name + catePl.id"
+                :key="'categoryCredit' + pVal.name + catePl.id"
               >
                 {{ catePl.category_name }}
               </option>
@@ -129,10 +130,11 @@
             class="form-control"
             required
           >
+            <option value="" v-if="op4" selected>---</option>
             <option
-              v-for="(plk, i) in plKubun"
+              v-for="(plk, i) in pKubun2"
               :value="plk.id"
-              :key="'pl-kubun' + mnVal.name + i"
+              :key="'pl-kubun' + pVal.name + i"
             >
               {{ plk.kubun_name }}
             </option>
@@ -141,16 +143,20 @@
       </div>
 
       <div class="inpNmlPrice">
-        <label for="inpNmlPrice" class="">金額：</label>
-        <div class="inpNmlinputPrice">
+        <label for="inpNmlPrice" class="mt-2 align-top">金額：</label>
+        <div class="inpNmlinputPrice align-top">
           <input
             type="text"
             name="price"
             id="inpNmlPrice"
             class="form-control"
-            value=""
+            :class="classValidPrice"
+            v-model="price"
             required
           />
+          <div class="invalid-feedback mt-1" v-if="errorPrice">
+            {{ errorPrice }}
+          </div>
         </div>
       </div>
 
@@ -161,9 +167,14 @@
             name="comment"
             id="inpNmlComment"
             class="form-control"
+            :class="classValidComment"
             cols="36"
             rows="5"
+            v-model="comment"
           ></textarea>
+          <div class="invalid-feedback mt-1" v-if="errorComment">
+            {{ errorComment }}
+          </div>
         </div>
       </div>
 
@@ -184,12 +195,14 @@
 <script>
 export default {
   props: [
-    "mDate",
-    "mnVal",
     "csrf",
-    "mCateAsset",
-    "mCateExpense",
-    "mCateIncome",
+    "pDate",
+    "pVal",
+    "pCateAsset",
+    "pCateExpense",
+    "pCateIncome",
+    "pKubun1",
+    "pKubun2",
   ],
   data: function () {
     return {
@@ -197,53 +210,88 @@ export default {
       mKubun: "",
       asKubun: "",
       plKubun: "",
-
+      // optionの最初の値
+      op1: true,
+      op2: true,
+      op3: true,
+      op4: true,
+      // model：fromバリデーション用
+      date: this.pDate,
+      price: "",
+      comment: "",
+      // バリデーションエラー
+      errorDate: "",
+      errorPrice: "",
+      errorComment: "",
+      // is-invalidのクラス名
+      classValidDate: "",
+      classValidPrice: "",
+      classValidComment: "",
       // 置き換え用
-      rep: {},
     };
   },
   mounted: function () {
     console.log("--- mount modal nomal ---");
-    // console.log("date = " + this.mDate);
+    // console.log("date = " + this.pDate);
   },
   updated: function () {
     console.log("--- update modal nomal ---");
   },
   methods: {
-    delNaCateTop: function () {
-      let chgCategory = document.querySelector("#inpNaCategory");
-      let child = document.querySelector("#opna0");
-      chgCategory.removeChild(child);
-    },
-    delNpCateTop: function () {
-      let bCategory = document.querySelector("#inpNpCategory");
-      let child = document.querySelector("#opnp0");
-      bCategory.removeChild(child);
-    },
-
-    getKubunNomal: function (ev, args) {
+    chgCate1: function (ev) {
+      this.op1 = false;
+      this.op2 = false;
       let cid = ev.target.value;
-      axios
-        .get("./ajax/kubun_by_category", {
-          params: {
-            category_id: cid,
-          },
-        })
-        .then(
-          function (res) {
-            let data = res.data;
-            console.log("getkubun-nomal");
-            console.log(data);
-            if (args == "asset") {
-              this.asKubun = res.data;
-            } else {
-              this.plKubun = res.data;
-            }
-          }.bind(this)
-        )
-        .catch(function (e) {
-          console.error(e);
-        });
+      this.$emit("chg-cate1", cid);
+    },
+    chgCate2: function (ev) {
+      this.op3 = false;
+      this.op4 = false;
+      let cid = ev.target.value;
+      this.$emit("chg-cate2", cid);
+    },
+    // バリデーション
+    validDate: function () {
+      let date = this.date;
+      console.log(date);
+      if (!date.match(/^\d{4}\-\d{2}\-\d{2}$/)) {
+        this.errorDate = "正しい日付を入力してください";
+        this.classValidDate = "is-invalid";
+      }
+      var y = date.split("-")[0];
+      if (y < 2008) {
+        this.errorDate = "2010年以降で入力してください";
+        this.classValidDate = "is-invalid";
+      }
+    },
+    checkForm: function (ev) {
+      let date = this.date;
+      let price = this.price;
+      let comment = this.comment;
+      // 日付
+      if (!date.match(/^\d{4}\-\d{2}\-\d{2}$/)) {
+        this.errorDate = "正しい日付を入力してください";
+        this.classValidDate = "is-invalid";
+        ev.preventDefault();
+      }
+      var y = date.split("-")[0];
+      if (y < 2009) {
+        this.errorDate = "2010年以降で入力してください";
+        this.classValidDate = "is-invalid";
+        ev.preventDefault();
+      }
+      // 金額
+      if (isNaN(price)) {
+        this.errorPrice = "金額は半角数字のみで入力してください";
+        this.classValidPrice = "is-invalid";
+        ev.preventDefault();
+      }
+      // コメント
+      if (comment.length > 200) {
+        this.errorComment = "コメントは200文字以内で入力してください";
+        this.classValidComment = "is-invalid";
+        ev.preventDefault();
+      }
     },
   },
 };

@@ -2148,16 +2148,16 @@ __webpack_require__.r(__webpack_exports__);
       // バリデーションエラー
       errorCate: "",
       errorKubun: "",
-      // バリデーションの表示チェック
-      validType: false,
-      validCateId: false,
-      validCateName: false,
-      validKubunName: false,
       // is-invalidのクラス名
       classValidType: "",
       classValidCateId: "",
       classValidCateName: "",
       classValidKubunName: "",
+      // バリデーションの表示チェック：選択するraidoにより異なるため
+      validType: false,
+      validCateId: false,
+      validCateName: false,
+      validKubunName: false,
       // app.bladeでjsonへ変換
       sesMsg: sesMsg,
       // 使ってない：ただのメモ
@@ -2576,18 +2576,18 @@ __webpack_require__.r(__webpack_exports__);
       // バリデーションエラー
       errorCate: "",
       errorKubun: "",
-      // バリデーションの表示チェック
-      validType: false,
-      validCateId: false,
-      validKubunId: false,
-      validCateName: false,
-      validKubunName: false,
       // is-invalidのクラス名
       classValidType: "",
       classValidCateId: "",
       classValidKubunId: "",
       classValidCateName: "",
       classValidKubunName: "",
+      // バリデーションの表示チェック：選択するraidoにより異なるため
+      validType: false,
+      validCateId: false,
+      validKubunId: false,
+      validCateName: false,
+      validKubunName: false,
       // app.bladeでjsonへ変換
       sesMsg: sesMsg // 使ってない：ただのメモ
       // 置き換え用
@@ -4368,6 +4368,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["csrf", "pDate", "pVal", "pCateAsset", "pCateExpense", "pCateIncome", "pKubun1", "pKubun2"],
   data: function data() {
@@ -4383,8 +4397,16 @@ __webpack_require__.r(__webpack_exports__);
       op4: true,
       // model：fromバリデーション用
       date: this.pDate,
-      categoryName: "",
-      kubunName: "" // 置き換え用
+      price: "",
+      comment: "",
+      // バリデーションエラー
+      errorDate: "",
+      errorPrice: "",
+      errorComment: "",
+      // is-invalidのクラス名
+      classValidDate: "",
+      classValidPrice: "",
+      classValidComment: "" // 置き換え用
 
     };
   },
@@ -4401,11 +4423,61 @@ __webpack_require__.r(__webpack_exports__);
       var cid = ev.target.value;
       this.$emit("chg-cate1", cid);
     },
-    chgCate2: function chgCate2(ev, args) {
+    chgCate2: function chgCate2(ev) {
       this.op3 = false;
       this.op4 = false;
       var cid = ev.target.value;
       this.$emit("chg-cate2", cid);
+    },
+    // バリデーション
+    validDate: function validDate() {
+      var date = this.date;
+      console.log(date);
+
+      if (!date.match(/^\d{4}\-\d{2}\-\d{2}$/)) {
+        this.errorDate = "正しい日付を入力してください";
+        this.classValidDate = "is-invalid";
+      }
+
+      var y = date.split("-")[0];
+
+      if (y < 2008) {
+        this.errorDate = "2010年以降で入力してください";
+        this.classValidDate = "is-invalid";
+      }
+    },
+    checkForm: function checkForm(ev) {
+      var date = this.date;
+      var price = this.price;
+      var comment = this.comment; // 日付
+
+      if (!date.match(/^\d{4}\-\d{2}\-\d{2}$/)) {
+        this.errorDate = "正しい日付を入力してください";
+        this.classValidDate = "is-invalid";
+        ev.preventDefault();
+      }
+
+      var y = date.split("-")[0];
+
+      if (y < 2009) {
+        this.errorDate = "2010年以降で入力してください";
+        this.classValidDate = "is-invalid";
+        ev.preventDefault();
+      } // 金額
+
+
+      if (isNaN(price)) {
+        this.errorPrice = "金額は半角数字のみで入力してください";
+        this.classValidPrice = "is-invalid";
+        ev.preventDefault();
+      } // コメント
+
+
+      if (comment.length > 200) {
+        this.errorComment = "コメントは200文字以内で入力してください";
+        this.classValidComment = "is-invalid";
+        ev.preventDefault();
+      }
     }
   }
 });
@@ -40987,7 +41059,9 @@ var render = function() {
                 },
                 [
                   _vm.op1
-                    ? _c("option", { attrs: { selected: "" } }, [_vm._v("---")])
+                    ? _c("option", { attrs: { value: "", selected: "" } }, [
+                        _vm._v("---")
+                      ])
                     : _vm._e(),
                   _vm._v(" "),
                   _vm._l(_vm.pType, function(type, i) {
@@ -41123,9 +41197,11 @@ var render = function() {
                         },
                         [
                           _vm.op1
-                            ? _c("option", { attrs: { selected: "" } }, [
-                                _vm._v("---")
-                              ])
+                            ? _c(
+                                "option",
+                                { attrs: { value: "", selected: "" } },
+                                [_vm._v("---")]
+                              )
                             : _vm._e(),
                           _vm._v(" "),
                           _vm._l(_vm.pCate, function(cate, i) {
@@ -41467,7 +41543,9 @@ var render = function() {
               },
               [
                 _vm.op1
-                  ? _c("option", { attrs: { selected: "" } }, [_vm._v("---")])
+                  ? _c("option", { attrs: { value: "", selected: "" } }, [
+                      _vm._v("---")
+                    ])
                   : _vm._e(),
                 _vm._v(" "),
                 _vm._l(_vm.pType, function(type, i) {
@@ -41526,7 +41604,9 @@ var render = function() {
               },
               [
                 _vm.op2
-                  ? _c("option", { attrs: { selected: "" } }, [_vm._v("---")])
+                  ? _c("option", { attrs: { value: "", selected: "" } }, [
+                      _vm._v("---")
+                    ])
                   : _vm._e(),
                 _vm._v(" "),
                 _vm._l(_vm.pCate, function(cate, i) {
@@ -41590,7 +41670,7 @@ var render = function() {
                     },
                     [
                       _vm.op3
-                        ? _c("option", { attrs: { selected: "" } }, [
+                        ? _c("option", { attrs: { value: "", selected: "" } }, [
                             _vm._v("---")
                           ])
                         : _vm._e(),
@@ -43551,300 +43631,382 @@ var render = function() {
     "div",
     { staticClass: "nomalModalInner", attrs: { id: "modalNomal" } },
     [
-      _c("form", { attrs: { action: "./items/store", method: "post" } }, [
-        _c("input", {
-          attrs: { type: "hidden", name: "_token" },
-          domProps: { value: _vm.csrf }
-        }),
-        _vm._v(" "),
-        _c("div", { staticClass: "inpNmlDate" }, [
-          _c("label", { attrs: { for: "inpNmlDate" } }, [_vm._v("日付：")]),
+      _c(
+        "form",
+        {
+          attrs: { action: "./items/store", method: "post" },
+          on: { submit: _vm.checkForm }
+        },
+        [
+          _c("input", {
+            attrs: { type: "hidden", name: "_token" },
+            domProps: { value: _vm.csrf }
+          }),
           _vm._v(" "),
-          _c("div", { staticClass: "inpNmlinputDate" }, [
+          _c("div", { staticClass: "inpNmlDate" }, [
+            _c("label", { attrs: { for: "inpNmlDate" } }, [_vm._v("日付：")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "inpNmlinputDate" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.date,
+                    expression: "date"
+                  }
+                ],
+                staticClass: "form-control",
+                class: _vm.classValidDate,
+                attrs: {
+                  type: "date",
+                  name: "date",
+                  id: "inpNmlDate",
+                  required: ""
+                },
+                domProps: { value: _vm.date },
+                on: {
+                  blur: function($event) {
+                    return _vm.validDate()
+                  },
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.date = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm.errorDate
+                ? _c("div", { staticClass: "invalid-feedback mt-1" }, [
+                    _vm._v(
+                      "\n          " + _vm._s(_vm.errorDate) + "\n        "
+                    )
+                  ])
+                : _vm._e()
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "inpNa" }, [
             _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.date,
-                  expression: "date"
-                }
-              ],
-              staticClass: "form-control",
+              attrs: { type: "hidden", name: "submit", value: "inpNml" }
+            }),
+            _vm._v(" "),
+            _c("input", {
               attrs: {
-                type: "date",
-                name: "date",
-                id: "inpNmlDate",
-                required: ""
+                type: "hidden",
+                name: "debit_credit[]",
+                id: "inpNmlDc0"
               },
-              domProps: { value: _vm.date },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+              domProps: { value: _vm.pVal.dc0 }
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "inpNaCategory" }, [
+              _c("label", { attrs: { for: "inpNaCategory" } }, [
+                _vm._v(_vm._s(_vm.pVal.title))
+              ]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  staticClass: "form-control",
+                  attrs: {
+                    name: "category_id[]",
+                    id: "inpNaCategory",
+                    required: ""
+                  },
+                  on: {
+                    change: function($event) {
+                      return _vm.chgCate1($event)
+                    }
                   }
-                  _vm.date = $event.target.value
-                }
-              }
-            })
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "inpNa" }, [
-          _c("input", {
-            attrs: { type: "hidden", name: "submit", value: "inpNml" }
-          }),
-          _vm._v(" "),
-          _c("input", {
-            attrs: { type: "hidden", name: "debit_credit[]", id: "inpNmlDc0" },
-            domProps: { value: _vm.pVal.dc0 }
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "inpNaCategory" }, [
-            _c("label", { attrs: { for: "inpNaCategory" } }, [
-              _vm._v(_vm._s(_vm.pVal.title))
+                },
+                [
+                  _vm.op1
+                    ? _c("option", { attrs: { value: "", selected: "" } }, [
+                        _vm._v("選択してください")
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm._l(_vm.pCateAsset, function(cateDeb) {
+                    return _c(
+                      "option",
+                      {
+                        key: "categoryDebit" + _vm.pVal.name + cateDeb.id,
+                        domProps: { value: cateDeb.id }
+                      },
+                      [
+                        _vm._v(
+                          "\n            " +
+                            _vm._s(cateDeb.category_name) +
+                            "\n          "
+                        )
+                      ]
+                    )
+                  })
+                ],
+                2
+              )
             ]),
             _vm._v(" "),
-            _c(
-              "select",
-              {
-                staticClass: "form-control",
-                attrs: {
-                  name: "category_id[]",
-                  id: "inpNaCategory",
-                  required: ""
+            _c("div", { staticClass: "inpNaKubun" }, [
+              _c("label", { attrs: { for: "inpNaKubun" } }, [
+                _vm._v("小科目：")
+              ]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  staticClass: "form-control",
+                  attrs: { name: "kubun_id[]", id: "inpNaKubun", required: "" }
                 },
-                on: {
-                  change: function($event) {
-                    return _vm.chgCate1($event)
-                  }
-                }
-              },
-              [
-                _vm.op1
-                  ? _c("option", { attrs: { selected: "" } }, [
-                      _vm._v("選択してください")
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm._l(_vm.pCateAsset, function(cateDeb) {
-                  return _c(
-                    "option",
-                    {
-                      key: "categoryDebit" + _vm.pVal.name + cateDeb.id,
-                      domProps: { value: cateDeb.id }
-                    },
-                    [
-                      _vm._v(
-                        "\n            " +
-                          _vm._s(cateDeb.category_name) +
-                          "\n          "
-                      )
-                    ]
-                  )
-                })
-              ],
-              2
-            )
+                [
+                  _vm.op2
+                    ? _c("option", { attrs: { value: "", selected: "" } }, [
+                        _vm._v("---")
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm._l(_vm.pKubun1, function(ask, i) {
+                    return _c(
+                      "option",
+                      {
+                        key: "asset-kubun" + _vm.pVal.name + i,
+                        domProps: { value: ask.id }
+                      },
+                      [
+                        _vm._v(
+                          "\n            " +
+                            _vm._s(ask.kubun_name) +
+                            "\n          "
+                        )
+                      ]
+                    )
+                  })
+                ],
+                2
+              )
+            ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "inpNaKubun" }, [
-            _c("label", { attrs: { for: "inpNaKubun" } }, [_vm._v("小科目：")]),
+          _c("div", { staticClass: "inpNp" }, [
+            _c("input", {
+              attrs: { type: "hidden", name: "debit_credit[]", id: "inpNmlDc" },
+              domProps: { value: _vm.pVal.dc1 }
+            }),
             _vm._v(" "),
-            _c(
-              "select",
-              {
-                staticClass: "form-control",
-                attrs: { name: "kubun_id[]", id: "inpNaKubun", required: "" }
-              },
-              [
-                _vm.op2
-                  ? _c("option", { attrs: { selected: "" } }, [_vm._v("---")])
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm._l(_vm.pKubun1, function(ask, i) {
-                  return _c(
-                    "option",
-                    {
-                      key: "asset-kubun" + _vm.pVal.name + i,
-                      domProps: { value: ask.id }
-                    },
-                    [
-                      _vm._v(
-                        "\n            " +
-                          _vm._s(ask.kubun_name) +
-                          "\n          "
-                      )
-                    ]
-                  )
-                })
-              ],
-              2
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "inpNp" }, [
-          _c("input", {
-            attrs: { type: "hidden", name: "debit_credit[]", id: "inpNmlDc" },
-            domProps: { value: _vm.pVal.dc1 }
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "inpNpCategory" }, [
-            _c("label", { attrs: { for: "inpNpCategory" } }, [
-              _vm._v("内容：")
+            _c("div", { staticClass: "inpNpCategory" }, [
+              _c("label", { attrs: { for: "inpNpCategory" } }, [
+                _vm._v("内容：")
+              ]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  staticClass: "form-control",
+                  attrs: {
+                    name: "category_id[]",
+                    id: "inpNpCategory",
+                    required: ""
+                  },
+                  on: {
+                    change: function($event) {
+                      return _vm.chgCate2($event, "pl")
+                    }
+                  }
+                },
+                [
+                  _vm.op3
+                    ? _c("option", { attrs: { value: "", selected: "" } }, [
+                        _vm._v("選択してください")
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.pVal.name == "income"
+                    ? _vm._l(_vm.pCateIncome, function(catePl) {
+                        return _c(
+                          "option",
+                          {
+                            key: "categoryCredit" + _vm.pVal.name + catePl.id,
+                            domProps: { value: catePl.id }
+                          },
+                          [
+                            _vm._v(
+                              "\n              " +
+                                _vm._s(catePl.category_name) +
+                                "\n            "
+                            )
+                          ]
+                        )
+                      })
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.pVal.name == "expense"
+                    ? _vm._l(_vm.pCateExpense, function(catePl) {
+                        return _c(
+                          "option",
+                          {
+                            key: "categoryCredit" + _vm.pVal.name + catePl.id,
+                            domProps: { value: catePl.id }
+                          },
+                          [
+                            _vm._v(
+                              "\n              " +
+                                _vm._s(catePl.category_name) +
+                                "\n            "
+                            )
+                          ]
+                        )
+                      })
+                    : _vm._e()
+                ],
+                2
+              )
             ]),
             _vm._v(" "),
-            _c(
-              "select",
-              {
-                staticClass: "form-control",
-                attrs: {
-                  name: "category_id[]",
-                  id: "inpNpCategory",
-                  required: ""
+            _c("div", { staticClass: "inpNpKubun" }, [
+              _c("label", { attrs: { for: "inpNpKubun" } }, [
+                _vm._v("小科目：")
+              ]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  staticClass: "form-control",
+                  attrs: { name: "kubun_id[]", id: "inpNpKubun", required: "" }
                 },
-                on: {
-                  change: function($event) {
-                    return _vm.chgCate2($event, "pl")
-                  }
-                }
-              },
-              [
-                _vm.op3
-                  ? _c("option", { attrs: { selected: "" } }, [
-                      _vm._v("選択してください")
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.pVal.name == "income"
-                  ? _vm._l(_vm.pCateIncome, function(catePl) {
-                      return _c(
-                        "option",
-                        {
-                          key: "categoryCredit" + _vm.pVal.name + catePl.id,
-                          domProps: { value: catePl.id }
-                        },
-                        [
-                          _vm._v(
-                            "\n              " +
-                              _vm._s(catePl.category_name) +
-                              "\n            "
-                          )
-                        ]
-                      )
-                    })
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.pVal.name == "expense"
-                  ? _vm._l(_vm.pCateExpense, function(catePl) {
-                      return _c(
-                        "option",
-                        {
-                          key: "categoryCredit" + _vm.pVal.name + catePl.id,
-                          domProps: { value: catePl.id }
-                        },
-                        [
-                          _vm._v(
-                            "\n              " +
-                              _vm._s(catePl.category_name) +
-                              "\n            "
-                          )
-                        ]
-                      )
-                    })
-                  : _vm._e()
-              ],
-              2
-            )
+                [
+                  _vm.op4
+                    ? _c("option", { attrs: { value: "", selected: "" } }, [
+                        _vm._v("---")
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm._l(_vm.pKubun2, function(plk, i) {
+                    return _c(
+                      "option",
+                      {
+                        key: "pl-kubun" + _vm.pVal.name + i,
+                        domProps: { value: plk.id }
+                      },
+                      [
+                        _vm._v(
+                          "\n            " +
+                            _vm._s(plk.kubun_name) +
+                            "\n          "
+                        )
+                      ]
+                    )
+                  })
+                ],
+                2
+              )
+            ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "inpNpKubun" }, [
-            _c("label", { attrs: { for: "inpNpKubun" } }, [_vm._v("小科目：")]),
-            _vm._v(" "),
+          _c("div", { staticClass: "inpNmlPrice" }, [
             _c(
-              "select",
-              {
+              "label",
+              { staticClass: "mt-2 align-top", attrs: { for: "inpNmlPrice" } },
+              [_vm._v("金額：")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "inpNmlinputPrice align-top" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.price,
+                    expression: "price"
+                  }
+                ],
                 staticClass: "form-control",
-                attrs: { name: "kubun_id[]", id: "inpNpKubun", required: "" }
+                class: _vm.classValidPrice,
+                attrs: {
+                  type: "text",
+                  name: "price",
+                  id: "inpNmlPrice",
+                  required: ""
+                },
+                domProps: { value: _vm.price },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.price = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm.errorPrice
+                ? _c("div", { staticClass: "invalid-feedback mt-1" }, [
+                    _vm._v(
+                      "\n          " + _vm._s(_vm.errorPrice) + "\n        "
+                    )
+                  ])
+                : _vm._e()
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "inpNmlCommentSubmit" }, [
+            _c(
+              "label",
+              {
+                staticClass: "inpNmlCommentLabel",
+                attrs: { for: "inpNmlComment" }
               },
-              [
-                _vm.op4
-                  ? _c("option", { attrs: { selected: "" } }, [_vm._v("---")])
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm._l(_vm.pKubun2, function(plk, i) {
-                  return _c(
-                    "option",
-                    {
-                      key: "pl-kubun" + _vm.pVal.name + i,
-                      domProps: { value: plk.id }
-                    },
-                    [
-                      _vm._v(
-                        "\n            " +
-                          _vm._s(plk.kubun_name) +
-                          "\n          "
-                      )
-                    ]
-                  )
-                })
-              ],
-              2
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _vm._m(0),
-        _vm._v(" "),
-        _vm._m(1),
-        _vm._v(" "),
-        _vm._m(2)
-      ])
+              [_vm._v("コメント：")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "inpNmlComment" }, [
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.comment,
+                    expression: "comment"
+                  }
+                ],
+                staticClass: "form-control",
+                class: _vm.classValidComment,
+                attrs: {
+                  name: "comment",
+                  id: "inpNmlComment",
+                  cols: "36",
+                  rows: "5"
+                },
+                domProps: { value: _vm.comment },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.comment = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm.errorComment
+                ? _c("div", { staticClass: "invalid-feedback mt-1" }, [
+                    _vm._v(
+                      "\n          " + _vm._s(_vm.errorComment) + "\n        "
+                    )
+                  ])
+                : _vm._e()
+            ])
+          ]),
+          _vm._v(" "),
+          _vm._m(0)
+        ]
+      )
     ]
   )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "inpNmlPrice" }, [
-      _c("label", { attrs: { for: "inpNmlPrice" } }, [_vm._v("金額：")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "inpNmlinputPrice" }, [
-        _c("input", {
-          staticClass: "form-control",
-          attrs: {
-            type: "text",
-            name: "price",
-            id: "inpNmlPrice",
-            value: "",
-            required: ""
-          }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "inpNmlCommentSubmit" }, [
-      _c(
-        "label",
-        { staticClass: "inpNmlCommentLabel", attrs: { for: "inpNmlComment" } },
-        [_vm._v("コメント：")]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "inpNmlComment" }, [
-        _c("textarea", {
-          staticClass: "form-control",
-          attrs: { name: "comment", id: "inpNmlComment", cols: "36", rows: "5" }
-        })
-      ])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -56362,6 +56524,25 @@ var app = new Vue({
       }.bind(this))["catch"](function (e) {
         console.error(e);
       });
+    },
+    // --- ここからmethod ---
+    validDate: function validDate(ev) {
+      // 日付
+      if (!ev.match(/^\d{4}\-\d{2}\-\d{2}$/)) {
+        $(element).addClass("is-invalid");
+        this.errors.date = "正しい日付を入力してください";
+        this.classValid.date = "is-invalid";
+        ev.preventDefault();
+      }
+
+      var y = ev.split("-")[0];
+
+      if (ev < 2010) {
+        $(element).addClass("is-invalid");
+        this.errors.date = "2010年以降で入力してください";
+        this.classValid.date = "is-invalid";
+        ev.preventDefault();
+      }
     }
   }
 });

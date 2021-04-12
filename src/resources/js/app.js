@@ -74,7 +74,7 @@ const app = new Vue({
         // === child ===
         // all共通
         propCate: {},
-        cAcctType:  ["資産", "費用", "収益"],
+        cAcctType: ["資産", "費用", "収益"],
         cCate: [],
         cKubun: [],
         cKubun1: [],
@@ -206,13 +206,13 @@ const app = new Vue({
             };
         },
         homeChgCate1: function (ev) {
-            console.log("get kubun id : "+ ev);
+            console.log("get kubun id : " + ev);
             this.getKubun(ev).then(() => {
                 this.cKubun1 = this.keepKubun;
             });
         },
         homeChgCate2: function (ev) {
-            console.log("get kubun id : "+ ev);
+            console.log("get kubun id : " + ev);
             this.getKubun(ev).then(() => {
                 this.cKubun2 = this.keepKubun;
             });
@@ -318,5 +318,23 @@ const app = new Vue({
                 console.error(e);
             });
         },
+
+        // --- ここからmethod ---
+        validDate: function (ev) {
+            // 日付
+            if (!ev.match(/^\d{4}\-\d{2}\-\d{2}$/)) {
+                $(element).addClass("is-invalid");
+                this.errors.date = "正しい日付を入力してください";
+                this.classValid.date = "is-invalid";
+                ev.preventDefault();
+            }
+            var y = ev.split("-")[0];
+            if (ev < 2010) {
+                $(element).addClass("is-invalid");
+                this.errors.date = "2010年以降で入力してください";
+                this.classValid.date = "is-invalid";
+                ev.preventDefault();
+            }
+        }
     }
 });
