@@ -66,7 +66,7 @@
             required
             @change="chgType($event)"
           >
-            <option v-if="op1" selected>---</option>
+            <option value="" v-if="op1" selected>---</option>
             <option v-for="(type, i) in pType" :value="i" :key="'type' + i">
               {{ type }}
             </option>
@@ -94,7 +94,7 @@
             required
             @change="chgCate($event)"
           >
-            <option v-if="op2" selected>---</option>
+            <option value="" v-if="op2" selected>---</option>
             <option
               v-for="(cate, i) in pCate"
               :value="cate.id"
@@ -130,7 +130,7 @@
             :class="classValidKubunId"
             required
           >
-            <option v-if="op3" selected>---</option>
+            <option value="" v-if="op3" selected>---</option>
             <option
               v-for="(kubun, i) in pKubun"
               :value="kubun.id"
@@ -271,19 +271,18 @@ export default {
       // バリデーションエラー
       errorCate: "",
       errorKubun: "",
-
-      // バリデーションの表示チェック
-      validType: false,
-      validCateId: false,
-      validKubunId: false,
-      validCateName: false,
-      validKubunName: false,
       // is-invalidのクラス名
       classValidType: "",
       classValidCateId: "",
       classValidKubunId: "",
       classValidCateName: "",
       classValidKubunName: "",
+      // バリデーションの表示チェック：選択するraidoにより異なるため
+      validType: false,
+      validCateId: false,
+      validKubunId: false,
+      validCateName: false,
+      validKubunName: false,
 
       // app.bladeでjsonへ変換
       sesMsg: sesMsg, // 使ってない：ただのメモ
