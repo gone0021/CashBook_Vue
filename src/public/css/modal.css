@@ -32,3 +32,24 @@ div.detailBtn {
     justify-content: center;
     margin-bottom: 20px;
 }
+
+/* ------------------------ */
+/* input Nomal/income */
+/* ------------------------ */
+#modalMsg {
+    z-index: 2;
+    position: fixed;
+
+    top: 50%;
+    left: 50%;
+    margin-top: -120px;
+    margin-left: -180px;
+    background-color: #e6ecf0;
+    height: 140px;
+    width: 360px;
+    padding: 40px 0px;
+    border-radius: 10px;
+    text-align: center;
+
+    font-weight: bold;
+}

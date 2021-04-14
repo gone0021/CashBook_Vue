@@ -8,14 +8,11 @@
         :id="`inpAdCategory${cntDeb}`"
         class="form-control"
         required
-        @change.once="mChgDebCateTop(cntDeb)"
-        @change="mGetKubunAdeb($event, cntDeb)"
+        @change="chgCateDeb($event)"
       >
-        <option value="" class="opCatDebite" :id="`opCateDebit${cntDeb}`">
-          選択してください
-        </option>
+        <option value="" v-if="op1" selected>選択してください</option>
         <option
-          v-for="cate in mCate"
+          v-for="cate in pCate"
           :value="cate.id"
           :key="`categoryDebit${cate.id}`"
         >
@@ -30,28 +27,39 @@
         name="kubun_id[]"
         :id="`inpAdKubun${cntDeb}`"
         class="form-control"
+        required
       >
+        <option value="" v-if="op2" selected>---</option>
         <option
-          v-for="kubun in mDebkubun"
-          :value="kubun.id"
-          :key="`categoryDebit${kubun.id}`"
+          v-for="dKubun in debKubun"
+          :value="dKubun.id"
+          :key="`categoryDebit${dKubun.id}`"
         >
-          {{ kubun.kubun_name }}
+          {{ dKubun.kubun_name }}
+        </option>
+        <option value="" id="" v-if="!debKubun.length && noKubun">
+          小科目なし
         </option>
       </select>
     </div>
 
     <div class="inpAdPrice">
-      <label :for="`inpAdPrice${cntDeb}`">金額：</label>
+      <label :for="`inpAdPrice${cntDeb}`" class="align-top mt-2">金額：</label>
       <div class="inpAdPriceInput" :id="`inpAdPriceInput${cntDeb}`">
         <input
           type="text"
           name="price[]"
           :id="`inpAdPrice${cntDeb}`"
           class="form-control"
-          value=""
+          :class="classValidPrice"
+          v-model="debPrice"
           required
+          @blur="blurPrice()"
         />
+
+        <div class="invalid-feedback mt-1" v-if="errorPrice">
+          {{ errorPrice }}
+        </div>
       </div>
     </div>
   </div>
@@ -67,56 +75,62 @@ export default {
     },
     cntDeb: { type: Number, default: 0 },
     // ObjectでもArrayでもtypeのエラーがでるため指定なしにしている
-    mCate: { default: () => [] },
+    pCate: { default: () => [] },
   },
   data: function () {
     return {
-      mDebkubun: [],
-      //
+      // --- this ---
+      debKubun: [],
+      op1: true,
+      op2: true,
+      noKubun: true,
+      // バリデーション用
+      errorPrice: "",
+      classValidPrice: "",
+      // model
+      debPrice: "",
+      // --- parent ---
+      validError: false,
     };
   },
   created: function () {
-    if (this.addBtn == "debit") {
-      console.log("add : " + this.addBtn);
-      console.log("props : " + this.cntDeb);
-    }
+    // console.log("--- created modal account debit ---");
   },
-  updated: function () {},
+  updated: function () {
+    // console.log("--- updated modal account debit ---");
+  },
   methods: {
-    mChgDebCateTop: function (i) {
-      //   console.log("mdeb:i = " + i);
-      this.$emit("m-chg-deb-cate-top", i);
+    blurPrice: function () {
+      if (isNaN(this.debPrice)) {
+        this.errorPrice = "金額は半角数字のみ";
+        this.classValidPrice = "is-invalid";
+        this.validError = true;
+      } else {
+        this.errorPrice = "";
+        this.classValidPrice = "";
+        this.validError = false;
+      }
+
+      this.$emit("p-blur-price", this.validError);
     },
 
-    // parentのメソッドを使用する場合：値が受け取れなかったため保留
-    // mGetKubunAcct: function (ev, i) {
-    //   let cid = ev.target.value;
-    //   console.log("mdeb:i = " + i);
-    //   console.log("id = " + cid);
-    //   this.$emit("m-get-kubun-acct", cid, i);
-    //   console.log("mkubun ↓ ");
-    //   console.log(this.mDebKubun);
-    // },
-
-    mGetKubunAdeb: function (ev, i) {
+    chgCateDeb: function (ev) {
+      this.op1 = false;
+      this.op2 = false;
+      this.noKubun = true;
+      // $eventから値を取得
       let cid = ev.target.value;
-      //   console.log("id = " + cid);
-      //   this.$emit("m-get-kubun", cid);
-      console.log("cntDeb : " + this.cntDeb);
-      Number(i);
+    //   console.log("cid : " + cid);
+      // ajaxでkubunを取得
       axios
-        .get("./ajax/kubun_by_category", {
+        .get(`./ajax/kubun_by_category`, {
           params: {
             category_id: cid,
           },
         })
         .then(
           function (res) {
-            // console.log(res.data);
-            this.mDebkubun = res.data;
-            console.log("args i : " + i);
-            console.log(this.mDebkubun);
-            // console.log(title);
+            this.debKubun = res.data;
           }.bind(this)
         )
         .catch(function (e) {

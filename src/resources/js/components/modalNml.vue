@@ -13,6 +13,7 @@
   <div id="modalNomal" class="nomalModalInner">
     <form action="./items/store" method="post" @submit="checkForm">
       <input type="hidden" name="_token" :value="csrf" />
+      <input type="hidden" name="submit" value="inputNomal" />
 
       <div class="inpNmlDate">
         <label for="inpNmlDate" class="">日付：</label>
@@ -25,7 +26,7 @@
             :class="classValidDate"
             v-model="date"
             required
-            @blur="validDate()"
+            @blur="blurDate()"
           />
           <div class="invalid-feedback mt-1" v-if="errorDate">
             {{ errorDate }}
@@ -35,8 +36,6 @@
 
       <!-- asset -->
       <div class="inpNa">
-        <input type="hidden" name="submit" value="inpNml" />
-
         <input
           type="hidden"
           name="debit_credit[]"
@@ -78,6 +77,9 @@
               :key="'asset-kubun' + pVal.name + i"
             >
               {{ ask.kubun_name }}
+            </option>
+            <option value="" id="" v-if="!pKubun1.length && noKubun1">
+              小科目なし
             </option>
           </select>
         </div>
@@ -138,6 +140,9 @@
             >
               {{ plk.kubun_name }}
             </option>
+            <option value="" id="" v-if="!pKubun2.length && noKubun2">
+              小科目なし
+            </option>
           </select>
         </div>
       </div>
@@ -153,6 +158,7 @@
             :class="classValidPrice"
             v-model="price"
             required
+            @blur="blurPrice()"
           />
           <div class="invalid-feedback mt-1" v-if="errorPrice">
             {{ errorPrice }}
@@ -171,6 +177,7 @@
             cols="36"
             rows="5"
             v-model="comment"
+            @blur="blurComment()"
           ></textarea>
           <div class="invalid-feedback mt-1" v-if="errorComment">
             {{ errorComment }}
@@ -206,10 +213,13 @@ export default {
   ],
   data: function () {
     return {
+      // --- this ---
       cataId: "",
       mKubun: "",
       asKubun: "",
       plKubun: "",
+      noKubun1: false,
+      noKubun2: false,
       // optionの最初の値
       op1: true,
       op2: true,
@@ -231,65 +241,75 @@ export default {
     };
   },
   mounted: function () {
-    console.log("--- mount modal nomal ---");
+    // console.log("--- mount modal nomal ---");
     // console.log("date = " + this.pDate);
   },
   updated: function () {
-    console.log("--- update modal nomal ---");
+    // console.log("--- update modal nomal ---");
   },
   methods: {
     chgCate1: function (ev) {
+      // 最初のoptionを隠す
       this.op1 = false;
       this.op2 = false;
+      // nokubunの表示許可
+      this.noKubun1 = true;
       let cid = ev.target.value;
       this.$emit("chg-cate1", cid);
     },
     chgCate2: function (ev) {
+      // 最初のoptionを隠す
       this.op3 = false;
       this.op4 = false;
+      // nokubunの表示許可
+      this.noKubun2 = true;
       let cid = ev.target.value;
       this.$emit("chg-cate2", cid);
     },
+
     // バリデーション
-    validDate: function () {
+    blurDate: function () {
       let date = this.date;
-      console.log(date);
       if (!date.match(/^\d{4}\-\d{2}\-\d{2}$/)) {
+        // 半角数字
         this.errorDate = "正しい日付を入力してください";
         this.classValidDate = "is-invalid";
-      }
-      var y = date.split("-")[0];
-      if (y < 2008) {
-        this.errorDate = "2010年以降で入力してください";
+      } else if (y < 2000 || y > 3000) {
+        // 日付：2000年～3000年
+        this.errorDate = "2000年～3000年で入力してください";
         this.classValidDate = "is-invalid";
+      } else {
+        this.errorDate = "";
+        this.classValidDate = "";
       }
     },
-    checkForm: function (ev) {
-      let date = this.date;
+    blurPrice: function () {
       let price = this.price;
-      let comment = this.comment;
-      // 日付
-      if (!date.match(/^\d{4}\-\d{2}\-\d{2}$/)) {
-        this.errorDate = "正しい日付を入力してください";
-        this.classValidDate = "is-invalid";
-        ev.preventDefault();
-      }
-      var y = date.split("-")[0];
-      if (y < 2009) {
-        this.errorDate = "2010年以降で入力してください";
-        this.classValidDate = "is-invalid";
-        ev.preventDefault();
-      }
       // 金額
       if (isNaN(price)) {
         this.errorPrice = "金額は半角数字のみで入力してください";
         this.classValidPrice = "is-invalid";
-        ev.preventDefault();
+      } else {
+        this.errorPrice = "";
+        this.classValidPrice = "";
       }
-      // コメント
+    },
+
+    blurComment: function () {
+      let comment = this.comment;
       if (comment.length > 200) {
         this.errorComment = "コメントは200文字以内で入力してください";
         this.classValidComment = "is-invalid";
+      } else {
+        this.errorComment = "";
+        this.classValidComment = "";
+      }
+    },
+    checkForm: function (ev) {
+      //   if (this.errorDate || this.errorPrice || this.errorComment) {
+      let inValid = document.querySelector(".is-invalid");
+      if (inValid) {
+        alert("不正な入力があります");
         ev.preventDefault();
       }
     },

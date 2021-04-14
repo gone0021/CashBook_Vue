@@ -8,14 +8,11 @@
         :id="`inpAcCategory${cntCre}`"
         class="form-control"
         required
-        @change.once="mChgCreCateTop(cntCre)"
-        @change="mGetKubunAcre($event, cntCre)"
+        @change="chgCateCre($event)"
       >
-        <option value="" class="opCateCredit" :id="`opCateCredit${cntCre}`">
-          選択してください
-        </option>
+        <option value="" v-if="op1" selected>選択してください</option>
         <option
-          v-for="obj in mCate"
+          v-for="obj in pCate"
           :value="obj.id"
           :key="`categoryCredit${obj.id}`"
         >
@@ -25,25 +22,44 @@
     </div>
 
     <div class="inpAcKubun">
-      <label :for="`inpAcKubun${cntCre}`">小科目：</label>
+      <label for="creKubun">小科目：</label>
       <select
         name="kubun_id[]"
         :id="`inpAcKubun${cntCre}`"
         class="form-control"
-      ></select>
+        required
+      >
+        <option value="" v-if="op2" selected>---</option>
+        <option
+          v-for="cKubun in creKubun"
+          :value="cKubun.id"
+          :key="`categoryCredit${cKubun.id}`"
+        >
+          {{ cKubun.kubun_name }}
+        </option>
+        <option value="" id="" v-if="!creKubun.length && noKubun">
+          小科目なし
+        </option>
+      </select>
     </div>
 
     <div class="inpAcPrice">
-      <label :for="`inpAcPrice${cntCre}`">金額：</label>
+      <label :for="`inpAcPrice${cntCre}`" class="align-top mt-2">金額：</label>
       <div class="inpAcPriceinput" :id="`inpAcPriceinput${cntCre}`">
         <input
           type="text"
           name="price[]"
           :id="`inpAcPrice${cntCre}`"
           class="form-control"
-          value=""
+          :class="classValidPrice"
+          v-model="crePrice"
           required
+          @blur="blurPrice()"
         />
+
+        <div class="invalid-feedback mt-1" v-if="errorPrice">
+          {{ errorPrice }}
+        </div>
       </div>
     </div>
   </div>
@@ -51,61 +67,62 @@
 
 <script>
 export default {
-  props: ["addBtn", "cntCre", "mCate"],
+  props: ["addBtn", "cntCre", "pCate"],
   data: function () {
     return {
-      //
+      // --- this ---
+      creKubun: [],
+      op1: true,
+      op2: true,
+      noKubun: false,
+
+      // バリデーション用
+      errorPrice: "",
+      classValidPrice: "",
+      // model
+      crePrice: "",
+      // --- parent ---
+      validError: false,
     };
   },
+  created: function () {
+    // console.log("--- created modal account credit ---");
+  },
   updated: function () {
-    if (this.addBtn == "credit") {
-      console.log("add : " + this.addBtn);
-      console.log("props : " + this.cntCre);
-    }
+    // console.log("--- updated modal account credit ---");
   },
   methods: {
-    mChgCreCateTop: function (i) {
-      //   console.log("mcre:i = " + i);
-      this.$emit("m-chg-cre-cate-top", i);
-    },
-    mGetKubunAcre: function (ev, i) {
-      // 引数のキャスト
-      Number(i);
-
-      // 該当するselectの取得
-      let select = document.querySelector(`#inpAcKubun${i}`);
-      //   値があれば削除
-      while (select.lastChild) {
-        select.removeChild(select.lastChild);
+    blurPrice: function () {
+      if (isNaN(this.crePrice)) {
+        this.errorPrice = "金額は半角数字のみ";
+        this.classValidPrice = "is-invalid";
+        this.validError = true;
+      } else {
+        this.errorPrice = "";
+        this.classValidPrice = "";
+        this.validError = false;
       }
 
+      this.$emit("p-blur-price", this.validError);
+    },
+
+    chgCateCre: function (ev) {
+      this.op1 = false;
+      this.op2 = false;
+      this.noKubun = true;
       // $eventから値を取得
       let cid = ev.target.value;
+    //   console.log("cid : " + cid);
+      // ajaxでkubunを取得
       axios
-        .get("./ajax/kubun_by_category", {
+        .get(`./ajax/kubun_by_category`, {
           params: {
             category_id: cid,
           },
         })
         .then(
           function (res) {
-            let data = res.data;
-            console.log(data.length);
-            console.log(data);
-            // optionの追加
-            if (!data.length) {
-              let option = document.createElement("option");
-              option.text = "小科目なし";
-              option.value = 0;
-              select.appendChild(option);
-            } else {
-              for (let j = 0; j < data.length; j++) {
-                let option = document.createElement("option");
-                option.text = data[j].kubun_name;
-                option.value = data[j].id;
-                select.appendChild(option);
-              }
-            }
+            this.creKubun = res.data;
           }.bind(this)
         )
         .catch(function (e) {

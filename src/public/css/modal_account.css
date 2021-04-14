@@ -33,7 +33,7 @@ div.inpAccountDate {
     display: flex;
     justify-content: center;
     margin-bottom: 10px;
-    align-items: center;
+    /* align-items: center; */
 }
 
 label.inpaccountDate {
@@ -47,7 +47,7 @@ div.inpAccountinputDate {
 }
 
 /* 追加・削除ボタン */
-.addBtn {
+div.addBtn {
     display: inline-block;
 }
 

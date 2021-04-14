@@ -55,7 +55,7 @@
               <mda-debit
                 :add-name="'debit'"
                 :cnt-deb="0"
-                :m-cate="mdaCate"
+                :m-cate="pCate"
                 :m-items="debItems[0]"
                 :m-root="root"
                 :m-dis="dis"
@@ -67,7 +67,7 @@
               <mda-credit
                 :add-name="'credit'"
                 :cnt-cre="0"
-                :m-cate="mdaCate"
+                :m-cate="pCate"
                 :m-items="creItems[0]"
                 :m-root="root"
                 :m-dis="dis"
@@ -81,7 +81,7 @@
               <mda-debit
               v-if="val === 'debit'"
                 :cnt-deb="i + 1"
-                :m-cate="mdaCate"
+                :m-cate="pCate"
                 :m-items="debItems[i + 1]"
                 :m-root="root"
                 :m-dis="dis"
@@ -92,7 +92,7 @@
               <mda-credit
               v-if="val === 'credit'"
                 :cnt-cre="i + 1"
-                :m-cate="mdaCate"
+                :m-cate="pCate"
                 :m-items="creItems[i + 1]"
                 :m-root="root"
                 :m-dis="dis"
@@ -160,7 +160,7 @@ import mdaDebit from "./mdaDebit.vue";
 
 export default {
   components: { mdaDebit },
-  props: ["csrf", "mdaCate", "mdaItems"],
+  props: ["csrf", "pCate", "mdaItems"],
   data: function () {
     return {
       // this
