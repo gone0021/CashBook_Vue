@@ -162,6 +162,7 @@
 <script>
 import mAcctDebit from "./mAcctDebit.vue";
 import mAcctCredit from "./mAcctCredit.vue";
+
 export default {
   components: { mAcctDebit, mAcctCredit },
   props: ["pDate", "pCate", "csrf"],
