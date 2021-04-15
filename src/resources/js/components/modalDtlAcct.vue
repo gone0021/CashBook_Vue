@@ -14,7 +14,7 @@
             name="date"
             id="detailAccountDate"
             class="form-control"
-            :value="mdaItems[0].date"
+            :value="pItems[0].date"
             :disabled="dis"
             required
           />
@@ -157,10 +157,11 @@
 
 <script>
 import mdaDebit from "./mdaDebit.vue";
+import mdaCredit from "./mdaCredit.vue";
 
 export default {
-  components: { mdaDebit },
-  props: ["csrf", "pCate", "mdaItems"],
+  components: { mdaDebit, mdaCredit },
+  props: ["csrf", "pCate", "pItems"],
   data: function () {
     return {
       // this
@@ -170,7 +171,7 @@ export default {
       // 属性の操作
       dis: true,
       // textareaはv-model
-      mComment:this.mdaItems[0].comment,
+      mComment:this.pItems[0].comment,
 
       // --- ajax ---
       // urlの取得・保存
@@ -203,7 +204,7 @@ export default {
 
     // itmesの数をカウント
     // console.log("items legth");
-    let items = this.mdaItems;
+    let items = this.pItems;
     // console.log(items.length);
 
     // --- childの初期値 ---
