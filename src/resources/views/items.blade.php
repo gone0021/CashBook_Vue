@@ -189,11 +189,11 @@
 </div>
 
 <div class='glayLayer' v-if="glay" v-on:click="glayLayer"></div>
-<modal-acct v-if="modalAccount" :csrf="{{json_encode(csrf_token())}}" :m-date="date" :m-cate="category"
-    :m-action="'detail'"></modal-acct>
+<modal-dtl-acct v-if="modalAccount" :csrf="{{json_encode(csrf_token())}}" :p-date="date" :p-cate="cateAll"
+    :p-action="'detail'"></modal-dtl-acct>
 
-<modal-nml-dtl v-show="modalNomal" :csrf="{{json_encode(csrf_token())}}" :m-date="date" :mn-val="mnVal" :m-cate="category"
-    :m-action="'detail'"></modal-nml-dtl>
+<modal-dtl-nml v-show="modalNomal" :csrf="{{json_encode(csrf_token())}}" :m-date="date" :mn-val="mnVal" :m-cate="cateAll"
+    :m-action="'detail'"></modal-dtl-nml>
 
 {{-- vue-js-modal --}}
 {{-- <modal-nomal :csrf="{{json_encode(csrf_token())}}" :nm-obj="mnVal" :m-cate="category"></modal-nomal> --}}

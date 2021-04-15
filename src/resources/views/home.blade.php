@@ -4,9 +4,6 @@
 <div class="card-header">Home</div>
 
 <div class="card-body">
-    <form>
-        @csrf
-    </form>
     <div class="mb-3">
         <div class="my-2">● 新規作成</div>
         <div class="btn btn-sticky ml-2 mb-3" id="newAccount" v-on:click="newAccount">
@@ -56,37 +53,15 @@
     </div>
 
     <div class='glayLayer' v-if="glay" v-on:click="glayLayer"></div>
-    <modal-acct v-show="modalAccount" :csrf="{{json_encode(csrf_token())}}" :m-date="date" :ma-val="mnVal"
-        :m-cate="propCate" :m-action="'new'"></modal-acct>
+    <modal-acct v-show="modalAccount" :csrf="{{json_encode(csrf_token())}}" :p-date="date" :p-val="mnVal"
+        :p-cate="cateAll"></modal-acct>
 
-    </modal-nomal>
     <modal-nml v-show="modalNomal" :csrf="{{json_encode(csrf_token())}}" :p-date="date" :p-val="mnVal"
-        :p-cate-asset="cateAsset" :p-cate-expense="cateExpense" :p-cate-income="cateIncome"
-        :p-kubun1="cKubun1" :p-kubun2="cKubun2"
-        v-on:chg-cate1="homeChgCate1($event)"
-        v-on:chg-cate2="homeChgCate2($event)"
-        ></modal-nml>
-    {{-- vue-js-modal --}}
-    {{-- <modal-nomal :csrf="{{json_encode(csrf_token())}}" :nm-obj="mnVal" :m-cate="category" :key="mnVal.name">
+        :p-cate-asset="cateAsset" :p-cate-expense="cateExpense" :p-cate-income="cateIncome" :p-kubun1="cKubun1"
+        :p-kubun2="cKubun2" v-on:chg-cate1="homeChgCate1" v-on:chg-cate2="homeChgCate2"></modal-nml>
 
-    {{-- ここから旧 --}}
-    {{-- @include('components.expense_modal') --}}
-    {{-- @component ('components.input_account')
-    @slot('today',$today)
-    @slot('categoryAll',$categoryAll)
-    @endcomponent
+    <modal-msg v-if="modalMsg"></modal-msg>
 
-    @component ('components.input_nomal')
-    @slot('today',$today)
-    @slot('categoryAccet',$categoryAccet)
-    @slot('categoryCost',$categoryCost)
-    @slot('categoryProfit',$categoryProfit)
-    @endcomponent
-
-    @component ('components.input_msg')
-    @endcomponent --}}
-
-    {{-- section ここまで --}}
     @endsection
 
 </div>

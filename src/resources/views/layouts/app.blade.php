@@ -36,16 +36,16 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/parts.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/modal.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/modal_account.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/modal_nomal.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/calendar.css') }}" rel="stylesheet">
     <link href="{{ asset('css/detail_account.css') }}" rel="stylesheet">
     <link href="{{ asset('css/detail_nomal.css') }}" rel="stylesheet">
     <link href="{{ asset('css/items.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
     <link href="{{ asset('css/layout.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/calendar.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/modal.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/modal_account.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/modal_nomal.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/parts.css') }}" rel="stylesheet">
 
 </head>
 
