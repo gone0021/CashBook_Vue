@@ -21,6 +21,8 @@ window.Vue = require('vue');
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
+// --- 共通 ---
+Vue.component('modal-msg', require('./components/modalMsg.vue').default);
 // --- home ---
 Vue.component('modal-nml', require('./components/modalNml.vue').default);
 Vue.component('modal-acct', require('./components/modalAcct.vue').default);
@@ -60,7 +62,8 @@ const app = new Vue({
         modalNomal: false,
         modalDtlNml: false,
         modalDtlAcct: false,
-
+        // バリデーションエラー：home,items
+        modalMsg: false,
         // admin
 
         // === ajax ===
@@ -73,12 +76,15 @@ const app = new Vue({
 
         // === child ===
         // all共通
-        propCate: {},
+        cateAll: {},
         cAcctType: ["資産", "費用", "収益"],
         cCate: [],
         cKubun: [],
         cKubun1: [],
         cKubun2: [],
+        // バリデーション用
+        errorMsg: {},
+        validClass: {},
 
         // --- home ---
         // 共通
@@ -129,7 +135,7 @@ const app = new Vue({
             console.log("-- get category --");
             // modal - home : account
             this.getCategory().then(() => {
-                this.propCate = this.keepCate;
+                this.cateAll = this.keepCate;
             });
 
             // items/index : nomal
@@ -148,6 +154,12 @@ const app = new Vue({
             });
         }
 
+        // home,items：バリデーションエラー
+        if (sesMsg) {
+            this.modalMsg = true;
+            this.glay = true;
+        }
+
         // --- home ---
         // date
         let dt = new Date();
@@ -156,6 +168,7 @@ const app = new Vue({
         var d = ("00" + dt.getDate()).slice(-2);
         this.date = y + "-" + m + "-" + d;
         // console.log("date : " + this.date);
+
     },
     mounted: function () {
         // console.log("--- mounted app.js ---");
@@ -171,6 +184,7 @@ const app = new Vue({
             this.modalNomal = false;
             this.modalDtlNml = false;
             this.modalDtlAcct = false;
+            this.modalMsg = false;
         },
 
         // --- ここからhome ---
@@ -231,7 +245,7 @@ const app = new Vue({
         },
 
         detailNomal: async function (bookNo) {
-            // console.log("--- click detsil nomal ---");
+            // console.clog("--- click detsil nomal ---");
 
             this.bookNo = bookNo
 
@@ -255,6 +269,9 @@ const app = new Vue({
         },
 
         // --- ここからadmin ---
+        adminValid: function (param) {
+
+        },
         // 共通:kubun, edit, delete
         adminChgType: function (ev) {
             this.getCateByAcct(ev).then(() => {
@@ -319,22 +336,39 @@ const app = new Vue({
             });
         },
 
-        // --- ここからmethod ---
+        // --- ここからバリデーション ---
         validDate: function (ev) {
             // 日付
             if (!ev.match(/^\d{4}\-\d{2}\-\d{2}$/)) {
                 $(element).addClass("is-invalid");
-                this.errors.date = "正しい日付を入力してください";
+                this.errorMsg.date = "正しい日付を入力してください";
                 this.classValid.date = "is-invalid";
                 ev.preventDefault();
             }
             var y = ev.split("-")[0];
             if (ev < 2010) {
                 $(element).addClass("is-invalid");
-                this.errors.date = "2010年以降で入力してください";
+                this.errorMsg.date = "2010年以降で入力してください";
+                this.classValid.date = "is-invalid";
+                ev.preventDefault();
+            }
+        },
+        validName: function (ev) {
+            // 日付
+            if (!ev.match(/^\d{4}\-\d{2}\-\d{2}$/)) {
+                $(element).addClass("is-invalid");
+                this.errorMsg.date = "正しい日付を入力してください";
+                this.classValid.date = "is-invalid";
+                ev.preventDefault();
+            }
+            var y = ev.split("-")[0];
+            if (ev < 2010) {
+                $(element).addClass("is-invalid");
+                this.errorMsg.date = "2010年以降で入力してください";
                 this.classValid.date = "is-invalid";
                 ev.preventDefault();
             }
         }
+
     }
 });

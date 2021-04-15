@@ -84,7 +84,7 @@
           </span>
         </div>
 
-        <div class="createSelectCategory align-top mr-3">
+        <div class="editSelectCategory align-top mr-3">
           <label for="editSelectCategory">科目名</label>
           <select
             name="category_id"
@@ -116,7 +116,7 @@
           </span>
         </div>
 
-        <!-- 小科目のみ表示 -->
+        <!--小科目のみ -->
         <div
           class="editSelectKubun align-top mr-3"
           v-if="radio == 2 || radio == 4"
@@ -143,7 +143,6 @@
             </option>
           </select>
 
-          <!-- categoryは段合わせ用 -->
           <span class="invalid-feedback" v-if="pErrors.kubun_id">
             <template v-if="validKubunId">
               <div v-for="(kId, i) in pErrors.kubun_id" :key="'errKubunId' + i">
@@ -167,6 +166,7 @@
             required
             :disabled="disCate"
             v-model="categoryName"
+            @blur="blurCate()"
           />
 
           <div class="invalid-feedback mt-1" v-if="errorCate">
@@ -185,7 +185,7 @@
           </span>
         </div>
 
-        <!-- 小科目のみ表示 -->
+        <!-- 小科目のみ -->
         <div class="editKubunName align-top mb-4" v-if="radio == 2">
           <label for="editKubunName">変更（小科目名）</label>
           <input
@@ -199,6 +199,7 @@
             required
             :disabled="disKubun"
             v-model="kubunName"
+            @blur="blurKubun()"
           />
 
           <div class="invalid-feedback mt-1" v-if="errorKubun">
@@ -311,33 +312,6 @@ export default {
           this.disKubun = true;
           this.disDel = false;
         }
-
-        // バリデーションメッセージの表示設定
-        if (sesMsg === "editCategory") {
-          if (val == 1) {
-            this.showValidCate();
-          } else {
-            this.hiddenValid();
-          }
-        } else if (sesMsg === "editKubun") {
-          if (val == 2) {
-            this.showValidKubun();
-          } else {
-            this.hiddenValid();
-          }
-        } else if (sesMsg === "editCategoryDel") {
-          if (val == 3) {
-            this.showValidCateDel();
-          } else {
-            this.hiddenValid();
-          }
-        } else if (sesMsg === "editKubunDel") {
-          if (val == 4) {
-            this.showValidKubunDel();
-          } else {
-            this.hiddenValid();
-          }
-        }
       },
     },
   },
@@ -394,79 +368,35 @@ export default {
       }
     },
     // バリデーション
-    checkForm: function (ev) {
+    blurCate() {
       let cate = this.categoryName;
-      let kubun = this.kubunName;
-      if (!this.disCate) {
-        if (cate.length > 20) {
-          this.errorCate = "科目名は20文字までで入力してください";
-          this.classValidCateName = "is-invalid";
-          ev.preventDefault();
-        }
+      if (!this.disCate && cate.length > 20) {
+        this.errorCate = "変更名は20文字までで入力してください";
+        this.classValidCateName = "is-invalid";
+      } else {
+        this.errorCate = "";
+        this.classValidCateName = "";
       }
-
-      if (!this.disKubun) {
-        if (kubun.length > 20) {
-          this.errorKubun = "小科目名は20文字までで入力してください";
-          this.classValidKubunName = "is-invalid";
-          ev.preventDefault();
-        }
+    },
+    blurKubun() {
+      let kubun = this.kubunName;
+      if (!this.disKubun && kubun.length > 20) {
+        this.errorKubun = "変更名は20文字までで入力してください";
+        this.classValidKubunName = "is-invalid";
+      } else {
+        this.errorKubun = "";
+        this.classValidKubunName = "";
+      }
+    },
+    checkForm: function (ev) {
+      let inValid = document.querySelector(".is-invalid");
+      if (inValid) {
+        alert("不正な入力があります");
+        ev.preventDefault();
       }
     },
 
     // --- method ---
-    showValidCate() {
-      this.validType = true;
-      this.validCateId = true;
-      this.validCateName = true;
-      if (this.pErrors.account_type) {
-        this.classValidType = "is-invalid";
-      }
-      if (this.pErrors.category_id) {
-        this.classValidCateId = "is-invalid";
-      }
-      if (this.pErrors.category_name) {
-        this.classValidCateName = "is-invalid";
-      }
-    },
-    showValidKubun() {
-      this.validType = true;
-      this.validCateId = true;
-      this.validCateName = true;
-      this.validKubunId = true;
-      this.validKubunName = true;
-      this.classValidType = "is-invalid";
-      this.classValidCateId = "is-invalid";
-      this.classValidCateName = "is-invalid";
-      this.classValidKubunId = "is-invalid";
-      this.classValidKubunName = "is-invalid";
-    },
-    showValidCateDel() {
-      this.validType = true;
-      this.validCateId = true;
-      this.classValidType = "is-invalid";
-      this.classValidCateId = "is-invalid";
-    },
-    showValidKubunDel() {
-      this.validType = true;
-      this.validCateId = true;
-      this.validKubunId = true;
-      this.classValidType = "is-invalid";
-      this.classValidCateId = "is-invalid";
-      this.classValidKubunId = "is-invalid";
-    },
-    hiddenValid() {
-      this.validType = false;
-      this.validCateId = false;
-      this.validCateName = false;
-      this.validKubunId = false;
-      this.validKubunName = false;
-      this.classValidType = "";
-      this.classValidCateId = "";
-      this.classValidCateName = "";
-      this.classValidKubunId = "";
-      this.classValidKubunName = "";
-    },
   },
 };
 </script>

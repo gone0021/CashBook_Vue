@@ -69,10 +69,11 @@
               name="category_name"
               id="createCategory"
               class="form-control"
-              required
               :class="classValidCateName"
+              required
               :disabled="disCate"
               v-model="categoryName"
+              @blur="blurCate()"
             />
 
             <div class="invalid-feedback mt-1" v-if="errorCate">
@@ -100,8 +101,8 @@
               name="category_id"
               id="createSelectCategory"
               class="form-control"
-              required
               :class="classValidCateId"
+              required
               :disabled="disKubun"
             >
               <!-- <option v-if="op2">---</option> -->
@@ -134,10 +135,11 @@
               name="kubun_name"
               id="createKubunName"
               class="form-control mr-1"
-              required
               :class="classValidKubunName"
               :disabled="disKubun"
               v-model="kubunName"
+              required
+              @blur="blurKubun()"
             />
 
             <div class="invalid-feedback mt-1" v-if="errorKubun">
@@ -219,11 +221,7 @@ export default {
       immediate: true,
       handler(val) {
         this.radio = val;
-        // optionの最初の値
-        // ：切り替えごと表示するかしないかで使い勝手の判断が微妙
-        // this.op1 = true;
-        // this.op2 = true;
-
+        // console.log("watch raido : " + val);
         // ラジオボタンによるdisabledの設定
         if (val == 1) {
           this.disCate = false;
@@ -233,21 +231,10 @@ export default {
           this.disKubun = false;
         }
 
-        // バリデーションメッセージの表示設定
-        if (sesMsg === "createCategory") {
-          if (val == 1) {
-            this.showValidCate();
-          } else {
-            this.hiddenValid();
-          }
-        }
-        if (sesMsg === "createKubun") {
-          if (val == 2) {
-            this.showValidKubun();
-          } else {
-            this.hiddenValid();
-          }
-        }
+        // optionの最初の値
+        // ：切り替えごと表示するかしないかで使い勝手の判断が微妙
+        // this.op1 = true;
+        // this.op2 = true;
       },
     },
   },
@@ -281,23 +268,31 @@ export default {
     },
     // --- form ---
     // バリデーション
-    checkForm: function (ev) {
+    blurCate() {
       let cate = this.categoryName;
-      let kubun = this.kubunName;
-      if (!this.disCate) {
-        if (cate.length > 20) {
-          this.errorCate = "科目名は20文字までで入力してください";
-          this.classValidCateName = "is-invalid";
-          ev.preventDefault();
-        }
+      if (!this.disCate && cate.length > 20) {
+        this.errorCate = "変更名は20文字までで入力してください";
+        this.classValidCateName = "is-invalid";
+      } else {
+        this.errorCate = "";
+        this.classValidCateName = "";
       }
-
-      if (!this.disKubun) {
-        if (kubun.length > 20) {
-          this.errorKubun = "小科目名は20文字までで入力してください";
-          this.classValidKubunName = "is-invalid";
-          ev.preventDefault();
-        }
+    },
+    blurKubun() {
+      let kubun = this.kubunName;
+      if (!this.disKubun && kubun.length > 20) {
+        this.errorKubun = "変更名は20文字までで入力してください";
+        this.classValidKubunName = "is-invalid";
+      } else {
+        this.errorKubun = "";
+        this.classValidKubunName = "";
+      }
+    },
+    checkForm: function (ev) {
+      let inValid = document.querySelector(".is-invalid");
+      if (inValid) {
+        alert("不正な入力があります");
+        ev.preventDefault();
       }
     },
 
