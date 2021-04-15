@@ -56,7 +56,7 @@
     <modal-acct v-show="modalAccount" :csrf="{{json_encode(csrf_token())}}" :p-date="date" :p-val="mnVal"
         :p-cate="cateAll"></modal-acct>
 
-    <modal-nml v-show="modalNomal" :csrf="{{json_encode(csrf_token())}}" :p-date="date" :p-val="mnVal"
+    <modal-nml v-if="modalNomal" :csrf="{{json_encode(csrf_token())}}" :p-date="date" :p-val="mnVal"
         :p-cate-asset="cateAsset" :p-cate-expense="cateExpense" :p-cate-income="cateIncome" :p-kubun1="cKubun1"
         :p-kubun2="cKubun2" v-on:chg-cate1="homeChgCate1" v-on:chg-cate2="homeChgCate2"></modal-nml>
 
