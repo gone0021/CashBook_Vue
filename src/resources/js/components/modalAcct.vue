@@ -234,6 +234,7 @@ export default {
     },
     blurDate() {
       let date = this.date;
+      let y = date.split("-")[0];
       if (!date.match(/^\d{4}\-\d{2}\-\d{2}$/)) {
         // 半角数字
         this.errorDate = "正しい日付を入力してください";
