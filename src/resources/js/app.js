@@ -220,13 +220,13 @@ const app = new Vue({
             };
         },
         homeChgCate1: function (ev) {
-            console.log("get kubun id : " + ev);
+            // console.log("get kubun id : " + ev);
             this.getKubun(ev).then(() => {
                 this.cKubun1 = this.keepKubun;
             });
         },
         homeChgCate2: function (ev) {
-            console.log("get kubun id : " + ev);
+            // console.log("get kubun id : " + ev);
             this.getKubun(ev).then(() => {
                 this.cKubun2 = this.keepKubun;
             });

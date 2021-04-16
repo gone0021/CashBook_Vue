@@ -61,11 +61,15 @@
             <tr class="totalPrice">
               <td class="inputDebitTotalPrice" id="">
                 <span>借方合計：</span>
-                <span id="inputDebitTotalPrice"></span>
+                <span id="inputDebitTotalPrice" :class="clrRed">{{
+                  debPriceTotal
+                }}</span>
               </td>
               <td class="inputCreditTotalPrice" id="">
-                <span>借方合計：</span>
-                <span id="inputCreditTotalPrice"></span>
+                <span>貸方合計：</span>
+                <span id="inputCreditTotalPrice" :class="clrRed">{{
+                  crePriceTotal
+                }}</span>
               </td>
             </tr>
 
@@ -170,11 +174,10 @@ export default {
     return {
       // --- this ---
       addTr: [],
-      debPrice: "",
-      crePrice: [],
+      debPriceTotal: 0,
+      crePriceTotal: 0,
       // バリデーション用
       errorDate: "",
-      errorPrice: "",
       errorComment: "",
       // model
       date: this.pDate,
@@ -185,6 +188,8 @@ export default {
       // is-invalidのクラス名
       classValidDate: "",
       classValidComment: "",
+      // style
+      clrRed: "",
       // --- child ---
       cPriceCre: "",
       cPriceDeb: "",
@@ -201,7 +206,7 @@ export default {
     // --- this-page ---
     addDebit: function () {
       this.addTr.push("debit");
-    //   console.log(this.addTr);
+      //   console.log(this.addTr);
     },
     delDebit: function () {
       var rev = this.addTr.reverse();
@@ -210,12 +215,13 @@ export default {
         rev.splice(index, 1);
       }
       this.addtr = rev.reverse();
+      this.checkPrice();
 
-    //   console.log(this.addTr);
+      //   console.log(this.addTr);
     },
     addCredit: function () {
       this.addTr.push("credit");
-    //   console.log(this.addTr);
+      //   console.log(this.addTr);
     },
     delCredit: function () {
       var rev = this.addTr.reverse();
@@ -224,13 +230,15 @@ export default {
         rev.splice(index, 1);
       }
       this.addtr = rev.reverse();
-    //   console.log(this.addTr);
+      this.checkPrice();
+      //   console.log(this.addTr);
     },
 
     // --- バリデーション用 ---
     blurPrice(val) {
-        this.errorPrice = val;
-    //   console.log("blur : " + val);
+      console.log("blur price");
+      //   console.log(this.addTr);
+      this.checkPrice();
     },
     blurDate() {
       let date = this.date;
@@ -261,10 +269,60 @@ export default {
 
     checkForm: function (ev) {
       //   if (this.errorDate || this.errorPrice || this.errorComment) {
+      if (this.crePriceTotal !== this.debPriceTotal) {
+        alert("貸借が一致しません");
+        ev.preventDefault();
+      }
       let inValid = document.querySelector(".is-invalid");
       if (inValid) {
         alert("不正な入力があります");
         ev.preventDefault();
+      }
+    },
+
+    // --- method ---
+    /**
+     * 貸借の金額のチェック
+     */
+    checkPrice: function () {
+      this.getPrice();
+      this.setColor("clrRed");
+    },
+    /**
+     * 金額の取得
+     */
+    getPrice: function () {
+      // 最初の金額
+      let crePrice0 = document.querySelector(`#inpAcPrice0`);
+      let creVal0 = crePrice0.value;
+      let debPrice0 = document.querySelector(`#inpAdPrice0`);
+      let debVal0 = debPrice0.value;
+
+      this.crePriceTotal = Number(creVal0);
+      this.debPriceTotal = Number(debVal0);
+
+      // 二番目以降の金額
+      for (var i = 0; i < this.addTr.length; i++) {
+        if (this.addTr[i] === "credit") {
+          var crePrice = document.querySelector(`#inpAcPrice${i + 1}`);
+          var creVal = crePrice.value;
+          this.crePriceTotal += Number(creVal);
+        } else if (this.addTr[i] === "debit") {
+          var debPrice = document.querySelector(`#inpAdPrice${i + 1}`);
+          var debVal = debPrice.value;
+          this.debPriceTotal += Number(debVal);
+        }
+      }
+    },
+    /**
+     * 貸借が一致しない時の文字色
+     * @param {string} name
+     */
+    setColor: function(name) {
+      if (this.crePriceTotal !== this.debPriceTotal) {
+        this.clrRed = name;
+      } else {
+        this.clrRed = "";
       }
     },
   },

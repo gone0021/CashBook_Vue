@@ -2131,6 +2131,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["pCate", "pType", "pErrors", "csrf"],
   data: function data() {
@@ -3460,6 +3461,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3474,16 +3479,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     return _ref = {
       // --- this ---
       addTr: [],
-      debPrice: "",
-      crePrice: [],
+      debPriceTotal: 0,
+      crePriceTotal: 0,
       // バリデーション用
       errorDate: "",
-      errorPrice: "",
       errorComment: "",
       // model
       date: this.pDate,
       comment: ""
-    }, _defineProperty(_ref, "errorDate", ""), _defineProperty(_ref, "errorComment", ""), _defineProperty(_ref, "classValidDate", ""), _defineProperty(_ref, "classValidComment", ""), _defineProperty(_ref, "cPriceCre", ""), _defineProperty(_ref, "cPriceDeb", ""), _ref;
+    }, _defineProperty(_ref, "errorDate", ""), _defineProperty(_ref, "errorComment", ""), _defineProperty(_ref, "classValidDate", ""), _defineProperty(_ref, "classValidComment", ""), _defineProperty(_ref, "clrRed", ""), _defineProperty(_ref, "cPriceCre", ""), _defineProperty(_ref, "cPriceDeb", ""), _ref;
   },
   mounted: function mounted() {// console.log("--- mouted modal account ---");
     // console.log("date = " + this.pDate);
@@ -3503,7 +3507,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         rev.splice(index, 1);
       }
 
-      this.addtr = rev.reverse(); //   console.log(this.addTr);
+      this.addtr = rev.reverse();
+      this.checkPrice(); //   console.log(this.addTr);
     },
     addCredit: function addCredit() {
       this.addTr.push("credit"); //   console.log(this.addTr);
@@ -3516,14 +3521,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         rev.splice(index, 1);
       }
 
-      this.addtr = rev.reverse(); //   console.log(this.addTr);
+      this.addtr = rev.reverse();
+      this.checkPrice(); //   console.log(this.addTr);
     },
     // --- バリデーション用 ---
     blurPrice: function blurPrice(val) {
-      this.errorPrice = val; //   console.log("blur : " + val);
+      console.log("blur price"); //   console.log(this.addTr);
+
+      this.checkPrice();
     },
     blurDate: function blurDate() {
       var date = this.date;
+      var y = date.split("-")[0];
 
       if (!date.match(/^\d{4}\-\d{2}\-\d{2}$/)) {
         // 半角数字
@@ -3551,11 +3560,62 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     checkForm: function checkForm(ev) {
       //   if (this.errorDate || this.errorPrice || this.errorComment) {
+      if (this.crePriceTotal !== this.debPriceTotal) {
+        alert("貸借が一致しません");
+        ev.preventDefault();
+      }
+
       var inValid = document.querySelector(".is-invalid");
 
       if (inValid) {
         alert("不正な入力があります");
         ev.preventDefault();
+      }
+    },
+    // --- method ---
+
+    /**
+     * 貸借の金額のチェック
+     */
+    checkPrice: function checkPrice() {
+      this.getPrice();
+      this.setColor("clrRed");
+    },
+
+    /**
+     * 金額の取得
+     */
+    getPrice: function getPrice() {
+      // 最初の金額
+      var crePrice0 = document.querySelector("#inpAcPrice0");
+      var creVal0 = crePrice0.value;
+      var debPrice0 = document.querySelector("#inpAdPrice0");
+      var debVal0 = debPrice0.value;
+      this.crePriceTotal = Number(creVal0);
+      this.debPriceTotal = Number(debVal0); // 二番目以降の金額
+
+      for (var i = 0; i < this.addTr.length; i++) {
+        if (this.addTr[i] === "credit") {
+          var crePrice = document.querySelector("#inpAcPrice".concat(i + 1));
+          var creVal = crePrice.value;
+          this.crePriceTotal += Number(creVal);
+        } else if (this.addTr[i] === "debit") {
+          var debPrice = document.querySelector("#inpAdPrice".concat(i + 1));
+          var debVal = debPrice.value;
+          this.debPriceTotal += Number(debVal);
+        }
+      }
+    },
+
+    /**
+     * 貸借が一致しない時の文字色
+     * @param {string} name
+     */
+    setColor: function setColor(name) {
+      if (this.crePriceTotal !== this.debPriceTotal) {
+        this.clrRed = name;
+      } else {
+        this.clrRed = "";
       }
     }
   }
@@ -3573,6 +3633,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mdaDebit_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./mdaDebit.vue */ "./resources/js/components/mdaDebit.vue");
+/* harmony import */ var _mdaCredit_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./mdaCredit.vue */ "./resources/js/components/mdaCredit.vue");
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -3730,39 +3793,41 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    mdaDebit: _mdaDebit_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+    mdaDebit: _mdaDebit_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    mdaCredit: _mdaCredit_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
-  props: ["csrf", "pCate", "mdaItems"],
+  props: ["csrf", "pCate", "pItems"],
   data: function data() {
-    return {
-      // this
-      cntTr: [],
-      // --- form ---
-      // 属性の操作
-      dis: true,
-      // textareaはv-model
-      mComment: this.mdaItems[0].comment,
-      // --- ajax ---
-      // urlの取得・保存
-      root: "",
-      // 取得した値の一時保存
-      keepKubun: [],
-      // --- child ---
-      debKubun: [],
-      creKubun: [],
-      //   debCateId: {},
-      debKubunId: [],
-      creKubunId: [],
-      debItems: [],
-      creItems: [],
-      //   --- その他 ---
-      // addの配列：forで回す用
-      addType: [] // 代入
+    var _ref;
 
-    };
+    return _ref = {
+      // --- this ---
+      cntTr: [],
+      // バリデーション用
+      errorDate: "",
+      errorPrice: "",
+      errorComment: "",
+      // model
+      date: this.pDate,
+      comment: ""
+    }, _defineProperty(_ref, "errorDate", ""), _defineProperty(_ref, "errorComment", ""), _defineProperty(_ref, "classValidDate", ""), _defineProperty(_ref, "classValidComment", ""), _defineProperty(_ref, "dis", true), _defineProperty(_ref, "mComment", this.pItems[0].comment), _defineProperty(_ref, "root", ""), _defineProperty(_ref, "keepKubun", []), _defineProperty(_ref, "debKubun", []), _defineProperty(_ref, "creKubun", []), _defineProperty(_ref, "debKubunId", []), _defineProperty(_ref, "creKubunId", []), _defineProperty(_ref, "debItems", []), _defineProperty(_ref, "creItems", []), _defineProperty(_ref, "addType", []), _ref;
   },
   created: function created() {
     console.log("--- created modal detail account ---"); // urlの取得
@@ -3772,7 +3837,7 @@ __webpack_require__.r(__webpack_exports__);
     this.root = url.substr(0, indexItem); // itmesの数をカウント
     // console.log("items legth");
 
-    var items = this.mdaItems; // console.log(items.length);
+    var items = this.pItems; // console.log(items.length);
     // --- childの初期値 ---
     // items
 
@@ -4062,51 +4127,86 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   // keep：categoryのaccount_rypeに使用：CashBookのitem.jsを参照
   // 処理が終わったらコメントを削除すること
   props: [// csrf
   "csrf", // category
-  "mdnCateAsset", "mdnCateExpense", "mdnCateIncome", // items
-  "mdnAsItems", "mdnPlItems"],
+  "pCateAsset", "pCateExpense", "pCateIncome", // items
+  "pAsItems", "pPlItems"],
   data: function data() {
     return {
-      // --- form ---
-      // 属性の操作
+      // --- this ---
+      title: "",
+      asKubun: [],
+      plKubun: [],
+      noKubun: false,
+      opTop: true,
+      // form
+      // disabledの操作
       dis: true,
       // value：v-modelで入力の度に値が変わるため変数に代入
-      asCateId: this.mdnAsItems.category_id,
-      asKubunId: this.mdnAsItems.kubun_id,
-      plCateId: this.mdnPlItems.category_id,
-      plKubunId: this.mdnPlItems.kubun_id,
-      mPrice: this.mdnAsItems.price,
-      mComment: this.mdnAsItems.comment,
-      // --- ajax ---
-      // urlの取得・保存
-      root: "",
-      // 取得した値の一時保存
-      keepKubun: [],
-      // --- その他 ---
-      // 代入
-      asKubun: [],
-      plKubun: [] // propsの編集
+      asDate: this.pAsItems.date,
+      asCateId: this.pAsItems.category_id,
+      asKubunId: this.pAsItems.kubun_id,
+      plCateId: this.pPlItems.category_id,
+      plKubunId: this.pPlItems.kubun_id,
+      asPrice: this.pAsItems.price,
+      asComment: this.pAsItems.comment,
+      // model：fromバリデーション用
+      date: this.pDate,
+      price: "",
+      comment: "",
+      // バリデーションエラー
+      errorDate: "",
+      errorPrice: "",
+      errorComment: "",
+      // is-invalidのクラス名
+      classValidDate: "",
+      classValidPrice: "",
+      classValidComment: "",
+      // ajax：取得した値の一時保存
+      keepKubun: [] // その他
+      // --- child ---
 
     };
   },
   created: function created() {
-    console.log("--- created modal detail nomal ---");
-    console.log("mdn-asItems ::: ");
-    console.log(this.mdnAsItems);
-    console.log("mdn-plItems ::: ");
-    console.log(this.mdnPlItems);
-    console.log("mdn-cate-set ::: ");
-    console.log(this.mdnCateAsset);
-    console.log(this.mdnCateExpense);
-    console.log(this.mdnCateIncome); // urlの取得
+    // console.log("--- created modal detail nomal ---");
+    // 表示の編集
+    var asType = this.pAsItems.account_type;
+    var plType = this.pPlItems.account_type;
 
-    var url = location.href;
-    var indexItem = url.indexOf("/item");
-    this.root = url.substr(0, indexItem); // form属性：値を取得してからdisabledを設定
+    if (asType == plType) {
+      this.title = "振替：";
+    } else if (plType === "1") {
+      this.title = "支出：";
+    } else if (plType === "2") {
+      this.title = "収入：";
+    } else {
+      this.title = "収支：";
+    } // disable属性：値を取得してからdisabledを設定
+
 
     this.dis = true;
   },
@@ -4120,21 +4220,27 @@ __webpack_require__.r(__webpack_exports__);
     dtlEdit: function dtlEdit() {
       var _this = this;
 
-      this.dis = false; // category
+      // disabledの解除
+      this.dis = false; // 最初のoptionを隠す
 
-      var asstCid = this.mdnAsItems.category_id;
-      var plCid = this.mdnPlItems.category_id; // kubun
+      this.opTop = false; // category
+
+      var asstCid = this.pAsItems.category_id;
+      var plCid = this.pPlItems.category_id; // kubun
 
       this.getKubunDtlNml(asstCid).then(function () {
         _this.asKubun = _this.keepKubun;
       });
       this.getKubunDtlNml(plCid).then(function () {
-        _this.plKubun = _this.keepKubun;
+        _this.plKubun = _this.keepKubun; // nokubunの表示許可
+
+        _this.noKubun = true;
       });
     },
     chgAsCate: function chgAsCate(ev) {
       var _this2 = this;
 
+      // kubunの取得
       this.getKubunDtlNml(ev).then(function () {
         _this2.asKubun = _this2.keepKubun;
         _this2.asKubunId = _this2.keepKubun[0].id;
@@ -4143,28 +4249,15 @@ __webpack_require__.r(__webpack_exports__);
     chgPlCate: function chgPlCate(ev) {
       var _this3 = this;
 
+      // kubunの取得
       this.getKubunDtlNml(ev).then(function () {
         _this3.plKubun = _this3.keepKubun;
         _this3.plKubunId = _this3.keepKubun[0].id;
       });
     },
-    delKateTop: function delKateTop() {
-      this.delKateTop0();
-      this.delKateTop1();
-    },
-    // method
-    delKateTop0: function delKateTop0() {
-      var chgKubun = document.querySelector("#dtlNaKubun");
-      var kchild = document.querySelector("#opdnak0");
-      chgKubun.removeChild(kchild);
-    },
-    delKateTop1: function delKateTop1() {
-      var chgKubun = document.querySelector("#dtlNpKubun");
-      var kchild = document.querySelector("#opdnpk0");
-      chgKubun.removeChild(kchild);
-    },
+    // --- method ---
+    // 複数で使用する（prpsが煩雑になる）ためemitしない
     getKubunDtlNml: function getKubunDtlNml(ev) {
-      var args = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
       // 取得する値をチェック（初期値はstringのため）
       var cid = NaN;
 
@@ -4175,7 +4268,7 @@ __webpack_require__.r(__webpack_exports__);
       } // --- ajax get ---
 
 
-      return axios.get("".concat(this.root, "/ajax/kubun_by_category"), {
+      return axios.get("../ajax/kubun_by_category", {
         params: {
           category_id: cid
         }
@@ -4184,6 +4277,55 @@ __webpack_require__.r(__webpack_exports__);
       }.bind(this))["catch"](function (e) {
         console.error(e);
       });
+    },
+    // バリデーション
+    blurDate: function blurDate() {
+      var date = this.asDate;
+      var y = date.split("-")[0];
+
+      if (!date.match(/^\d{4}\-\d{2}\-\d{2}$/)) {
+        // 半角数字
+        this.errorDate = "正しい日付を入力してください";
+        this.classValidDate = "is-invalid";
+      } else if (y < 2000 || y > 3000) {
+        // 日付：2000年～3000年
+        this.errorDate = "2000年～3000年で入力してください";
+        this.classValidDate = "is-invalid";
+      } else {
+        this.errorDate = "";
+        this.classValidDate = "";
+      }
+    },
+    blurPrice: function blurPrice() {
+      var price = this.asPrice; // 金額
+
+      if (isNaN(price)) {
+        this.errorPrice = "金額は半角数字のみで入力してください";
+        this.classValidPrice = "is-invalid";
+      } else {
+        this.errorPrice = "";
+        this.classValidPrice = "";
+      }
+    },
+    blurComment: function blurComment() {
+      var comment = this.asComment;
+
+      if (comment.length > 2) {
+        this.errorComment = "コメントは200文字以内で入力してください";
+        this.classValidComment = "is-invalid";
+      } else {
+        this.errorComment = "";
+        this.classValidComment = "";
+      }
+    },
+    checkForm: function checkForm(ev) {
+      //   if (this.errorDate || this.errorPrice || this.errorComment) {
+      var inValid = document.querySelector(".is-invalid");
+
+      if (inValid) {
+        alert("不正な入力があります");
+        ev.preventDefault();
+      }
     }
   }
 });
@@ -4437,7 +4579,8 @@ __webpack_require__.r(__webpack_exports__);
       op2: true,
       op3: true,
       op4: true,
-      // model：fromバリデーション用
+      // fromバリデーション用
+      // model：
       date: this.pDate,
       price: "",
       comment: "",
@@ -4479,6 +4622,7 @@ __webpack_require__.r(__webpack_exports__);
     // バリデーション
     blurDate: function blurDate() {
       var date = this.date;
+      var y = date.split("-")[0];
 
       if (!date.match(/^\d{4}\-\d{2}\-\d{2}$/)) {
         // 半角数字
@@ -41319,7 +41463,8 @@ var render = function() {
                         type: "text",
                         name: "kubun_name",
                         id: "createKubunName",
-                        disabled: _vm.disKubun
+                        disabled: _vm.disKubun,
+                        required: ""
                       },
                       domProps: { value: _vm.kubunName },
                       on: {
@@ -42818,7 +42963,47 @@ var render = function() {
               _c(
                 "tbody",
                 [
-                  _vm._m(1),
+                  _c("tr", { staticClass: "totalPrice" }, [
+                    _c(
+                      "td",
+                      {
+                        staticClass: "inputDebitTotalPrice",
+                        attrs: { id: "" }
+                      },
+                      [
+                        _c("span", [_vm._v("借方合計：")]),
+                        _vm._v(" "),
+                        _c(
+                          "span",
+                          {
+                            class: _vm.clrRed,
+                            attrs: { id: "inputDebitTotalPrice" }
+                          },
+                          [_vm._v(_vm._s(_vm.debPriceTotal))]
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "td",
+                      {
+                        staticClass: "inputCreditTotalPrice",
+                        attrs: { id: "" }
+                      },
+                      [
+                        _c("span", [_vm._v("貸方合計：")]),
+                        _vm._v(" "),
+                        _c(
+                          "span",
+                          {
+                            class: _vm.clrRed,
+                            attrs: { id: "inputCreditTotalPrice" }
+                          },
+                          [_vm._v(_vm._s(_vm.crePriceTotal))]
+                        )
+                      ]
+                    )
+                  ]),
                   _vm._v(" "),
                   _c("tr", { staticClass: "accounTop" }, [
                     _c(
@@ -42893,7 +43078,7 @@ var render = function() {
                   _c("tr", { staticClass: "detailEnd" }, [
                     _c("td", { attrs: { colspan: "2", id: "" } }, [
                       _c("div", { staticClass: "inpAccountComment" }, [
-                        _vm._m(2),
+                        _vm._m(1),
                         _vm._v(" "),
                         _c(
                           "div",
@@ -42953,7 +43138,7 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
-            _vm._m(3)
+            _vm._m(2)
           ]
         )
       ]
@@ -42970,24 +43155,6 @@ var staticRenderFns = [
         _c("th", { attrs: { id: "tittleDebit" } }, [_vm._v("借方")]),
         _vm._v(" "),
         _c("th", { attrs: { id: "titleCredit" } }, [_vm._v("貸方")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tr", { staticClass: "totalPrice" }, [
-      _c("td", { staticClass: "inputDebitTotalPrice", attrs: { id: "" } }, [
-        _c("span", [_vm._v("借方合計：")]),
-        _vm._v(" "),
-        _c("span", { attrs: { id: "inputDebitTotalPrice" } })
-      ]),
-      _vm._v(" "),
-      _c("td", { staticClass: "inputCreditTotalPrice", attrs: { id: "" } }, [
-        _c("span", [_vm._v("借方合計：")]),
-        _vm._v(" "),
-        _c("span", { attrs: { id: "inputCreditTotalPrice" } })
       ])
     ])
   },
@@ -43066,6 +43233,7 @@ var render = function() {
           _c("div", { staticClass: "detailAccountinputDate" }, [
             _c("input", {
               staticClass: "form-control",
+              class: _vm.classValidDate,
               attrs: {
                 type: "date",
                 name: "date",
@@ -43073,8 +43241,19 @@ var render = function() {
                 disabled: _vm.dis,
                 required: ""
               },
-              domProps: { value: _vm.mdaItems[0].date }
-            })
+              domProps: { value: _vm.pItems[0].date },
+              on: {
+                blur: function($event) {
+                  return _vm.blurDate()
+                }
+              }
+            }),
+            _vm._v(" "),
+            _vm.errorDate
+              ? _c("div", { staticClass: "invalid-feedback mt-1" }, [
+                  _vm._v("\n          " + _vm._s(_vm.errorDate) + "\n        ")
+                ])
+              : _vm._e()
           ])
         ]),
         _vm._v(" "),
@@ -43100,7 +43279,8 @@ var render = function() {
                         "m-items": _vm.debItems[0],
                         "m-root": _vm.root,
                         "m-dis": _vm.dis
-                      }
+                      },
+                      on: { "p-blur-price": _vm.blurPrice }
                     })
                   ],
                   1
@@ -43118,7 +43298,8 @@ var render = function() {
                         "m-items": _vm.creItems[0],
                         "m-root": _vm.root,
                         "m-dis": _vm.dis
-                      }
+                      },
+                      on: { "p-blur-price": _vm.blurPrice }
                     })
                   ],
                   1
@@ -43186,6 +43367,7 @@ var render = function() {
                             }
                           ],
                           staticClass: "form-control",
+                          class: _vm.classValidComment,
                           attrs: {
                             name: "comment",
                             id: "inpAccountComment",
@@ -43195,6 +43377,9 @@ var render = function() {
                           },
                           domProps: { value: _vm.mComment },
                           on: {
+                            blur: function($event) {
+                              return _vm.blurComment()
+                            },
                             input: function($event) {
                               if ($event.target.composing) {
                                 return
@@ -43202,7 +43387,21 @@ var render = function() {
                               _vm.mComment = $event.target.value
                             }
                           }
-                        })
+                        }),
+                        _vm._v(" "),
+                        _vm.errorComment
+                          ? _c(
+                              "div",
+                              { staticClass: "invalid-feedback mt-1" },
+                              [
+                                _vm._v(
+                                  "\n                  " +
+                                    _vm._s(_vm.errorComment) +
+                                    "\n                "
+                                )
+                              ]
+                            )
+                          : _vm._e()
                       ]
                     )
                   ])
@@ -43329,505 +43528,584 @@ var render = function() {
     "div",
     { staticClass: "nomalModalInner", attrs: { id: "modalNomal" } },
     [
-      _c("form", { attrs: { action: "./update", method: "post" } }, [
-        _c("input", {
-          attrs: { type: "hidden", name: "_token" },
-          domProps: { value: _vm.csrf }
-        }),
-        _vm._v(" "),
-        _c("div", { staticClass: "inpNmlDate" }, [
-          _c("span", [_vm._v("book No.")]),
-          _vm._v(" "),
-          _c("span", { staticClass: "mr-3", attrs: { id: "dtlDspBookNo" } }, [
-            _vm._v(_vm._s(_vm.mdnAsItems.book_no))
-          ]),
-          _vm._v(" "),
-          _c("label", { attrs: { for: "inpNmlDate" } }, [_vm._v("日付：")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "inpNmlinputDate" }, [
-            _c("input", {
-              staticClass: "form-control",
-              attrs: {
-                type: "date",
-                name: "date",
-                id: "inpNmlDate",
-                disabled: _vm.dis,
-                required: ""
-              },
-              domProps: { value: _vm.mdnAsItems.date }
-            })
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "inpNa" }, [
+      _c(
+        "form",
+        {
+          attrs: { action: "./update", method: "post" },
+          on: { submit: _vm.checkForm }
+        },
+        [
           _c("input", {
-            attrs: { type: "hidden", name: "id[]", id: "" },
-            domProps: { value: _vm.mdnAsItems.id }
+            attrs: { type: "hidden", name: "_token" },
+            domProps: { value: _vm.csrf }
           }),
           _vm._v(" "),
-          _c("input", {
-            attrs: { type: "hidden", name: "debit_credit[]", id: "inpNmlDc0" },
-            domProps: { value: _vm.mdnAsItems.debit_credit }
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "inpNaCategory" }, [
-            _c("label", { attrs: { for: "inpNaCategory" } }, [
-              _vm._v("収支：")
+          _c("div", { staticClass: "inpNmlDate" }, [
+            _c("span", [_vm._v("book No.")]),
+            _vm._v(" "),
+            _c("span", { staticClass: "mr-3", attrs: { id: "dtlDspBookNo" } }, [
+              _vm._v(_vm._s(_vm.pAsItems.book_no))
             ]),
             _vm._v(" "),
-            _c(
-              "select",
-              {
+            _c("label", { attrs: { for: "inpNmlDate" } }, [_vm._v("日付：")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "inpNmlinputDate" }, [
+              _c("input", {
                 directives: [
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.asCateId,
-                    expression: "asCateId"
+                    value: _vm.asDate,
+                    expression: "asDate"
                   }
                 ],
                 staticClass: "form-control",
+                class: _vm.classValidDate,
                 attrs: {
-                  name: "category_id[]",
-                  id: "dtlNaCategory",
+                  type: "date",
+                  name: "date",
+                  id: "inpNmlDate",
                   disabled: _vm.dis,
                   required: ""
                 },
+                domProps: { value: _vm.asDate },
                 on: {
-                  change: [
-                    function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.asCateId = $event.target.multiple
-                        ? $$selectedVal
-                        : $$selectedVal[0]
-                    },
-                    function($event) {
-                      return _vm.chgAsCate($event)
+                  blur: function($event) {
+                    return _vm.blurDate()
+                  },
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
                     }
-                  ]
+                    _vm.asDate = $event.target.value
+                  }
                 }
-              },
-              _vm._l(_vm.mdnCateAsset, function(cate, i) {
-                return _c(
-                  "option",
-                  { key: "cateAs" + i, domProps: { value: cate.id } },
-                  [
-                    _vm._v(
-                      "\n            " +
-                        _vm._s(cate.category_name) +
-                        "\n          "
-                    )
-                  ]
-                )
               }),
-              0
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "inpNaKubun" }, [
-            _c("label", { attrs: { for: "inpNaKubun" } }, [_vm._v("小科目：")]),
-            _vm._v(" "),
-            _c(
-              "select",
-              {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.asKubunId,
-                    expression: "asKubunId"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: {
-                  name: "kubun_id[]",
-                  id: "dtlNaKubun",
-                  disabled: _vm.dis,
-                  required: ""
-                },
-                on: {
-                  change: function($event) {
-                    var $$selectedVal = Array.prototype.filter
-                      .call($event.target.options, function(o) {
-                        return o.selected
-                      })
-                      .map(function(o) {
-                        var val = "_value" in o ? o._value : o.value
-                        return val
-                      })
-                    _vm.asKubunId = $event.target.multiple
-                      ? $$selectedVal
-                      : $$selectedVal[0]
-                  }
-                }
-              },
-              [
-                _c(
-                  "option",
-                  {
-                    attrs: { id: "opdnak0" },
-                    domProps: { value: _vm.mdnAsItems.kubun_id }
-                  },
-                  [
+              _vm._v(" "),
+              _vm.errorDate
+                ? _c("div", { staticClass: "invalid-feedback mt-1" }, [
                     _vm._v(
-                      "\n            " +
-                        _vm._s(_vm.mdnAsItems.kubun_name) +
-                        "\n          "
+                      "\n          " + _vm._s(_vm.errorDate) + "\n        "
                     )
-                  ]
-                ),
-                _vm._v(" "),
-                _vm._l(_vm.asKubun, function(ask, i) {
-                  return _c(
-                    "option",
-                    { key: "asset-kubun" + i, domProps: { value: ask.id } },
-                    [
-                      _vm._v(
-                        "\n            " +
-                          _vm._s(ask.kubun_name) +
-                          "\n          "
-                      )
-                    ]
-                  )
-                })
-              ],
-              2
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "inpNp" }, [
-          _c("input", {
-            attrs: { type: "hidden", name: "id[]", id: "" },
-            domProps: { value: _vm.mdnPlItems.id }
-          }),
-          _vm._v(" "),
-          _c("input", {
-            attrs: { type: "hidden", name: "debit_credit[]", id: "inpNmlDc" },
-            domProps: { value: _vm.mdnPlItems.debit_credit }
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "inpNpCategory" }, [
-            _c("label", { attrs: { for: "inpNpCategory" } }, [
-              _vm._v("内容：")
-            ]),
-            _vm._v(" "),
-            _c(
-              "select",
-              {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.plCateId,
-                    expression: "plCateId"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: {
-                  name: "category_id[]",
-                  id: "dtlNpCategory",
-                  disabled: _vm.dis,
-                  required: ""
-                },
-                on: {
-                  change: [
-                    function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.plCateId = $event.target.multiple
-                        ? $$selectedVal
-                        : $$selectedVal[0]
-                    },
-                    function($event) {
-                      return _vm.chgPlCate($event)
-                    }
-                  ]
-                }
-              },
-              [
-                _vm.mdnPlItems.account_type === "1"
-                  ? _vm._l(_vm.mdnCateExpense, function(cate, i) {
-                      return _c(
-                        "option",
-                        { key: "cateEx" + i, domProps: { value: cate.id } },
-                        [
-                          _vm._v(
-                            "\n              " +
-                              _vm._s(cate.category_name) +
-                              "\n            "
-                          )
-                        ]
-                      )
-                    })
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.mdnPlItems.account_type === "2"
-                  ? _vm._l(_vm.mdnCateIncome, function(cate, i) {
-                      return _c(
-                        "option",
-                        { key: "cateIn" + i, domProps: { value: cate.id } },
-                        [
-                          _vm._v(
-                            "\n              " +
-                              _vm._s(cate.category_name) +
-                              "\n            "
-                          )
-                        ]
-                      )
-                    })
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.mdnPlItems.account_type === "0"
-                  ? _vm._l(_vm.mdnCateAsset, function(cate, i) {
-                      return _c(
-                        "option",
-                        { key: "cateAs2" + i, domProps: { value: cate.id } },
-                        [
-                          _vm._v(
-                            "\n              " +
-                              _vm._s(cate.category_name) +
-                              "\n            "
-                          )
-                        ]
-                      )
-                    })
-                  : _vm._e()
-              ],
-              2
-            )
+                  ])
+                : _vm._e()
+            ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "inpNpKubun" }, [
-            _c("label", { attrs: { for: "inpNpKubun" } }, [_vm._v("小科目：")]),
+          _c("div", { staticClass: "inpNa" }, [
+            _c("input", {
+              attrs: { type: "hidden", name: "id[]", id: "" },
+              domProps: { value: _vm.pAsItems.id }
+            }),
             _vm._v(" "),
-            _c(
-              "select",
-              {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.plKubunId,
-                    expression: "plKubunId"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: {
-                  name: "kubun_id[]",
-                  id: "dtlNpKubun",
-                  disabled: _vm.dis,
-                  required: ""
-                },
-                on: {
-                  change: function($event) {
-                    var $$selectedVal = Array.prototype.filter
-                      .call($event.target.options, function(o) {
-                        return o.selected
-                      })
-                      .map(function(o) {
-                        var val = "_value" in o ? o._value : o.value
-                        return val
-                      })
-                    _vm.plKubunId = $event.target.multiple
-                      ? $$selectedVal
-                      : $$selectedVal[0]
-                  }
-                }
-              },
-              [
-                _c(
-                  "option",
-                  {
-                    attrs: { id: "opdnpk0" },
-                    domProps: { value: _vm.mdnPlItems.kubun_id }
-                  },
-                  [
-                    _vm._v(
-                      "\n            " +
-                        _vm._s(_vm.mdnPlItems.kubun_name) +
-                        "\n          "
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _vm._l(_vm.plKubun, function(plk, i) {
-                  return _c(
-                    "option",
-                    { key: "pl-kubun" + i, domProps: { value: plk.id } },
-                    [
-                      _vm._v(
-                        "\n            " +
-                          _vm._s(plk.kubun_name) +
-                          "\n          "
-                      )
-                    ]
-                  )
-                })
-              ],
-              2
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "inpNmlPrice" }, [
-          _c("label", { attrs: { for: "inpNmlPrice" } }, [_vm._v("金額：")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "inpNmlinputPrice" }, [
             _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.mPrice,
-                  expression: "mPrice"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: {
-                type: "text",
-                name: "price[]",
-                id: "inpNmlPrice",
-                disabled: _vm.dis,
-                required: ""
-              },
-              domProps: { value: _vm.mPrice },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.mPrice = $event.target.value
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "priceHidden" }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.mPrice,
-                  expression: "mPrice"
-                }
-              ],
-              staticClass: "form-control",
               attrs: {
                 type: "hidden",
-                name: "price[]",
-                id: "inpNmlPrice",
-                disabled: _vm.dis,
-                required: ""
+                name: "debit_credit[]",
+                id: "inpNmlDc0"
               },
-              domProps: { value: _vm.mPrice },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.mPrice = $event.target.value
-                }
-              }
-            })
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "inpNmlCommentSubmit" }, [
-          _c(
-            "label",
-            {
-              staticClass: "inpNmlCommentLabel",
-              attrs: { for: "inpNmlComment" }
-            },
-            [_vm._v("コメント：")]
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "inpNmlComment" }, [
-            _c("textarea", {
-              directives: [
+              domProps: { value: _vm.pAsItems.debit_credit }
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "inpNaCategory" }, [
+              _c("label", { attrs: { for: "inpNaCategory" } }, [
+                _vm._v(_vm._s(_vm.title))
+              ]),
+              _vm._v(" "),
+              _c(
+                "select",
                 {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.mComment,
-                  expression: "mComment"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: {
-                name: "comment",
-                id: "inpNmlComment",
-                cols: "36",
-                rows: "5",
-                disabled: _vm.dis
-              },
-              domProps: { value: _vm.mComment },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.asCateId,
+                      expression: "asCateId"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    name: "category_id[]",
+                    id: "dtlNaCategory",
+                    disabled: _vm.dis,
+                    required: ""
+                  },
+                  on: {
+                    change: [
+                      function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.asCateId = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      },
+                      function($event) {
+                        return _vm.chgAsCate($event)
+                      }
+                    ]
                   }
-                  _vm.mComment = $event.target.value
+                },
+                _vm._l(_vm.pCateAsset, function(cate, i) {
+                  return _c(
+                    "option",
+                    { key: "cateAs" + i, domProps: { value: cate.id } },
+                    [
+                      _vm._v(
+                        "\n            " +
+                          _vm._s(cate.category_name) +
+                          "\n          "
+                      )
+                    ]
+                  )
+                }),
+                0
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "inpNaKubun" }, [
+              _c("label", { attrs: { for: "inpNaKubun" } }, [
+                _vm._v("小科目：")
+              ]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.asKubunId,
+                      expression: "asKubunId"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    name: "kubun_id[]",
+                    id: "dtlNaKubun",
+                    disabled: _vm.dis,
+                    required: ""
+                  },
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.asKubunId = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    }
+                  }
+                },
+                [
+                  _vm.opTop
+                    ? _c(
+                        "option",
+                        {
+                          attrs: { id: "opdnak0" },
+                          domProps: { value: _vm.pAsItems.kubun_id }
+                        },
+                        [
+                          _vm._v(
+                            "\n            " +
+                              _vm._s(_vm.pAsItems.kubun_name) +
+                              "\n          "
+                          )
+                        ]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm._l(_vm.asKubun, function(ask, i) {
+                    return _c(
+                      "option",
+                      { key: "asset-kubun" + i, domProps: { value: ask.id } },
+                      [
+                        _vm._v(
+                          "\n            " +
+                            _vm._s(ask.kubun_name) +
+                            "\n          "
+                        )
+                      ]
+                    )
+                  }),
+                  _vm._v(" "),
+                  !_vm.asKubun.length && _vm.noKubun
+                    ? _c("option", { attrs: { value: "", id: "" } }, [
+                        _vm._v("\n            小科目なし\n          ")
+                      ])
+                    : _vm._e()
+                ],
+                2
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "inpNp" }, [
+            _c("input", {
+              attrs: { type: "hidden", name: "id[]", id: "" },
+              domProps: { value: _vm.pPlItems.id }
+            }),
+            _vm._v(" "),
+            _c("input", {
+              attrs: { type: "hidden", name: "debit_credit[]", id: "inpNmlDc" },
+              domProps: { value: _vm.pPlItems.debit_credit }
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "inpNpCategory" }, [
+              _c("label", { attrs: { for: "inpNpCategory" } }, [
+                _vm._v("内容：")
+              ]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.plCateId,
+                      expression: "plCateId"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    name: "category_id[]",
+                    id: "dtlNpCategory",
+                    disabled: _vm.dis,
+                    required: ""
+                  },
+                  on: {
+                    change: [
+                      function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.plCateId = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      },
+                      function($event) {
+                        return _vm.chgPlCate($event)
+                      }
+                    ]
+                  }
+                },
+                [
+                  _vm.pPlItems.account_type === "1"
+                    ? _vm._l(_vm.pCateExpense, function(cate, i) {
+                        return _c(
+                          "option",
+                          { key: "cateEx" + i, domProps: { value: cate.id } },
+                          [
+                            _vm._v(
+                              "\n              " +
+                                _vm._s(cate.category_name) +
+                                "\n            "
+                            )
+                          ]
+                        )
+                      })
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.pPlItems.account_type === "2"
+                    ? _vm._l(_vm.pCateIncome, function(cate, i) {
+                        return _c(
+                          "option",
+                          { key: "cateIn" + i, domProps: { value: cate.id } },
+                          [
+                            _vm._v(
+                              "\n              " +
+                                _vm._s(cate.category_name) +
+                                "\n            "
+                            )
+                          ]
+                        )
+                      })
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.pPlItems.account_type === "0"
+                    ? _vm._l(_vm.pCateAsset, function(cate, i) {
+                        return _c(
+                          "option",
+                          { key: "cateAs2" + i, domProps: { value: cate.id } },
+                          [
+                            _vm._v(
+                              "\n              " +
+                                _vm._s(cate.category_name) +
+                                "\n            "
+                            )
+                          ]
+                        )
+                      })
+                    : _vm._e()
+                ],
+                2
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "inpNpKubun" }, [
+              _c("label", { attrs: { for: "inpNpKubun" } }, [
+                _vm._v("小科目：")
+              ]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.plKubunId,
+                      expression: "plKubunId"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    name: "kubun_id[]",
+                    id: "dtlNpKubun",
+                    disabled: _vm.dis,
+                    required: ""
+                  },
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.plKubunId = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    }
+                  }
+                },
+                [
+                  _vm.opTop
+                    ? _c(
+                        "option",
+                        {
+                          attrs: { id: "opdnpk0" },
+                          domProps: { value: _vm.pPlItems.kubun_id }
+                        },
+                        [
+                          _vm._v(
+                            "\n            " +
+                              _vm._s(_vm.pPlItems.kubun_name) +
+                              "\n          "
+                          )
+                        ]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm._l(_vm.plKubun, function(plk, i) {
+                    return _c(
+                      "option",
+                      { key: "pl-kubun" + i, domProps: { value: plk.id } },
+                      [
+                        _vm._v(
+                          "\n            " +
+                            _vm._s(plk.kubun_name) +
+                            "\n          "
+                        )
+                      ]
+                    )
+                  }),
+                  _vm._v(" "),
+                  !_vm.plKubun.length && _vm.noKubun
+                    ? _c("option", { attrs: { value: "", id: "" } }, [
+                        _vm._v("\n            小科目なし\n          ")
+                      ])
+                    : _vm._e()
+                ],
+                2
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "inpNmlPrice" }, [
+            _c("label", { attrs: { for: "inpNmlPrice" } }, [_vm._v("金額：")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "inpNmlinputPrice" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.asPrice,
+                    expression: "asPrice"
+                  }
+                ],
+                staticClass: "form-control",
+                class: _vm.classValidPrice,
+                attrs: {
+                  type: "text",
+                  name: "price[]",
+                  id: "inpNmlPrice",
+                  disabled: _vm.dis
+                },
+                domProps: { value: _vm.asPrice },
+                on: {
+                  blur: function($event) {
+                    return _vm.blurPrice()
+                  },
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.asPrice = $event.target.value
+                  }
                 }
+              }),
+              _vm._v(" "),
+              _vm.errorPrice
+                ? _c("div", { staticClass: "invalid-feedback mt-1" }, [
+                    _vm._v(
+                      "\n          " + _vm._s(_vm.errorPrice) + "\n        "
+                    )
+                  ])
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "priceHidden" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.asPrice,
+                    expression: "asPrice"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "hidden",
+                  name: "price[]",
+                  id: "inpNmlPrice",
+                  disabled: _vm.dis,
+                  required: ""
+                },
+                domProps: { value: _vm.asPrice },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.asPrice = $event.target.value
+                  }
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "inpNmlCommentSubmit" }, [
+            _c(
+              "label",
+              {
+                staticClass: "inpNmlCommentLabel",
+                attrs: { for: "inpNmlComment" }
+              },
+              [_vm._v("コメント：")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "inpNmlComment" }, [
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.asComment,
+                    expression: "asComment"
+                  }
+                ],
+                staticClass: "form-control",
+                class: _vm.classValidComment,
+                attrs: {
+                  name: "comment",
+                  id: "inpNmlComment",
+                  cols: "36",
+                  rows: "5",
+                  disabled: _vm.dis
+                },
+                domProps: { value: _vm.asComment },
+                on: {
+                  blur: function($event) {
+                    return _vm.blurComment()
+                  },
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.asComment = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm.errorComment
+                ? _c("div", { staticClass: "invalid-feedback mt-1" }, [
+                    _vm._v(
+                      "\n          " + _vm._s(_vm.errorComment) + "\n        "
+                    )
+                  ])
+                : _vm._e()
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "detailBtn col-md-10 mb-3" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-info btnEdit mr-3",
+                attrs: { type: "button", id: "dtlBtnEdit" },
+                on: {
+                  click: function($event) {
+                    return _vm.dtlEdit()
+                  }
+                }
+              },
+              [_vm._v("\n        edit\n      ")]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              staticClass: "btn btn-info btnUpdate mr-3",
+              attrs: {
+                type: "submit",
+                name: "submit",
+                value: "update",
+                id: "dtlBtnUpd",
+                disabled: _vm.dis
+              }
+            }),
+            _vm._v(" "),
+            _c("input", {
+              staticClass: "btn btn-outline-danger btnDel mr-3",
+              attrs: {
+                type: "submit",
+                name: "submit",
+                value: "delete",
+                id: "dtlBtnDel"
               }
             })
           ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "detailBtn col-md-10 mb-3" }, [
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-info btnEdit mr-3",
-              attrs: { type: "button", id: "dtlBtnEdit" },
-              on: {
-                click: function($event) {
-                  return _vm.dtlEdit()
-                },
-                "~click": function($event) {
-                  return _vm.delKateTop()
-                }
-              }
-            },
-            [_vm._v("\n        edit\n      ")]
-          ),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "btn btn-info btnUpdate mr-3",
-            attrs: {
-              type: "submit",
-              name: "submit",
-              value: "update",
-              id: "dtlBtnUpd",
-              disabled: _vm.dis
-            }
-          }),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "btn btn-outline-danger btnDel mr-3",
-            attrs: {
-              type: "submit",
-              name: "submit",
-              value: "delete",
-              id: "dtlBtnDel"
-            }
-          })
-        ])
-      ])
+        ]
+      )
     ]
   )
 }
@@ -56690,7 +56968,7 @@ var app = new Vue({
     homeChgCate1: function homeChgCate1(ev) {
       var _this2 = this;
 
-      console.log("get kubun id : " + ev);
+      // console.log("get kubun id : " + ev);
       this.getKubun(ev).then(function () {
         _this2.cKubun1 = _this2.keepKubun;
       });
@@ -56698,7 +56976,7 @@ var app = new Vue({
     homeChgCate2: function homeChgCate2(ev) {
       var _this3 = this;
 
-      console.log("get kubun id : " + ev);
+      // console.log("get kubun id : " + ev);
       this.getKubun(ev).then(function () {
         _this3.cKubun2 = _this3.keepKubun;
       });

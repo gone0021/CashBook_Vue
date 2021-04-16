@@ -225,7 +225,8 @@ export default {
       op2: true,
       op3: true,
       op4: true,
-      // model：fromバリデーション用
+      // fromバリデーション用
+      // model：
       date: this.pDate,
       price: "",
       comment: "",
@@ -251,6 +252,7 @@ export default {
     chgCate1: function (ev) {
       // 最初のoptionを隠す
       this.op1 = false;
+
       this.op2 = false;
       // nokubunの表示許可
       this.noKubun1 = true;

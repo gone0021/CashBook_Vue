@@ -286,3 +286,8 @@ label.detailAccountCommentLabel {
     align-items : flex-start;
     margin: 24px 5px 0 0;
 }
+
+/* 追加スタイル */
+span.clrRed {
+    color: red;
+}
