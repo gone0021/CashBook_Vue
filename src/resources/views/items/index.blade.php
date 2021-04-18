@@ -189,28 +189,14 @@
 </div>
 
 <div class='glayLayer' v-if="glay" v-on:click="glayLayer"></div>
-<modal-dtl-acct v-if="modalDtlAcct" :csrf="{{json_encode(csrf_token())}}" :mda-cate="propCate" :mda-items="daItems"></modal-dtl-acct>
+<modal-dtl-acct v-if="modalDtlAcct" :csrf="{{json_encode(csrf_token())}}" :p-cate="cateAll" :p-items="daItems">
+</modal-dtl-acct>
 
-<modal-dtl-nml v-if="modalDtlNml" :csrf="{{json_encode(csrf_token())}}" :mdn-cate-asset="cateAsset"
-    :mdn-cate-expense="cateExpense" :mdn-cate-income="cateIncome" :mdn-as-items="asItems" :mdn-pl-items="plItems">
+<modal-dtl-nml v-if="modalDtlNml" :csrf="{{json_encode(csrf_token())}}" :p-cate-asset="cateAsset"
+    :p-cate-expense="cateExpense" :p-cate-income="cateIncome" :p-as-items="asItems" :p-pl-items="plItems">
 </modal-dtl-nml>
 
-{{-- <modal-nml-dtl v-if="modalNomal" :csrf="{{json_encode(csrf_token())}}" :mn-val="mnVal" :m-cate="category" >
-</modal-nml-dtl> --}}
+<modal-msg v-if="modalMsg"></modal-msg>
 
-{{-- vue-js-modal --}}
-{{-- <modal-nomal :csrf="{{json_encode(csrf_token())}}" :nm-obj="mnVal" :m-cate="category"></modal-nomal> --}}
-
-{{-- ここから旧 --}}
-{{-- @component ('components.detail_account')
-@slot('items',$items)
-@endcomponent
-
-@component ('components.detail_nomal')
-@slot('items',$items)
-@endcomponent
-
-@component ('components.input_msg')
-@endcomponent --}}
 
 @endsection
