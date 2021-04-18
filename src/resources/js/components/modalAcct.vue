@@ -1,16 +1,4 @@
 <template>
-  <!-- <modal
-    name="account"
-    classes="accountModal"
-    :resizable="true"
-    :reset="true"
-    :scrollable="true"
-    :width="720"
-    :height="480"
-    :minWidth="720"
-    :maxWidth="720"
-    :minHeight="480"
-  > -->
   <div class="template">
     <div id="modalAccount" class="ui-widget-content ui-resizable">
       <form action="./items/store" method="post" @submit="checkForm">
