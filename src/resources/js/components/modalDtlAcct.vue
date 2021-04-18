@@ -14,10 +14,15 @@
             name="date"
             id="detailAccountDate"
             class="form-control"
-            :value="pItems[0].date"
+            :class="classValidDate"
+            v-model="date"
             :disabled="dis"
             required
+            @blur="blurDate()"
           />
+          <div class="invalid-feedback mt-1" v-if="errorDate">
+            {{ errorDate }}
+          </div>
         </div>
       </div>
 
@@ -40,11 +45,15 @@
           <tr class="totalPrice">
             <td class="detailDebitTotalPrice" id="">
               <span>借方合計：</span>
-              <span id="detailDebitTotalPrice"></span>
+              <span id="detailDebitTotalPrice" :class="clrRed">{{
+                debPriceTotal
+              }}</span>
             </td>
             <td class="detailCreditTotalPrice" id="">
               <span>借方合計：</span>
-              <span id="detailCreditTotalPrice"></span>
+              <span id="detailCreditTotalPrice" :class="clrRed">{{
+                crePriceTotal
+              }}</span>
             </td>
           </tr>
 
@@ -55,10 +64,10 @@
               <mda-debit
                 :add-name="'debit'"
                 :cnt-deb="0"
-                :m-cate="pCate"
-                :m-items="debItems[0]"
-                :m-root="root"
-                :m-dis="dis"
+                :p-cate="pCate"
+                :p-items="debItems[0]"
+                :p-dis="dis"
+                @p-blur-price="blurPrice"
               ></mda-debit>
             </td>
 
@@ -67,10 +76,10 @@
               <mda-credit
                 :add-name="'credit'"
                 :cnt-cre="0"
-                :m-cate="pCate"
-                :m-items="creItems[0]"
-                :m-root="root"
-                :m-dis="dis"
+                :p-cate="pCate"
+                :p-items="creItems[0]"
+                :p-dis="dis"
+                @p-blur-price="blurPrice"
               ></mda-credit>
             </td>
           </tr>
@@ -79,23 +88,23 @@
           <tr v-for="(val, i) in cntTr" :key="`cntTr${i + 1}`">
             <td class="inpAd">
               <mda-debit
-              v-if="val === 'debit'"
+                v-if="val === 'debit'"
                 :cnt-deb="i + 1"
-                :m-cate="pCate"
-                :m-items="debItems[i + 1]"
-                :m-root="root"
-                :m-dis="dis"
+                :p-cate="pCate"
+                :p-items="debItems[i + 1]"
+                :p-dis="dis"
+                @p-blur-price="blurPrice"
               ></mda-debit>
             </td>
 
             <td class="inpAc">
               <mda-credit
-              v-if="val === 'credit'"
+                :add-name="'credit'"
                 :cnt-cre="i + 1"
-                :m-cate="pCate"
-                :m-items="creItems[i + 1]"
-                :m-root="root"
-                :m-dis="dis"
+                :p-cate="pCate"
+                :p-items="creItems[i + 1]"
+                :p-dis="dis"
+                @p-blur-price="blurPrice"
               ></mda-credit>
             </td>
           </tr>
@@ -114,11 +123,17 @@
                     name="comment"
                     id="inpAccountComment"
                     class="form-control"
+                    :class="classValidComment"
                     cols="36"
                     rows="3"
-                    v-model="mComment"
+                    v-model="comment"
                     :disabled="dis"
+                    @blur="blurComment()"
                   ></textarea>
+
+                  <div class="invalid-feedback mt-1" v-if="errorComment">
+                    {{ errorComment }}
+                  </div>
                 </div>
               </div>
             </td>
@@ -142,6 +157,7 @@
           id="detailAccountUpdate"
           class="btn btn-info btnUpdate mr-3"
           :disabled="dis"
+          @click="checkForm($event)"
         />
         <input
           type="submit"
@@ -149,6 +165,7 @@
           value="delete"
           id="detailAcountDel"
           class="btn btn-outline-danger btnDel mr-3"
+          @click="onDel($event)"
         />
       </div>
     </form>
@@ -164,14 +181,28 @@ export default {
   props: ["csrf", "pCate", "pItems"],
   data: function () {
     return {
-      // this
+      // --- this ---
       cntTr: [],
+      debPriceTotal: 0,
+      crePriceTotal: 0,
 
-      // --- form ---
+      // form
       // 属性の操作
       dis: true,
       // textareaはv-model
-      mComment:this.pItems[0].comment,
+
+      // バリデーション用
+      // model
+      date: this.pItems[0].date,
+      comment: this.pItems[0].comment,
+      // バリデーションエラー
+      errorDate: "",
+      errorComment: "",
+      // is-invalidのクラス名
+      classValidDate: "",
+      classValidComment: "",
+      // style
+      clrRed: "",
 
       // --- ajax ---
       // urlの取得・保存
@@ -237,6 +268,103 @@ export default {
     dtlEdit: function () {
       // disabled
       this.dis = false;
+    },
+
+    // --- バリデーション用 ---
+    blurPrice() {
+      console.log("blur price");
+      //   console.log(this.addTr);
+      this.checkPrice();
+    },
+    blurDate() {
+      let date = this.date;
+      let y = date.split("-")[0];
+      if (!date.match(/^\d{4}\-\d{2}\-\d{2}$/)) {
+        // 半角数字
+        this.errorDate = "正しい日付を入力してください";
+        this.classValidDate = "is-invalid";
+      } else if (y < 2000 || y > 3000) {
+        // 日付：2000年～3000年
+        this.errorDate = "2000年～3000年で入力してください";
+        this.classValidDate = "is-invalid";
+      } else {
+        this.errorDate = "";
+        this.classValidDate = "";
+      }
+    },
+    blurComment() {
+      let comment = this.comment;
+      if (comment.length > 200) {
+        this.errorComment = "コメントは200文字以内で入力してください";
+        this.classValidComment = "is-invalid";
+      } else {
+        this.errorComment = "";
+        this.classValidComment = "";
+      }
+    },
+
+    checkForm: function (ev) {
+      //   if (this.errorDate || this.errorPrice || this.errorComment) {
+      if (this.crePriceTotal !== this.debPriceTotal) {
+        alert("貸借が一致しません");
+        ev.preventDefault();
+      }
+      let inValid = document.querySelector(".is-invalid");
+      if (inValid) {
+        alert("不正な入力があります");
+        ev.preventDefault();
+      }
+    },
+    onDel: function (ev) {
+      var msg = ["削除してもよろしいですか？"].join("\n");
+      if (!window.confirm(msg)) {
+        ev.preventDefault();
+      }
+    },
+    // --- method ---
+    /**
+     * 貸借の金額のチェック
+     */
+    checkPrice: function () {
+      this.getPrice();
+      this.setColor("clrRed");
+    },
+    /**
+     * 金額の取得
+     */
+    getPrice: function () {
+      // 最初の金額
+      let crePrice0 = document.querySelector(`#dtlAcPrice0`);
+      let creVal0 = crePrice0.value;
+      let debPrice0 = document.querySelector(`#dtlAdPrice0`);
+      let debVal0 = debPrice0.value;
+
+      this.crePriceTotal = Number(creVal0);
+      this.debPriceTotal = Number(debVal0);
+
+      // 二番目以降の金額
+      for (var i = 0; i < this.cntTr.length; i++) {
+        if (this.cntTr[i] === "credit") {
+          var crePrice = document.querySelector(`#dtlAcPrice${i + 1}`);
+          var creVal = crePrice.value;
+          this.crePriceTotal += Number(creVal);
+        } else if (this.cntTr[i] === "debit") {
+          var debPrice = document.querySelector(`#dtlAdPrice${i + 1}`);
+          var debVal = debPrice.value;
+          this.debPriceTotal += Number(debVal);
+        }
+      }
+    },
+    /**
+     * 貸借が一致しない時の文字色
+     * @param {string} name
+     */
+    setColor: function (name) {
+      if (this.crePriceTotal !== this.debPriceTotal) {
+        this.clrRed = name;
+      } else {
+        this.clrRed = "";
+      }
     },
   },
 };

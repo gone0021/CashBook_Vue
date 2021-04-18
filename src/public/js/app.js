@@ -3058,32 +3058,41 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   inheritAttrs: false,
-  props: ["addName", "cntCre", "mCate", "mRoot", "mItems", "mDis"],
+  props: ["addName", "cntCre", "pCate", "pItems", "pDis"],
   data: function data() {
     return {
       // --- this ---
       keepKubun: [],
       creKubun: [],
+      noKubun: false,
       // --- form ---
       // value：v-modelで入力の度に値が変わるため変数に代入
-      cateId: this.mItems.category_id,
-      kubunId: this.mItems.kubun_id //
-
+      cateId: this.pItems.category_id,
+      kubunId: this.pItems.kubun_id,
+      price: this.pItems.price,
+      // エラーメッセージ
+      errorPrice: "",
+      classValidPrice: "",
+      // --- parent ---
+      validError: false
     };
   },
   created: function created() {
     var _this = this;
 
     console.log("--- created modal detail account credit ---");
-
-    if (this.addName == "credit") {
-      console.log("add : " + this.addName);
-      console.log("props : " + this.mKubunId);
-    }
-
-    var cid = this.mItems.category_id;
+    var cid = this.pItems.category_id;
     this.getKubunDtlCre(cid).then(function () {
       _this.creKubun = _this.keepKubun;
     });
@@ -3093,18 +3102,30 @@ __webpack_require__.r(__webpack_exports__);
   updated: function updated() {// console.log("--- updated modal detail account ---");
   },
   methods: {
-    chgDtlCreCate: function chgDtlCreCate(ev) {
+    chgCateCre: function chgCateCre(ev) {
       var _this2 = this;
 
-      var args = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+      this.noKubun = true;
       this.getKubunDtlCre(ev).then(function () {
         _this2.kubunId = _this2.keepKubun[0].id;
         _this2.creKubun = _this2.keepKubun;
       });
     },
+    blurPrice: function blurPrice() {
+      if (isNaN(this.price)) {
+        this.errorPrice = "金額は半角数字のみ";
+        this.classValidPrice = "is-invalid";
+        this.validError = true;
+      } else {
+        this.errorPrice = "";
+        this.classValidPrice = "";
+        this.validError = false;
+      }
+
+      this.$emit("p-blur-price", this.validError);
+    },
     // method
     getKubunDtlCre: function getKubunDtlCre(ev) {
-      var args = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
       var cid = NaN;
 
       if (typeof ev === "string") {
@@ -3115,13 +3136,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
       console.log("parent cid : " + cid);
-      return axios.get("".concat(this.mRoot, "/ajax/kubun_by_category"), {
+      return axios.get("../ajax/kubun_by_category", {
         params: {
           category_id: cid
         }
       }).then(function (res) {
-        console.log("--- ajax ---");
-        console.log(res.data);
         this.keepKubun = res.data;
       }.bind(this))["catch"](function (e) {
         console.error(e);
@@ -3203,42 +3222,41 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   inheritAttrs: false,
-  props: ["addName", "cntDeb", "mCate", "mRoot", "mItems", "mDis"],
+  props: ["addName", "cntDeb", "pCate", "pItems", "pDis"],
   data: function data() {
     return {
       // --- this ---
       keepKubun: [],
       debKubun: [],
+      noKubun: false,
       // --- form ---
       // value：v-modelで入力の度に値が変わるため変数に代入
-      cateId: this.mItems.category_id,
-      kubunId: this.mItems.kubun_id //
-
+      cateId: this.pItems.category_id,
+      kubunId: this.pItems.kubun_id,
+      price: this.pItems.price,
+      // エラーメッセージ
+      errorPrice: "",
+      classValidPrice: "",
+      // --- parent ---
+      validError: false
     };
   },
-  // watcherの書き方：メモ残し
-  //   watch: {
-  //     mKubunId: {
-  //       // 外からプロパティの中身が変更になったら実行される
-  //       immediate: true,
-  //       handler(val) {
-  //         this.kubunId = val;
-  //       },
-  //     },
-  //   },
   created: function created() {
     var _this = this;
 
     console.log("--- created modal detail account debit ---");
-
-    if (this.addName == "debit") {
-      console.log("add : " + this.addName);
-      console.log("props : " + this.mKubunId);
-    }
-
-    var cid = this.mItems.category_id;
+    var cid = this.pItems.category_id;
     this.getKubunDtlDeb(cid).then(function () {
       _this.debKubun = _this.keepKubun;
     });
@@ -3248,14 +3266,27 @@ __webpack_require__.r(__webpack_exports__);
   updated: function updated() {// console.log("--- updated modal detail account ---");
   },
   methods: {
-    chgDtlDebCate: function chgDtlDebCate(ev) {
+    chgCateCre: function chgCateCre(ev) {
       var _this2 = this;
 
-      var args = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+      this.noKubun = true;
       this.getKubunDtlDeb(ev).then(function () {
         _this2.kubunId = _this2.keepKubun[0].id;
         _this2.debKubun = _this2.keepKubun;
       });
+    },
+    blurPrice: function blurPrice() {
+      if (isNaN(this.price)) {
+        this.errorPrice = "金額は半角数字のみ";
+        this.classValidPrice = "is-invalid";
+        this.validError = true;
+      } else {
+        this.errorPrice = "";
+        this.classValidPrice = "";
+        this.validError = false;
+      }
+
+      this.$emit("p-blur-price", this.validError);
     },
     // method
     getKubunDtlDeb: function getKubunDtlDeb(ev) {
@@ -3270,13 +3301,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
       console.log("parent cid : " + cid);
-      return axios.get("".concat(this.mRoot, "/ajax/kubun_by_category"), {
+      return axios.get("../ajax/kubun_by_category", {
         params: {
           category_id: cid
         }
       }).then(function (res) {
-        // console.log("--- ajax ---");
-        // console.log(res.data);
         this.keepKubun = res.data;
       }.bind(this))["catch"](function (e) {
         console.error(e);
@@ -3300,18 +3329,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mAcctCredit_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./mAcctCredit.vue */ "./resources/js/components/mAcctCredit.vue");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -3634,8 +3651,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mdaDebit_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./mdaDebit.vue */ "./resources/js/components/mdaDebit.vue");
 /* harmony import */ var _mdaCredit_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./mdaCredit.vue */ "./resources/js/components/mdaCredit.vue");
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
+//
+//
+//
+//
 //
 //
 //
@@ -3815,19 +3834,45 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   props: ["csrf", "pCate", "pItems"],
   data: function data() {
-    var _ref;
-
-    return _ref = {
+    return {
       // --- this ---
       cntTr: [],
+      debPriceTotal: 0,
+      crePriceTotal: 0,
+      // form
+      // 属性の操作
+      dis: true,
+      // textareaはv-model
       // バリデーション用
-      errorDate: "",
-      errorPrice: "",
-      errorComment: "",
       // model
-      date: this.pDate,
-      comment: ""
-    }, _defineProperty(_ref, "errorDate", ""), _defineProperty(_ref, "errorComment", ""), _defineProperty(_ref, "classValidDate", ""), _defineProperty(_ref, "classValidComment", ""), _defineProperty(_ref, "dis", true), _defineProperty(_ref, "mComment", this.pItems[0].comment), _defineProperty(_ref, "root", ""), _defineProperty(_ref, "keepKubun", []), _defineProperty(_ref, "debKubun", []), _defineProperty(_ref, "creKubun", []), _defineProperty(_ref, "debKubunId", []), _defineProperty(_ref, "creKubunId", []), _defineProperty(_ref, "debItems", []), _defineProperty(_ref, "creItems", []), _defineProperty(_ref, "addType", []), _ref;
+      date: this.pItems[0].date,
+      comment: this.pItems[0].comment,
+      // バリデーションエラー
+      errorDate: "",
+      errorComment: "",
+      // is-invalidのクラス名
+      classValidDate: "",
+      classValidComment: "",
+      // style
+      clrRed: "",
+      // --- ajax ---
+      // urlの取得・保存
+      root: "",
+      // 取得した値の一時保存
+      keepKubun: [],
+      // --- child ---
+      debKubun: [],
+      creKubun: [],
+      //   debCateId: {},
+      debKubunId: [],
+      creKubunId: [],
+      debItems: [],
+      creItems: [],
+      //   --- その他 ---
+      // addの配列：forで回す用
+      addType: [] // 代入
+
+    };
   },
   created: function created() {
     console.log("--- created modal detail account ---"); // urlの取得
@@ -3871,6 +3916,107 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     dtlEdit: function dtlEdit() {
       // disabled
       this.dis = false;
+    },
+    // --- バリデーション用 ---
+    blurPrice: function blurPrice() {
+      console.log("blur price"); //   console.log(this.addTr);
+
+      this.checkPrice();
+    },
+    blurDate: function blurDate() {
+      var date = this.date;
+      var y = date.split("-")[0];
+
+      if (!date.match(/^\d{4}\-\d{2}\-\d{2}$/)) {
+        // 半角数字
+        this.errorDate = "正しい日付を入力してください";
+        this.classValidDate = "is-invalid";
+      } else if (y < 2000 || y > 3000) {
+        // 日付：2000年～3000年
+        this.errorDate = "2000年～3000年で入力してください";
+        this.classValidDate = "is-invalid";
+      } else {
+        this.errorDate = "";
+        this.classValidDate = "";
+      }
+    },
+    blurComment: function blurComment() {
+      var comment = this.comment;
+
+      if (comment.length > 200) {
+        this.errorComment = "コメントは200文字以内で入力してください";
+        this.classValidComment = "is-invalid";
+      } else {
+        this.errorComment = "";
+        this.classValidComment = "";
+      }
+    },
+    checkForm: function checkForm(ev) {
+      //   if (this.errorDate || this.errorPrice || this.errorComment) {
+      if (this.crePriceTotal !== this.debPriceTotal) {
+        alert("貸借が一致しません");
+        ev.preventDefault();
+      }
+
+      var inValid = document.querySelector(".is-invalid");
+
+      if (inValid) {
+        alert("不正な入力があります");
+        ev.preventDefault();
+      }
+    },
+    onDel: function onDel(ev) {
+      var msg = ["削除してもよろしいですか？"].join("\n");
+
+      if (!window.confirm(msg)) {
+        ev.preventDefault();
+      }
+    },
+    // --- method ---
+
+    /**
+     * 貸借の金額のチェック
+     */
+    checkPrice: function checkPrice() {
+      this.getPrice();
+      this.setColor("clrRed");
+    },
+
+    /**
+     * 金額の取得
+     */
+    getPrice: function getPrice() {
+      // 最初の金額
+      var crePrice0 = document.querySelector("#dtlAcPrice0");
+      var creVal0 = crePrice0.value;
+      var debPrice0 = document.querySelector("#dtlAdPrice0");
+      var debVal0 = debPrice0.value;
+      this.crePriceTotal = Number(creVal0);
+      this.debPriceTotal = Number(debVal0); // 二番目以降の金額
+
+      for (var i = 0; i < this.cntTr.length; i++) {
+        if (this.cntTr[i] === "credit") {
+          var crePrice = document.querySelector("#dtlAcPrice".concat(i + 1));
+          var creVal = crePrice.value;
+          this.crePriceTotal += Number(creVal);
+        } else if (this.cntTr[i] === "debit") {
+          var debPrice = document.querySelector("#dtlAdPrice".concat(i + 1));
+          var debVal = debPrice.value;
+          this.debPriceTotal += Number(debVal);
+        }
+      }
+    },
+
+    /**
+     * 貸借が一致しない時の文字色
+     * @param {string} name
+     */
+    setColor: function setColor(name) {
+      if (this.crePriceTotal !== this.debPriceTotal) {
+        this.clrRed = name;
+      } else {
+        this.clrRed = "";
+      }
     }
   }
 });
@@ -42500,7 +42646,7 @@ var render = function() {
   return _c("div", [
     _c("input", {
       attrs: { type: "hidden", name: "id[]" },
-      domProps: { value: _vm.mItems.id }
+      domProps: { value: _vm.pItems.id }
     }),
     _vm._v(" "),
     _c("input", {
@@ -42527,7 +42673,7 @@ var render = function() {
           attrs: {
             name: "category_id[]",
             id: "dtlAcCategory" + _vm.cntCre,
-            disabled: _vm.mDis,
+            disabled: _vm.pDis,
             required: ""
           },
           on: {
@@ -42546,12 +42692,12 @@ var render = function() {
                   : $$selectedVal[0]
               },
               function($event) {
-                return _vm.chgDtlCreCate($event, _vm.cntCre)
+                return _vm.chgCateCre($event)
               }
             ]
           }
         },
-        _vm._l(_vm.mCate, function(cate) {
+        _vm._l(_vm.pCate, function(cate) {
           return _c(
             "option",
             { key: "cateCredit" + cate.id, domProps: { value: cate.id } },
@@ -42582,7 +42728,7 @@ var render = function() {
           attrs: {
             name: "kubun_id[]",
             id: "dtlAcKubun" + _vm.cntCre,
-            disabled: _vm.mDis
+            disabled: _vm.pDis
           },
           on: {
             change: function($event) {
@@ -42600,21 +42746,34 @@ var render = function() {
             }
           }
         },
-        _vm._l(_vm.creKubun, function(kubun) {
-          return _c(
-            "option",
-            { key: "ddcKbn" + kubun.id, domProps: { value: kubun.id } },
-            [_vm._v("\n        " + _vm._s(kubun.kubun_name) + "\n      ")]
-          )
-        }),
-        0
+        [
+          _vm._l(_vm.creKubun, function(kubun) {
+            return _c(
+              "option",
+              { key: "ddcKbn" + kubun.id, domProps: { value: kubun.id } },
+              [_vm._v("\n        " + _vm._s(kubun.kubun_name) + "\n      ")]
+            )
+          }),
+          _vm._v(" "),
+          !_vm.creKubun.length && _vm.noKubun
+            ? _c("option", { attrs: { value: "", id: "" } }, [
+                _vm._v("\n        小科目なし\n      ")
+              ])
+            : _vm._e()
+        ],
+        2
       )
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "inpAcPrice" }, [
-      _c("label", { attrs: { for: "inpAcPrice" + _vm.cntCre } }, [
-        _vm._v("金額：")
-      ]),
+      _c(
+        "label",
+        {
+          staticClass: "align-top mt-2",
+          attrs: { for: "inpAcPrice" + _vm.cntCre }
+        },
+        [_vm._v("金額：")]
+      ),
       _vm._v(" "),
       _c(
         "div",
@@ -42624,16 +42783,42 @@ var render = function() {
         },
         [
           _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.price,
+                expression: "price"
+              }
+            ],
             staticClass: "form-control",
+            class: _vm.classValidPrice,
             attrs: {
               type: "text",
               name: "price[]",
-              id: "inpAcPrice" + _vm.cntCre,
-              disabled: _vm.mDis,
+              id: "dtlAcPrice" + _vm.cntCre,
+              disabled: _vm.pDis,
               required: ""
             },
-            domProps: { value: _vm.mItems.price }
-          })
+            domProps: { value: _vm.price },
+            on: {
+              blur: function($event) {
+                return _vm.blurPrice()
+              },
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.price = $event.target.value
+              }
+            }
+          }),
+          _vm._v(" "),
+          _vm.errorPrice
+            ? _c("div", { staticClass: "invalid-feedback mt-1" }, [
+                _vm._v("\n        " + _vm._s(_vm.errorPrice) + "\n      ")
+              ])
+            : _vm._e()
         ]
       )
     ])
@@ -42664,7 +42849,7 @@ var render = function() {
   return _c("div", [
     _c("input", {
       attrs: { type: "hidden", name: "id[]" },
-      domProps: { value: _vm.mItems.id }
+      domProps: { value: _vm.pItems.id }
     }),
     _vm._v(" "),
     _c("input", {
@@ -42691,7 +42876,7 @@ var render = function() {
           attrs: {
             name: "category_id[]",
             id: "dtlAdCategory" + _vm.cntDeb,
-            disabled: _vm.mDis,
+            disabled: _vm.pDis,
             required: ""
           },
           on: {
@@ -42710,12 +42895,12 @@ var render = function() {
                   : $$selectedVal[0]
               },
               function($event) {
-                return _vm.chgDtlDebCate($event, _vm.cntDeb)
+                return _vm.chgCateCre($event)
               }
             ]
           }
         },
-        _vm._l(_vm.mCate, function(cate) {
+        _vm._l(_vm.pCate, function(cate) {
           return _c(
             "option",
             { key: "cateDebit" + cate.id, domProps: { value: cate.id } },
@@ -42746,7 +42931,7 @@ var render = function() {
           attrs: {
             name: "kubun_id[]",
             id: "dtlAdKubun" + _vm.cntDeb,
-            disabled: _vm.mDis
+            disabled: _vm.pDis
           },
           on: {
             change: function($event) {
@@ -42764,21 +42949,34 @@ var render = function() {
             }
           }
         },
-        _vm._l(_vm.debKubun, function(kubun) {
-          return _c(
-            "option",
-            { key: "ddaKbn" + kubun.id, domProps: { value: kubun.id } },
-            [_vm._v("\n        " + _vm._s(kubun.kubun_name) + "\n      ")]
-          )
-        }),
-        0
+        [
+          _vm._l(_vm.debKubun, function(kubun) {
+            return _c(
+              "option",
+              { key: "ddaKbn" + kubun.id, domProps: { value: kubun.id } },
+              [_vm._v("\n        " + _vm._s(kubun.kubun_name) + "\n      ")]
+            )
+          }),
+          _vm._v(" "),
+          !_vm.debKubun.length && _vm.noKubun
+            ? _c("option", { attrs: { value: "", id: "" } }, [
+                _vm._v("\n        小科目なし\n      ")
+              ])
+            : _vm._e()
+        ],
+        2
       )
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "inpAdPrice" }, [
-      _c("label", { attrs: { for: "inpAdPrice" + _vm.cntDeb } }, [
-        _vm._v("金額：")
-      ]),
+      _c(
+        "label",
+        {
+          staticClass: "align-top mt-2",
+          attrs: { for: "inpAdPrice" + _vm.cntDeb }
+        },
+        [_vm._v("金額：")]
+      ),
       _vm._v(" "),
       _c(
         "div",
@@ -42788,16 +42986,42 @@ var render = function() {
         },
         [
           _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.price,
+                expression: "price"
+              }
+            ],
             staticClass: "form-control",
+            class: _vm.classValidPrice,
             attrs: {
               type: "text",
               name: "price[]",
-              id: "inpAdPrice" + _vm.cntDeb,
-              disabled: _vm.mDis,
+              id: "dtlAdPrice" + _vm.cntDeb,
+              disabled: _vm.pDis,
               required: ""
             },
-            domProps: { value: _vm.mItems.price }
-          })
+            domProps: { value: _vm.price },
+            on: {
+              blur: function($event) {
+                return _vm.blurPrice()
+              },
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.price = $event.target.value
+              }
+            }
+          }),
+          _vm._v(" "),
+          _vm.errorPrice
+            ? _c("div", { staticClass: "invalid-feedback mt-1" }, [
+                _vm._v("\n        " + _vm._s(_vm.errorPrice) + "\n      ")
+              ])
+            : _vm._e()
         ]
       )
     ])
@@ -43232,6 +43456,14 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "detailAccountinputDate" }, [
             _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.date,
+                  expression: "date"
+                }
+              ],
               staticClass: "form-control",
               class: _vm.classValidDate,
               attrs: {
@@ -43241,10 +43473,16 @@ var render = function() {
                 disabled: _vm.dis,
                 required: ""
               },
-              domProps: { value: _vm.pItems[0].date },
+              domProps: { value: _vm.date },
               on: {
                 blur: function($event) {
                   return _vm.blurDate()
+                },
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.date = $event.target.value
                 }
               }
             }),
@@ -43264,7 +43502,41 @@ var render = function() {
             "tbody",
             { staticClass: "detailAccount" },
             [
-              _vm._m(1),
+              _c("tr", { staticClass: "totalPrice" }, [
+                _c(
+                  "td",
+                  { staticClass: "detailDebitTotalPrice", attrs: { id: "" } },
+                  [
+                    _c("span", [_vm._v("借方合計：")]),
+                    _vm._v(" "),
+                    _c(
+                      "span",
+                      {
+                        class: _vm.clrRed,
+                        attrs: { id: "detailDebitTotalPrice" }
+                      },
+                      [_vm._v(_vm._s(_vm.debPriceTotal))]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  { staticClass: "detailCreditTotalPrice", attrs: { id: "" } },
+                  [
+                    _c("span", [_vm._v("借方合計：")]),
+                    _vm._v(" "),
+                    _c(
+                      "span",
+                      {
+                        class: _vm.clrRed,
+                        attrs: { id: "detailCreditTotalPrice" }
+                      },
+                      [_vm._v(_vm._s(_vm.crePriceTotal))]
+                    )
+                  ]
+                )
+              ]),
               _vm._v(" "),
               _c("tr", { staticClass: "detailTop" }, [
                 _c(
@@ -43275,10 +43547,9 @@ var render = function() {
                       attrs: {
                         "add-name": "debit",
                         "cnt-deb": 0,
-                        "m-cate": _vm.pCate,
-                        "m-items": _vm.debItems[0],
-                        "m-root": _vm.root,
-                        "m-dis": _vm.dis
+                        "p-cate": _vm.pCate,
+                        "p-items": _vm.debItems[0],
+                        "p-dis": _vm.dis
                       },
                       on: { "p-blur-price": _vm.blurPrice }
                     })
@@ -43294,10 +43565,9 @@ var render = function() {
                       attrs: {
                         "add-name": "credit",
                         "cnt-cre": 0,
-                        "m-cate": _vm.pCate,
-                        "m-items": _vm.creItems[0],
-                        "m-root": _vm.root,
-                        "m-dis": _vm.dis
+                        "p-cate": _vm.pCate,
+                        "p-items": _vm.creItems[0],
+                        "p-dis": _vm.dis
                       },
                       on: { "p-blur-price": _vm.blurPrice }
                     })
@@ -43316,11 +43586,11 @@ var render = function() {
                         ? _c("mda-debit", {
                             attrs: {
                               "cnt-deb": i + 1,
-                              "m-cate": _vm.pCate,
-                              "m-items": _vm.debItems[i + 1],
-                              "m-root": _vm.root,
-                              "m-dis": _vm.dis
-                            }
+                              "p-cate": _vm.pCate,
+                              "p-items": _vm.debItems[i + 1],
+                              "p-dis": _vm.dis
+                            },
+                            on: { "p-blur-price": _vm.blurPrice }
                           })
                         : _vm._e()
                     ],
@@ -43331,17 +43601,16 @@ var render = function() {
                     "td",
                     { staticClass: "inpAc" },
                     [
-                      val === "credit"
-                        ? _c("mda-credit", {
-                            attrs: {
-                              "cnt-cre": i + 1,
-                              "m-cate": _vm.pCate,
-                              "m-items": _vm.creItems[i + 1],
-                              "m-root": _vm.root,
-                              "m-dis": _vm.dis
-                            }
-                          })
-                        : _vm._e()
+                      _c("mda-credit", {
+                        attrs: {
+                          "add-name": "credit",
+                          "cnt-cre": i + 1,
+                          "p-cate": _vm.pCate,
+                          "p-items": _vm.creItems[i + 1],
+                          "p-dis": _vm.dis
+                        },
+                        on: { "p-blur-price": _vm.blurPrice }
+                      })
                     ],
                     1
                   )
@@ -43351,7 +43620,7 @@ var render = function() {
               _c("tr", { staticClass: "detailEnd" }, [
                 _c("td", { attrs: { colspan: "2", id: "" } }, [
                   _c("div", { staticClass: "inpAccountComment" }, [
-                    _vm._m(2),
+                    _vm._m(1),
                     _vm._v(" "),
                     _c(
                       "div",
@@ -43362,8 +43631,8 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.mComment,
-                              expression: "mComment"
+                              value: _vm.comment,
+                              expression: "comment"
                             }
                           ],
                           staticClass: "form-control",
@@ -43375,7 +43644,7 @@ var render = function() {
                             rows: "3",
                             disabled: _vm.dis
                           },
-                          domProps: { value: _vm.mComment },
+                          domProps: { value: _vm.comment },
                           on: {
                             blur: function($event) {
                               return _vm.blurComment()
@@ -43384,7 +43653,7 @@ var render = function() {
                               if ($event.target.composing) {
                                 return
                               }
-                              _vm.mComment = $event.target.value
+                              _vm.comment = $event.target.value
                             }
                           }
                         }),
@@ -43435,6 +43704,11 @@ var render = function() {
               value: "update",
               id: "detailAccountUpdate",
               disabled: _vm.dis
+            },
+            on: {
+              click: function($event) {
+                return _vm.checkForm($event)
+              }
             }
           }),
           _vm._v(" "),
@@ -43445,6 +43719,11 @@ var render = function() {
               name: "submit",
               value: "delete",
               id: "detailAcountDel"
+            },
+            on: {
+              click: function($event) {
+                return _vm.onDel($event)
+              }
             }
           })
         ])
@@ -43466,24 +43745,6 @@ var staticRenderFns = [
         _c("th", { staticClass: "text-center" }, [
           _c("span", { staticClass: "credit" }, [_vm._v("貸方")])
         ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tr", { staticClass: "totalPrice" }, [
-      _c("td", { staticClass: "detailDebitTotalPrice", attrs: { id: "" } }, [
-        _c("span", [_vm._v("借方合計：")]),
-        _vm._v(" "),
-        _c("span", { attrs: { id: "detailDebitTotalPrice" } })
-      ]),
-      _vm._v(" "),
-      _c("td", { staticClass: "detailCreditTotalPrice", attrs: { id: "" } }, [
-        _c("span", [_vm._v("借方合計：")]),
-        _vm._v(" "),
-        _c("span", { attrs: { id: "detailCreditTotalPrice" } })
       ])
     ])
   },
