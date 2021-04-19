@@ -172,7 +172,7 @@ class ItemController extends Controller
                 $dbItem->date = $val['date'];
                 $dbItem->debit_credit = $val['debit_credit'][$k];
                 $dbItem->category_id = $val['category_id'][$k];
-                if ($req->kubun_id[$k]  == 0) {
+                if ($req->kubun_id[$k] == 0) {
                     $dbItem->kubun_id = null;
                 } else {
                     $dbItem->kubun_id = $val['kubun_id'][$k];
