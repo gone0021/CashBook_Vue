@@ -40,9 +40,6 @@
         >
           {{ kubun.kubun_name }}
         </option>
-        <option value="" id="" v-if="!debKubun.length && noKubun">
-          小科目なし
-        </option>
       </select>
     </div>
 
@@ -78,7 +75,6 @@ export default {
       // --- this ---
       keepKubun: [],
       debKubun: [],
-      noKubun: false,
       // --- form ---
       // value：v-modelで入力の度に値が変わるため変数に代入
       cateId: this.pItems.category_id,
@@ -93,6 +89,10 @@ export default {
   },
   created: function () {
     console.log("--- created modal detail account debit ---");
+
+    if (!this.kubunId) {
+      this.kubunId = 0;
+    }
     var cid = this.pItems.category_id;
     this.getKubunDtlDeb(cid).then(() => {
       this.debKubun = this.keepKubun;
@@ -106,7 +106,6 @@ export default {
   },
   methods: {
     chgCateCre: function (ev) {
-      this.noKubun = true;
       this.getKubunDtlDeb(ev).then(() => {
         this.kubunId = this.keepKubun[0].id;
         this.debKubun = this.keepKubun;
@@ -144,7 +143,12 @@ export default {
         })
         .then(
           function (res) {
-            this.keepKubun = res.data;
+            this.keepKubun = [];
+            if (!res.data.length) {
+              this.keepKubun[0] = { id: 0, kubun_name: "小科目なし" };
+            } else {
+              this.keepKubun = res.data;
+            }
           }.bind(this)
         )
         .catch(function (e) {

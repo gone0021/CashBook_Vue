@@ -138,9 +138,6 @@
             >
               {{ kubun.kubun_name }}
             </option>
-            <option value="0" id="" v-if="!pKubun.length && noKubun">
-              小科目なし
-            </option>
           </select>
 
           <span class="invalid-feedback" v-if="pErrors.kubun_id">
@@ -259,7 +256,6 @@ export default {
       disCate: true,
       disKubun: true,
       disDel: true,
-      noKubun: false,
 
       // optionの最初の値
       op1: true,
@@ -346,8 +342,6 @@ export default {
       // 最初のoptionを隠す
       this.op2 = false;
       this.op3 = false;
-      // nokubunの表示許可
-      this.noKubun = true;
 
       // category_idから区分を取得
       let cid = ev.target.value;
@@ -357,7 +351,6 @@ export default {
       if (!this.pKubun.length) {
         this.disOp3 = true;
         this.hideOp3 = true;
-        // this.noKubun = true;
       }
     },
     // --- form ---

@@ -2550,9 +2550,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["pType", "pCate", "pKubun", "pErrors", "csrf"],
   data: function data() {
@@ -2562,7 +2559,6 @@ __webpack_require__.r(__webpack_exports__);
       disCate: true,
       disKubun: true,
       disDel: true,
-      noKubun: false,
       // optionの最初の値
       op1: true,
       op2: true,
@@ -2643,9 +2639,7 @@ __webpack_require__.r(__webpack_exports__);
     chgCate: function chgCate(ev) {
       // 最初のoptionを隠す
       this.op2 = false;
-      this.op3 = false; // nokubunの表示許可
-
-      this.noKubun = true; // category_idから区分を取得
+      this.op3 = false; // category_idから区分を取得
 
       var cid = ev.target.value; // console.log(type);
 
@@ -2653,7 +2647,7 @@ __webpack_require__.r(__webpack_exports__);
 
       if (!this.pKubun.length) {
         this.disOp3 = true;
-        this.hideOp3 = true; // this.noKubun = true;
+        this.hideOp3 = true;
       }
     },
     // --- form ---
@@ -2774,9 +2768,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["addBtn", "cntCre", "pCate"],
   data: function data() {
@@ -2785,7 +2776,6 @@ __webpack_require__.r(__webpack_exports__);
       creKubun: [],
       op1: true,
       op2: true,
-      noKubun: false,
       // バリデーション用
       errorPrice: "",
       classValidPrice: "",
@@ -2815,8 +2805,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     chgCateCre: function chgCateCre(ev) {
       this.op1 = false;
-      this.op2 = false;
-      this.noKubun = true; // $eventから値を取得
+      this.op2 = false; // $eventから値を取得
 
       var cid = ev.target.value; //   console.log("cid : " + cid);
       // ajaxでkubunを取得
@@ -2826,7 +2815,16 @@ __webpack_require__.r(__webpack_exports__);
           category_id: cid
         }
       }).then(function (res) {
-        this.creKubun = res.data;
+        this.creKubun = [];
+
+        if (!res.data.length) {
+          this.creKubun[0] = {
+            id: 0,
+            kubun_name: "小科目なし"
+          };
+        } else {
+          this.creKubun = res.data;
+        }
       }.bind(this))["catch"](function (e) {
         console.error(e);
       });
@@ -2845,9 +2843,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
 //
 //
 //
@@ -2936,7 +2931,6 @@ __webpack_require__.r(__webpack_exports__);
       debKubun: [],
       op1: true,
       op2: true,
-      noKubun: true,
       // バリデーション用
       errorPrice: "",
       classValidPrice: "",
@@ -2966,8 +2960,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     chgCateDeb: function chgCateDeb(ev) {
       this.op1 = false;
-      this.op2 = false;
-      this.noKubun = true; // $eventから値を取得
+      this.op2 = false; // $eventから値を取得
 
       var cid = ev.target.value; //   console.log("cid : " + cid);
       // ajaxでkubunを取得
@@ -2977,7 +2970,16 @@ __webpack_require__.r(__webpack_exports__);
           category_id: cid
         }
       }).then(function (res) {
-        this.debKubun = res.data;
+        this.debKubun = [];
+
+        if (!res.data.length) {
+          this.debKubun[0] = {
+            id: 0,
+            kubun_name: "小科目なし"
+          };
+        } else {
+          this.debKubun = res.data;
+        }
       }.bind(this))["catch"](function (e) {
         console.error(e);
       });
@@ -3064,9 +3066,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   inheritAttrs: false,
   props: ["addName", "cntCre", "pCate", "pItems", "pDis"],
@@ -3075,7 +3074,6 @@ __webpack_require__.r(__webpack_exports__);
       // --- this ---
       keepKubun: [],
       creKubun: [],
-      noKubun: false,
       // --- form ---
       // value：v-modelで入力の度に値が変わるため変数に代入
       cateId: this.pItems.category_id,
@@ -3092,6 +3090,11 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     console.log("--- created modal detail account credit ---");
+
+    if (!this.kubunId) {
+      this.kubunId = 0;
+    }
+
     var cid = this.pItems.category_id;
     this.getKubunDtlCre(cid).then(function () {
       _this.creKubun = _this.keepKubun;
@@ -3105,7 +3108,6 @@ __webpack_require__.r(__webpack_exports__);
     chgCateCre: function chgCateCre(ev) {
       var _this2 = this;
 
-      this.noKubun = true;
       this.getKubunDtlCre(ev).then(function () {
         _this2.kubunId = _this2.keepKubun[0].id;
         _this2.creKubun = _this2.keepKubun;
@@ -3141,7 +3143,16 @@ __webpack_require__.r(__webpack_exports__);
           category_id: cid
         }
       }).then(function (res) {
-        this.keepKubun = res.data;
+        this.keepKubun = [];
+
+        if (!res.data.length) {
+          this.keepKubun[0] = {
+            id: 0,
+            kubun_name: "小科目なし"
+          };
+        } else {
+          this.keepKubun = res.data;
+        }
       }.bind(this))["catch"](function (e) {
         console.error(e);
       });
@@ -3228,9 +3239,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   inheritAttrs: false,
   props: ["addName", "cntDeb", "pCate", "pItems", "pDis"],
@@ -3239,7 +3247,6 @@ __webpack_require__.r(__webpack_exports__);
       // --- this ---
       keepKubun: [],
       debKubun: [],
-      noKubun: false,
       // --- form ---
       // value：v-modelで入力の度に値が変わるため変数に代入
       cateId: this.pItems.category_id,
@@ -3256,6 +3263,11 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     console.log("--- created modal detail account debit ---");
+
+    if (!this.kubunId) {
+      this.kubunId = 0;
+    }
+
     var cid = this.pItems.category_id;
     this.getKubunDtlDeb(cid).then(function () {
       _this.debKubun = _this.keepKubun;
@@ -3269,7 +3281,6 @@ __webpack_require__.r(__webpack_exports__);
     chgCateCre: function chgCateCre(ev) {
       var _this2 = this;
 
-      this.noKubun = true;
       this.getKubunDtlDeb(ev).then(function () {
         _this2.kubunId = _this2.keepKubun[0].id;
         _this2.debKubun = _this2.keepKubun;
@@ -3306,7 +3317,16 @@ __webpack_require__.r(__webpack_exports__);
           category_id: cid
         }
       }).then(function (res) {
-        this.keepKubun = res.data;
+        this.keepKubun = [];
+
+        if (!res.data.length) {
+          this.keepKubun[0] = {
+            id: 0,
+            kubun_name: "小科目なし"
+          };
+        } else {
+          this.keepKubun = res.data;
+        }
       }.bind(this))["catch"](function (e) {
         console.error(e);
       });
@@ -3855,11 +3875,6 @@ __webpack_require__.r(__webpack_exports__);
       classValidComment: "",
       // style
       clrRed: "",
-      // --- ajax ---
-      // urlの取得・保存
-      root: "",
-      // 取得した値の一時保存
-      keepKubun: [],
       // --- child ---
       debKubun: [],
       creKubun: [],
@@ -3875,11 +3890,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    console.log("--- created modal detail account ---"); // urlの取得
-
-    var url = location.href;
-    var indexItem = url.indexOf("/item");
-    this.root = url.substr(0, indexItem); // itmesの数をカウント
+    console.log("--- created modal detail account ---"); // itmesの数をカウント
     // console.log("items legth");
 
     var items = this.pItems; // console.log(items.length);
@@ -3910,7 +3921,9 @@ __webpack_require__.r(__webpack_exports__);
     this.dis = true;
   },
   mounted: function mounted() {
-    console.log("--- mounted modal detail account ---");
+    console.log("--- mounted modal detail account ---"); // 合計金額の表示
+
+    this.getPrice();
   },
   methods: {
     dtlEdit: function dtlEdit() {
@@ -4287,12 +4300,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   // keep：categoryのaccount_rypeに使用：CashBookのitem.jsを参照
   // 処理が終わったらコメントを削除すること
@@ -4306,7 +4313,6 @@ __webpack_require__.r(__webpack_exports__);
       title: "",
       asKubun: [],
       plKubun: [],
-      noKubun: false,
       opTop: true,
       // form
       // disabledの操作
@@ -4378,9 +4384,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.asKubun = _this.keepKubun;
       });
       this.getKubunDtlNml(plCid).then(function () {
-        _this.plKubun = _this.keepKubun; // nokubunの表示許可
-
-        _this.noKubun = true;
+        _this.plKubun = _this.keepKubun;
       });
     },
     chgAsCate: function chgAsCate(ev) {
@@ -4419,7 +4423,16 @@ __webpack_require__.r(__webpack_exports__);
           category_id: cid
         }
       }).then(function (res) {
-        this.keepKubun = res.data;
+        this.keepKubun = [];
+
+        if (!res.data.length) {
+          this.keepKubun[0] = {
+            id: 0,
+            kubun_name: "小科目なし"
+          };
+        } else {
+          this.keepKubun = res.data;
+        }
       }.bind(this))["catch"](function (e) {
         console.error(e);
       });
@@ -4703,12 +4716,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["csrf", "pDate", "pVal", "pCateAsset", "pCateExpense", "pCateIncome", "pKubun1", "pKubun2"],
   data: function data() {
@@ -4718,8 +4725,6 @@ __webpack_require__.r(__webpack_exports__);
       mKubun: "",
       asKubun: "",
       plKubun: "",
-      noKubun1: false,
-      noKubun2: false,
       // optionの最初の値
       op1: true,
       op2: true,
@@ -4750,18 +4755,14 @@ __webpack_require__.r(__webpack_exports__);
     chgCate1: function chgCate1(ev) {
       // 最初のoptionを隠す
       this.op1 = false;
-      this.op2 = false; // nokubunの表示許可
-
-      this.noKubun1 = true;
+      this.op2 = false;
       var cid = ev.target.value;
       this.$emit("chg-cate1", cid);
     },
     chgCate2: function chgCate2(ev) {
       // 最初のoptionを隠す
       this.op3 = false;
-      this.op4 = false; // nokubunの表示許可
-
-      this.noKubun2 = true;
+      this.op4 = false;
       var cid = ev.target.value;
       this.$emit("chg-cate2", cid);
     },
@@ -42028,13 +42029,7 @@ var render = function() {
                             )
                           ]
                         )
-                      }),
-                      _vm._v(" "),
-                      !_vm.pKubun.length && _vm.noKubun
-                        ? _c("option", { attrs: { value: "0", id: "" } }, [
-                            _vm._v("\n            小科目なし\n          ")
-                          ])
-                        : _vm._e()
+                      })
                     ],
                     2
                   ),
@@ -42365,13 +42360,7 @@ var render = function() {
                     )
                   ]
                 )
-              }),
-              _vm._v(" "),
-              !_vm.creKubun.length && _vm.noKubun
-                ? _c("option", { attrs: { value: "", id: "" } }, [
-                    _vm._v("\n        小科目なし\n      ")
-                  ])
-                : _vm._e()
+              })
             ],
             2
           )
@@ -42550,13 +42539,7 @@ var render = function() {
                     )
                   ]
                 )
-              }),
-              _vm._v(" "),
-              !_vm.debKubun.length && _vm.noKubun
-                ? _c("option", { attrs: { value: "", id: "" } }, [
-                    _vm._v("\n        小科目なし\n      ")
-                  ])
-                : _vm._e()
+              })
             ],
             2
           )
@@ -42746,22 +42729,14 @@ var render = function() {
             }
           }
         },
-        [
-          _vm._l(_vm.creKubun, function(kubun) {
-            return _c(
-              "option",
-              { key: "ddcKbn" + kubun.id, domProps: { value: kubun.id } },
-              [_vm._v("\n        " + _vm._s(kubun.kubun_name) + "\n      ")]
-            )
-          }),
-          _vm._v(" "),
-          !_vm.creKubun.length && _vm.noKubun
-            ? _c("option", { attrs: { value: "", id: "" } }, [
-                _vm._v("\n        小科目なし\n      ")
-              ])
-            : _vm._e()
-        ],
-        2
+        _vm._l(_vm.creKubun, function(kubun) {
+          return _c(
+            "option",
+            { key: "ddcKbn" + kubun.id, domProps: { value: kubun.id } },
+            [_vm._v("\n        " + _vm._s(kubun.kubun_name) + "\n      ")]
+          )
+        }),
+        0
       )
     ]),
     _vm._v(" "),
@@ -42949,22 +42924,14 @@ var render = function() {
             }
           }
         },
-        [
-          _vm._l(_vm.debKubun, function(kubun) {
-            return _c(
-              "option",
-              { key: "ddaKbn" + kubun.id, domProps: { value: kubun.id } },
-              [_vm._v("\n        " + _vm._s(kubun.kubun_name) + "\n      ")]
-            )
-          }),
-          _vm._v(" "),
-          !_vm.debKubun.length && _vm.noKubun
-            ? _c("option", { attrs: { value: "", id: "" } }, [
-                _vm._v("\n        小科目なし\n      ")
-              ])
-            : _vm._e()
-        ],
-        2
+        _vm._l(_vm.debKubun, function(kubun) {
+          return _c(
+            "option",
+            { key: "ddaKbn" + kubun.id, domProps: { value: kubun.id } },
+            [_vm._v("\n        " + _vm._s(kubun.kubun_name) + "\n      ")]
+          )
+        }),
+        0
       )
     ]),
     _vm._v(" "),
@@ -43998,13 +43965,7 @@ var render = function() {
                         )
                       ]
                     )
-                  }),
-                  _vm._v(" "),
-                  !_vm.asKubun.length && _vm.noKubun
-                    ? _c("option", { attrs: { value: "", id: "" } }, [
-                        _vm._v("\n            小科目なし\n          ")
-                      ])
-                    : _vm._e()
+                  })
                 ],
                 2
               )
@@ -44188,13 +44149,7 @@ var render = function() {
                         )
                       ]
                     )
-                  }),
-                  _vm._v(" "),
-                  !_vm.plKubun.length && _vm.noKubun
-                    ? _c("option", { attrs: { value: "", id: "" } }, [
-                        _vm._v("\n            小科目なし\n          ")
-                      ])
-                    : _vm._e()
+                  })
                 ],
                 2
               )
@@ -44583,13 +44538,7 @@ var render = function() {
                         )
                       ]
                     )
-                  }),
-                  _vm._v(" "),
-                  !_vm.pKubun1.length && _vm.noKubun1
-                    ? _c("option", { attrs: { value: "", id: "" } }, [
-                        _vm._v("\n            小科目なし\n          ")
-                      ])
-                    : _vm._e()
+                  })
                 ],
                 2
               )
@@ -44704,13 +44653,7 @@ var render = function() {
                         )
                       ]
                     )
-                  }),
-                  _vm._v(" "),
-                  !_vm.pKubun2.length && _vm.noKubun2
-                    ? _c("option", { attrs: { value: "", id: "" } }, [
-                        _vm._v("\n            小科目なし\n          ")
-                      ])
-                    : _vm._e()
+                  })
                 ],
                 2
               )
@@ -57353,7 +57296,16 @@ var app = new Vue({
           category_id: cid
         }
       }).then(function (res) {
-        this.keepKubun = res.data;
+        this.keepKubun = [];
+
+        if (!res.data.length) {
+          this.keepKubun[0] = {
+            id: 0,
+            kubun_name: "小科目なし"
+          };
+        } else {
+          this.keepKubun = res.data;
+        }
       }.bind(this))["catch"](function (e) {
         console.error(e);
       });

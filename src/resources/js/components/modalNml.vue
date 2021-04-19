@@ -78,9 +78,6 @@
             >
               {{ ask.kubun_name }}
             </option>
-            <option value="" id="" v-if="!pKubun1.length && noKubun1">
-              小科目なし
-            </option>
           </select>
         </div>
       </div>
@@ -139,9 +136,6 @@
               :key="'pl-kubun' + pVal.name + i"
             >
               {{ plk.kubun_name }}
-            </option>
-            <option value="" id="" v-if="!pKubun2.length && noKubun2">
-              小科目なし
             </option>
           </select>
         </div>
@@ -218,8 +212,6 @@ export default {
       mKubun: "",
       asKubun: "",
       plKubun: "",
-      noKubun1: false,
-      noKubun2: false,
       // optionの最初の値
       op1: true,
       op2: true,
@@ -252,10 +244,7 @@ export default {
     chgCate1: function (ev) {
       // 最初のoptionを隠す
       this.op1 = false;
-
       this.op2 = false;
-      // nokubunの表示許可
-      this.noKubun1 = true;
       let cid = ev.target.value;
       this.$emit("chg-cate1", cid);
     },
@@ -263,8 +252,6 @@ export default {
       // 最初のoptionを隠す
       this.op3 = false;
       this.op4 = false;
-      // nokubunの表示許可
-      this.noKubun2 = true;
       let cid = ev.target.value;
       this.$emit("chg-cate2", cid);
     },

@@ -88,9 +88,6 @@
             >
               {{ ask.kubun_name }}
             </option>
-            <option value="" id="" v-if="!asKubun.length && noKubun">
-              小科目なし
-            </option>
           </select>
         </div>
       </div>
@@ -169,9 +166,6 @@
               :key="'pl-kubun' + i"
             >
               {{ plk.kubun_name }}
-            </option>
-            <option value="" id="" v-if="!plKubun.length && noKubun">
-              小科目なし
             </option>
           </select>
         </div>
@@ -280,7 +274,6 @@ export default {
       title: "",
       asKubun: [],
       plKubun: [],
-      noKubun: false,
       opTop: true,
 
       // form
@@ -360,8 +353,6 @@ export default {
       });
       this.getKubunDtlNml(plCid).then(() => {
         this.plKubun = this.keepKubun;
-        // nokubunの表示許可
-        this.noKubun = true;
       });
     },
     chgAsCate: function (ev) {
@@ -399,7 +390,12 @@ export default {
         })
         .then(
           function (res) {
-            this.keepKubun = res.data;
+            this.keepKubun = [];
+            if (!res.data.length) {
+              this.keepKubun[0] = { id: 0, kubun_name: "小科目なし" };
+            } else {
+              this.keepKubun = res.data;
+            }
           }.bind(this)
         )
         .catch(function (e) {

@@ -329,7 +329,12 @@ const app = new Vue({
                     category_id: cid,
                 },
             }).then(function (res) {
-                this.keepKubun = res.data;
+                this.keepKubun = [];
+                if (!res.data.length) {
+                  this.keepKubun[0] = { id: 0, kubun_name: "小科目なし" };
+                } else {
+                  this.keepKubun = res.data;
+                }
             }.bind(this)
             ).catch(function (e) {
                 console.error(e);

@@ -37,9 +37,6 @@
         >
           {{ cKubun.kubun_name }}
         </option>
-        <option value="" id="" v-if="!creKubun.length && noKubun">
-          小科目なし
-        </option>
       </select>
     </div>
 
@@ -74,7 +71,6 @@ export default {
       creKubun: [],
       op1: true,
       op2: true,
-      noKubun: false,
 
       // バリデーション用
       errorPrice: "",
@@ -109,7 +105,6 @@ export default {
     chgCateCre: function (ev) {
       this.op1 = false;
       this.op2 = false;
-      this.noKubun = true;
       // $eventから値を取得
       let cid = ev.target.value;
     //   console.log("cid : " + cid);
@@ -122,7 +117,12 @@ export default {
         })
         .then(
           function (res) {
-            this.creKubun = res.data;
+            this.creKubun = [];
+            if (!res.data.length) {
+              this.creKubun[0] = { id: 0, kubun_name: "小科目なし" };
+            } else {
+              this.creKubun = res.data;
+            }
           }.bind(this)
         )
         .catch(function (e) {

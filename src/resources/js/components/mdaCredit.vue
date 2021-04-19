@@ -40,9 +40,6 @@
         >
           {{ kubun.kubun_name }}
         </option>
-        <option value="" id="" v-if="!creKubun.length && noKubun">
-          小科目なし
-        </option>
       </select>
     </div>
 
@@ -78,7 +75,6 @@ export default {
       // --- this ---
       keepKubun: [],
       creKubun: [],
-      noKubun: false,
       // --- form ---
       // value：v-modelで入力の度に値が変わるため変数に代入
       cateId: this.pItems.category_id,
@@ -93,6 +89,9 @@ export default {
   },
   created: function () {
     console.log("--- created modal detail account credit ---");
+    if (!this.kubunId) {
+      this.kubunId = 0;
+    }
     var cid = this.pItems.category_id;
     this.getKubunDtlCre(cid).then(() => {
       this.creKubun = this.keepKubun;
@@ -106,7 +105,6 @@ export default {
   },
   methods: {
     chgCateCre: function (ev) {
-      this.noKubun = true;
       this.getKubunDtlCre(ev).then(() => {
         this.kubunId = this.keepKubun[0].id;
         this.creKubun = this.keepKubun;
@@ -126,7 +124,7 @@ export default {
       this.$emit("p-blur-price", this.validError);
     },
 
-// method
+    // method
     getKubunDtlCre: function (ev) {
       let cid = NaN;
       if (typeof ev === "string") {
@@ -144,7 +142,12 @@ export default {
         })
         .then(
           function (res) {
-            this.keepKubun = res.data;
+            this.keepKubun = [];
+            if (!res.data.length) {
+              this.keepKubun[0] = { id: 0, kubun_name: "小科目なし" };
+            } else {
+              this.keepKubun = res.data;
+            }
           }.bind(this)
         )
         .catch(function (e) {

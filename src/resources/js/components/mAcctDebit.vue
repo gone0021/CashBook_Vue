@@ -37,9 +37,6 @@
         >
           {{ dKubun.kubun_name }}
         </option>
-        <option value="" id="" v-if="!debKubun.length && noKubun">
-          小科目なし
-        </option>
       </select>
     </div>
 
@@ -83,7 +80,6 @@ export default {
       debKubun: [],
       op1: true,
       op2: true,
-      noKubun: true,
       // バリデーション用
       errorPrice: "",
       classValidPrice: "",
@@ -117,10 +113,9 @@ export default {
     chgCateDeb: function (ev) {
       this.op1 = false;
       this.op2 = false;
-      this.noKubun = true;
       // $eventから値を取得
       let cid = ev.target.value;
-    //   console.log("cid : " + cid);
+      //   console.log("cid : " + cid);
       // ajaxでkubunを取得
       axios
         .get(`./ajax/kubun_by_category`, {
@@ -130,7 +125,12 @@ export default {
         })
         .then(
           function (res) {
-            this.debKubun = res.data;
+            this.debKubun = [];
+            if (!res.data.length) {
+              this.debKubun[0] = { id: 0, kubun_name: "小科目なし" };
+            } else {
+              this.debKubun = res.data;
+            }
           }.bind(this)
         )
         .catch(function (e) {
