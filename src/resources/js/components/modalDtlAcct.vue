@@ -204,12 +204,6 @@ export default {
       // style
       clrRed: "",
 
-      // --- ajax ---
-      // urlの取得・保存
-      root: "",
-      // 取得した値の一時保存
-      keepKubun: [],
-
       // --- child ---
       debKubun: [],
       creKubun: [],
@@ -228,10 +222,6 @@ export default {
   },
   created() {
     console.log("--- created modal detail account ---");
-    // urlの取得
-    let url = location.href;
-    let indexItem = url.indexOf("/item");
-    this.root = url.substr(0, indexItem);
 
     // itmesの数をカウント
     // console.log("items legth");
@@ -263,6 +253,8 @@ export default {
   },
   mounted() {
     console.log("--- mounted modal detail account ---");
+    // 合計金額の表示
+    this.getPrice();
   },
   methods: {
     dtlEdit: function () {
