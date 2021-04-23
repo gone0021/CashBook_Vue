@@ -46,6 +46,7 @@
     <link href="{{ asset('css/modal_account.css') }}" rel="stylesheet">
     <link href="{{ asset('css/modal_nomal.css') }}" rel="stylesheet">
     <link href="{{ asset('css/parts.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/anim.css') }}" rel="stylesheet">
 
 </head>
 

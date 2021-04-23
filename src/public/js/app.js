@@ -57141,7 +57141,6 @@ var app = new Vue({
     // --- ここからhome ---
     newAccount: function newAccount() {
       // console.log('newAccount');
-      console.log();
       this.glay = true;
       this.modalAccount = true; // this.$modal.show('accout');
     },

@@ -3,7 +3,7 @@
 /* ------------------------ */
 /* 背景 */
 .glayLayer {
-    z-index: 1;
+    z-index: 0;
     position: fixed;
     left: 0;
     top: 0;

@@ -188,13 +188,18 @@
     @endif
 </div>
 
+<transition name="fade">
 <div class='glayLayer' v-if="glay" v-on:click="glayLayer"></div>
+</transition>
+<transition name="fade">
 <modal-dtl-acct v-if="modalDtlAcct" :csrf="{{json_encode(csrf_token())}}" :p-cate="cateAll" :p-items="daItems">
 </modal-dtl-acct>
-
+</transition>
+<transition name="fade">
 <modal-dtl-nml v-if="modalDtlNml" :csrf="{{json_encode(csrf_token())}}" :p-cate-asset="cateAsset"
     :p-cate-expense="cateExpense" :p-cate-income="cateIncome" :p-as-items="asItems" :p-pl-items="plItems">
 </modal-dtl-nml>
+</transition>
 
 <modal-msg v-if="modalMsg"></modal-msg>
 

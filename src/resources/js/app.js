@@ -190,7 +190,6 @@ const app = new Vue({
         // --- ここからhome ---
         newAccount: function () {
             // console.log('newAccount');
-            console.log();
             this.glay = true;
             this.modalAccount = true;
             // this.$modal.show('accout');
