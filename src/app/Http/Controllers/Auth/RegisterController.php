@@ -102,7 +102,6 @@ class RegisterController extends Controller
         $val = $req->all();
         $val['password'] = Hash::make($val['password']);
         unset($val['_token']);
-        // dump($val); die;
 
         $users->fill($val)->save();
         return redirect('/register_done');
